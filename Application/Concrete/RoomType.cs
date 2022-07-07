@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class RoomType
+    public class RoomType : BaseEntity
     {
-        [Key]
+
         [Column(TypeName = "nvarchar")]
         [StringLength(20)]
         public string Code { get; set; }

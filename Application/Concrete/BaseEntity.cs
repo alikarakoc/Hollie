@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class Country : BaseEntity
+    public abstract class BaseEntity
     {
+        [Key]
         [Column(TypeName = "nvarchar")]
         [StringLength(20)]
-        public string Code { get; set; }
+        public int Id { get; set; }
+        public DateTime CreatedDate { get; set; }
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string CreatedUser { get; set; }
+        public DateTime UpdatedDate { get; set; }
+        [Column(TypeName = "nvarchar")]
+        [StringLength(50)]
+        public string UpdateUser { get; set; }
     }
 }
