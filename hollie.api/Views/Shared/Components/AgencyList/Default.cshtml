@@ -1,0 +1,38 @@
+﻿@using Application.Concrete
+@model List<Agency>
+----------------------------------------------
+<h1>Agency Tablosu</h1>
+    <table>
+   <tr>
+    <th>ID</th>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>CreatedDate</th>
+    <th>CreatedUser</th>
+    <th>UpdatedDate</th>
+    <th>UpdateUser</th>
+  </tr>
+@foreach(var item in Model)
+{
+
+
+  <tr>
+    <td>@item.Id</td>
+    <td>@item.Code</td>
+    <td>@item.Name</td>
+    <td>@item.Address</td>
+    <td>@item.Phone</td>
+    <td>@item.Email</td>
+    <td>@item.CreatedDate</td>
+    <td>@item.CreatedUser</td>
+    <td>@item.UpdatedDate</td>
+    <td>@item.UpdateUser</td>
+  </tr>
+
+}
+</table>
+
+-----------------------------------------------

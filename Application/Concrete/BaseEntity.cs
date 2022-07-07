@@ -11,7 +11,6 @@ namespace Application.Concrete
     public abstract class BaseEntity
     {
         [Key]
-        [Column(TypeName = "nvarchar")]
         [StringLength(20)]
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
