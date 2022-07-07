@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class Market
+    public class Market : BaseEntity
     {
-        [Key]
+  
         [Column(TypeName = "nvarchar")]
         [StringLength(20)]
         public string Code { get; set; }

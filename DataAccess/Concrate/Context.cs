@@ -13,7 +13,7 @@ namespace DataAccess.Concrate
         protected override void OnConfiguring(DbContextOptionsBuilder 
             optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=Efe;database=Efe;integrated security=true");
+            optionsBuilder.UseSqlServer("server=Efe;database=CoreProje;integrated security=true");
         }
         public DbSet<Agency> Agencys { get; set; }   
         public DbSet<Board> Boards { get; set; }
