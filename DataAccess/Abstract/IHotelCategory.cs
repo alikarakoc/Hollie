@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IAgency : IGeneric<Agency>
+    public interface IHotelCategory : IGeneric<HotelCategory>
     {
     }
 }
