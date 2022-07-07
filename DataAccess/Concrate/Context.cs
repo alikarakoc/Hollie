@@ -15,7 +15,7 @@ namespace DataAccess.Concrate
         {
             optionsBuilder.UseSqlServer("server=Efe;database=CoreProje;integrated security=true");
         }
-        public DbSet<Agency> Agencys { get; set; }
+        public DbSet<Agency> Agencys { get; set; }   
         public DbSet<Board> Boards { get; set; }
         public DbSet<Country> Countrys { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
