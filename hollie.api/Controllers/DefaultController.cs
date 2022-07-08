@@ -55,7 +55,7 @@ namespace hollie.api.Controllers
             AgencyManager agencyManager = new(new EfAgencyDal());
             var values = agencyManager.TGetById(id);
             agencyManager.TDelete(values);
-            return RedirectToAction();
+            return RedirectToAction("Index");
         }
     }
 }
