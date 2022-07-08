@@ -1,0 +1,26 @@
+﻿@model Application.Concrete.Agency
+@{
+    ViewData["Title"] = "AgencyGetir";
+}
+
+@using (Html.BeginForm("AgencyGetir","Default",FormMethod.Post))
+{
+    @Html.HiddenFor(x=>x.Id);
+    <br />
+    <p>Name</p>
+    @Html.TextBoxFor(x=>x.Name);
+    <p>Address</p>
+    @Html.TextBoxFor(x=>x.Address);
+    <p>Code</p>
+    @Html.TextBoxFor(x=>x.Code);
+    <p>CreatedUser</p>
+    @Html.TextBoxFor(x=>x.CreatedUser);
+    <p>UpdateUser</p>
+    @Html.TextBoxFor(x=>x.CreatedUser);
+    <p>Email</p>
+    @Html.TextBoxFor(x=>x.Email);
+    <p>Phone</p>
+    @Html.TextBoxFor(x=>x.Phone);
+    <button>Kaydet</button>
+}
+

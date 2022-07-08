@@ -26,4 +26,5 @@ namespace Application.Concrete
         [StringLength(50)]
         public string Email { get; set; }
     }
+    
 }

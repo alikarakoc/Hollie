@@ -2,9 +2,12 @@
     ViewData["Title"] = "Home Page";
 }
 
-@await Component.InvokeAsync("AgencyList")
+@await Html.PartialAsync("/Views/Default/AgencyInsert.cshtml")
+
+<li class="breadcrumb-item"><a href="~/Default/Index">Agency</a></li>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+

@@ -11,13 +11,14 @@ namespace Application.Concrete
     public abstract class BaseEntity
     {
         [Key]
-        [StringLength(20)]
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
+       
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string CreatedUser { get; set; }
         public DateTime UpdatedDate { get; set; }
+       
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string UpdateUser { get; set; }

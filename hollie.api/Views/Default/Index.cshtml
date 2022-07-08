@@ -1,5 +1,6 @@
 ﻿@using Application.Concrete
 @model List<Agency>
+
 ----------------------------------------------
 <h1>Agency Tablosu</h1>
     <table cellpadding="2">
@@ -14,6 +15,8 @@
     <th>CreatedUser</th>
     <th>UpdatedDate</th>
     <th>UpdateUser</th>
+    <th>Delete</th>
+    <th>Update</th>
   </tr>
 @foreach(var item in Model)
 {
@@ -28,11 +31,13 @@
     <td>@item.Email</td>
     <td>@item.CreatedDate</td>
     <td>@item.CreatedUser</td>
-    <td>@item.UpdatedDate</td>
-    <td>@item.UpdateUser</td>
+    <td><a href="~/Default/AgencySil/@item.Id"><i class="fas fa-edit"></i>Sil</a></td>
+    <td><a href="~/Default/AgencyGetir/@item.Id"><i class="fas fa-edit"></i>Güncelle</a></td>
   </tr>
 
 }
 </table>
 
 -----------------------------------------------
+
+@await Html.PartialAsync("/Views/Default/AgencyInsert.cshtml")
