@@ -3,6 +3,7 @@ using Application.Infrastructure;
 using DataAccess.Concrate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,9 +13,11 @@ namespace api.Controllers
     [ApiController]
     public class HotelsController : Controller
     {
+       
         Context c = new Context();
 
         [HttpGet]
+        [Route("AllHotels")]
         public ActionResponse<List<Hotel>> GetAllHotels()
         {
             ActionResponse<List<Hotel>> actionResponse = new()
@@ -34,7 +37,45 @@ namespace api.Controllers
             return actionResponse;
         }
 
-     
+
+
+        [HttpGet("{id}")]
+      
+        public ActionResponse<Hotel> GetHotel([FromBody] int id)
+        {
+            ActionResponse<Hotel> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok,
+                IsSuccessful = true,
+            };
+            var hotel = c.Hotels.FirstOrDefault(h => h.Id == id);
+            if (hotel != null)
+            {
+                actionResponse.Data = hotel;
+            }
+            return actionResponse;
+        }
+
+        [HttpPost]
+        [Route("AddHotel")]
+        public ActionResponse<Hotel> AddHotel([FromBody] Hotel htl)
+        {
+
+            ActionResponse<Hotel> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok,
+                IsSuccessful = true,
+            };
+            c.Hotels.Add(htl);
+            c.SaveChanges();
+            return actionResponse;
+
+        }
+
+
+
+
+
 
     }
 }

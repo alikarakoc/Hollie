@@ -16,7 +16,6 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Name { get; set; }
-        public ICollection<Hotel> Hotels { get; set; }
 
     }
 }

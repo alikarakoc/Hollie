@@ -159,7 +159,7 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("HotelCategoryId")
+                    b.Property<int>("HotelCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -178,8 +178,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HotelCategoryId");
 
                     b.ToTable("Hotels");
                 });
@@ -266,20 +264,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RoomTypes");
-                });
-
-            modelBuilder.Entity("Application.Concrete.Hotel", b =>
-                {
-                    b.HasOne("Application.Concrete.HotelCategory", "HotelCategory")
-                        .WithMany("Hotels")
-                        .HasForeignKey("HotelCategoryId");
-
-                    b.Navigation("HotelCategory");
-                });
-
-            modelBuilder.Entity("Application.Concrete.HotelCategory", b =>
-                {
-                    b.Navigation("Hotels");
                 });
 #pragma warning restore 612, 618
         }

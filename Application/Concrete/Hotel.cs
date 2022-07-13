@@ -26,7 +26,6 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Email { get; set; }
-        [Column(TypeName = "int")]
-        public virtual HotelCategory HotelCategory { get; set; }
+        public int HotelCategoryId { get; set; }
     }
 }
