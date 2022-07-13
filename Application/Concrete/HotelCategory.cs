@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class HotelCategory : BaseEntity
+    public class HotelCategory
     {
- 
-        [Column(TypeName = "nvarchar")]
-        [StringLength(20)]
-        public string Code { get; set; }
+
+        [Key]
+        public int Id { get; set; }
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Name { get; set; }

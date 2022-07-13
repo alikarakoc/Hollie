@@ -68,13 +68,6 @@ namespace hollie.api.Controllers
             return actionResponse;
         }
 
-        [HttpGet]
-        public List<Agency> Deneme()
-        {
-            var deneme = c.Agencys.ToList();
-            return deneme.ToList();
-        }
-
 
         //[HttpPost]
         //public ActionResponse<Hotel> AddHotel([FromBody] Hotel htl)
