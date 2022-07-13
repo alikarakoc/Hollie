@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Dtos;
+using Application.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -26,7 +28,19 @@ namespace hollie.api.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<ActionResponse<string>> GetAllHotels([FromQuery] GetAllHotelDto model)
+        {
+            ActionResponse<string> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok,
+                IsSuccessful = true,
+            };
+            //Otelleri Çek await ile
+            //eğer hata var ise actionResponse.IsSuccessful=false set edilir.
+            //actionResponse.Data = "çekilen otel listesi";
+            return actionResponse;
+        }
 
-        
     }
 }
