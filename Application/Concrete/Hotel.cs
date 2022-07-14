@@ -29,3 +29,4 @@ namespace Application.Concrete
         public int HotelCategoryId { get; set; }
     }
 }
+
