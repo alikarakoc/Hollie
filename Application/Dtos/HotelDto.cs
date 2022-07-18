@@ -2,7 +2,7 @@
 
 namespace Application.Dtos
 {
-    public class GetAllHotelDto
+    public class HotelDto
     {
         public int Id { get; set; }
         public string Code { get; set; }
