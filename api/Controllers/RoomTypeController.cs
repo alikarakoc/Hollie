@@ -15,10 +15,10 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MarketController : Controller
+    public class RoomTypeController : Controller
     {
         private readonly Context _context;
-        public MarketController(Context _context)
+        public RoomTypeController(Context _context)
         {
             this._context = _context;
         }
@@ -27,20 +27,20 @@ namespace api.Controllers
         
 
         [HttpGet]
-        [Route("AllMarkets")]
-        public ActionResponse<List<Market>> Market()
+        [Route("AllRoomTypes")]
+        public ActionResponse<List<RoomType>> RoomType()
         {
-            ActionResponse<List<Market>> actionResponse = new()
+            ActionResponse<List<RoomType>> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
 
-            var markets = _context.Markets;
+            var roomtypes = _context.RoomTypes;
             
-            if (markets != null && markets.Count() > 0)
+            if (roomtypes != null && roomtypes.Count() > 0)
             {
-                actionResponse.Data = markets.ToList();
+                actionResponse.Data = roomtypes.ToList();
             }
             return actionResponse;
         }
@@ -48,22 +48,22 @@ namespace api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResponse<Market>> GetMarkets([FromQuery] MarketDto model)
+        public async Task<ActionResponse<RoomType>> GetMarkets([FromQuery] RoomTypeDto model)
         {
             if (model is null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            ActionResponse<Market> actionResponse = new()
+            ActionResponse<RoomType> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var markets = await _context.Markets.FirstOrDefaultAsync(h => h.Id == model.Id);
-            if (markets != null)
+            var roomtypes = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
+            if (roomtypes != null)
             {
-                actionResponse.Data = markets;
+                actionResponse.Data = roomtypes;
             }
             return actionResponse;
         }
@@ -71,40 +71,40 @@ namespace api.Controllers
 
 
         [HttpPost]
-        [Route("AddMarket")]
-        public async Task<ActionResponse<Market>> AddMarket([FromBody] Market mrk)
+        [Route("AddRoomType")]
+        public async Task<ActionResponse<RoomType>> AddRoomType([FromBody] RoomType room)
         {
 
-            ActionResponse<Market> actionResponse = new()
+            ActionResponse<RoomType> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            _context.Markets.Add(mrk);
+            _context.RoomTypes.Add(room);
             _context.SaveChanges();
             return actionResponse;
         }
 
         [HttpDelete]
-        [Route("DeleteMarket")]
-        public async Task<ActionResponse<Hotel>> DeleteMarket([FromQuery] MarketDto model)
+        [Route("DeleteRoomType")]
+        public async Task<ActionResponse<RoomType>> DeleteRoomType([FromQuery] RoomTypeDto model)
         {
-            ActionResponse<Hotel> actionResponse = new()
+            ActionResponse<RoomType> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == model.Id);
-            _context.Markets.Remove(market);
+            var roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
+            _context.RoomTypes.Remove(roomtype);
             _context.SaveChanges();
             return actionResponse;
         }
 
         [HttpPut]
-        [Route("UpdateMarket")]
-        public async Task<ActionResponse<Market>> UpdateMarket([FromQuery]MarketDto modelID, [FromBody] MarketDto model)
+        [Route("UpdateRoomType")]
+        public async Task<ActionResponse<RoomType>> UpdateRoomType([FromQuery]RoomTypeDto modelID, [FromBody] RoomTypeDto model)
         {
-            ActionResponse<Market> actionResponse = new()
+            ActionResponse<RoomType> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
@@ -112,15 +112,15 @@ namespace api.Controllers
 
             try
             {
-                var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                if (market != null)
+                var roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == modelID.Id);
+                if (roomtype != null)
                 {
-                    market.Code = model.Code;
-                    market.Name = model.Name;
-                    market.CreatedDate = model.CreatedDate;
-                    market.CreatedUser = model.CreatedUser;
-                    market.UpdatedDate = model.UpdatedDate;
-                    market.UpdateUser = model.UpdateUser;
+                    roomtype.Code = model.Code;
+                    roomtype.Name = model.Name;
+                    roomtype.CreatedDate = model.CreatedDate;
+                    roomtype.CreatedUser = model.CreatedUser;
+                    roomtype.UpdatedDate = model.UpdatedDate;
+                    roomtype.UpdateUser = model.UpdateUser;
                 
                    
                     _context.SaveChanges();
