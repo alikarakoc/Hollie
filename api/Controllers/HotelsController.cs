@@ -67,7 +67,8 @@ namespace api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResponse<Hotel>> GetHotel([FromQuery] GetAllHotelDto model)
+        [Route("{id:int}")]
+        public async Task<ActionResponse<Hotel>> GetHotel([FromQuery] HotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
@@ -101,7 +102,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("DeleteHotel")]
-        public async Task<ActionResponse<Hotel>> DeleteHotel([FromQuery] GetAllHotelDto model)
+        public async Task<ActionResponse<Hotel>> DeleteHotel([FromQuery] HotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
@@ -116,7 +117,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("UpdateHotel")]
-        public async Task<ActionResponse<Hotel>> UpdateHotel([FromQuery] GetAllHotelDto modelID, [FromBody] GetAllHotelDto model)
+        public async Task<ActionResponse<Hotel>> UpdateHotel([FromQuery] HotelDto modelID, [FromBody] HotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
