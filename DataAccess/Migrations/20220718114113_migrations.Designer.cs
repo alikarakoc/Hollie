@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220718103007_mg1")]
-    partial class mg1
+    [Migration("20220718114113_migrations")]
+    partial class migrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,7 +132,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countrys");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Application.Concrete.Hotel", b =>

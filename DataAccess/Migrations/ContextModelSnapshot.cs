@@ -130,7 +130,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countrys");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Application.Concrete.Hotel", b =>
