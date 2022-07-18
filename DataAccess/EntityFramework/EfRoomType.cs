@@ -1,5 +1,6 @@
 ﻿using Application.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrate;
 using DataAccess.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,8 @@ namespace DataAccess.EntityFramework
 {
     public class EfRoomType : GenericRepository<RoomType>, IRoomType
     {
+        public EfRoomType(Context _context) : base(_context)
+        {
+        }
     }
 }

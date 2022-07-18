@@ -1,5 +1,6 @@
 ﻿using Application.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrate;
 using DataAccess.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace DataAccess.EntityFramework
 {
     public class EfCountryDal : GenericRepository<Country>, ICountry
     {
-    
+        public EfCountryDal(Context _context) : base(_context)
+        {
+        }
     }
 }

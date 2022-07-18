@@ -1,5 +1,6 @@
 ﻿using Application.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrate;
 using DataAccess.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,8 @@ namespace DataAccess.EntityFramework
 {
     public class EfHotelCategoryDal : GenericRepository<HotelCategory>, IHotelCategory
     {
+        public EfHotelCategoryDal(Context _context) : base(_context)
+        {
+        }
     }
 }

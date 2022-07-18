@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Dtos
 {
-    public class GetAllHotelDto
+    public class AgencyDto
     {
         public int Id { get; set; }
         public string Code { get; set; }
@@ -17,5 +21,3 @@ namespace Application.Dtos
         public string UpdateUser { get; set; }
     }
 }
-
-

@@ -15,7 +15,12 @@ namespace hollie.api.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        Context c = new Context();
+
+        private readonly Context _context;
+        public HomeController(Context context)
+        {
+            this._context = context;
+        }
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -41,7 +46,7 @@ namespace hollie.api.Controllers
                 IsSuccessful = true,
             };
 
-            var hotels = c.Hotels;
+            var hotels = _context.Hotels;
             //Otelleri Çek await ile
             //eğer hata var ise actionResponse.IsSuccessful=false set edilir.
             //actionResponse.Data = "çekilen otel listesi";
@@ -60,7 +65,7 @@ namespace hollie.api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var hotel = c.Hotels.FirstOrDefault(h => h.Id == id);
+            var hotel = _context.Hotels.FirstOrDefault(h => h.Id == id);
             if (hotel != null)
             {
                 actionResponse.Data = hotel;

@@ -4,10 +4,12 @@ using Application.Infrastructure;
 using DataAccess.Concrate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace api.Controllers
 {
@@ -15,8 +17,31 @@ namespace api.Controllers
     [ApiController]
     public class HotelsController : Controller
     {
-        
-        Context c = new Context();
+        private readonly Context _context;
+        public HotelsController(Context _context)
+        {
+            this._context = _context;
+        }
+
+
+        //private readonly ILogger<HotelsController> _logger;
+        //Context c = new Context();
+
+        //public HotelsController(ILogger<HotelsController> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
+        //Context c = new Context();
 
         [HttpGet]
         [Route("AllHotels")]
@@ -28,7 +53,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var hotels = c.Hotels;
+            var hotels = _context.Hotels;
             //Otelleri Çek await ile
             //eğer hata var ise actionResponse.IsSuccessful=false set edilir.
             //actionResponse.Data = "çekilen otel listesi";
@@ -42,14 +67,14 @@ namespace api.Controllers
 
 
         [HttpGet]
-        public ActionResponse<Hotel> GetHotel([FromQuery] GetAllHotelDto model)
+        public async Task<ActionResponse<Hotel>> GetHotel([FromQuery] GetAllHotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var hotel = c.Hotels.FirstOrDefault(h => h.Id == model.Id);
+            var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == model.Id);
             if (hotel != null)
             {
                 actionResponse.Data = hotel;
@@ -61,7 +86,7 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("AddHotel")]
-        public ActionResponse<Hotel> AddHotel([FromBody] Hotel htl)
+        public async Task<ActionResponse<Hotel>> AddHotel([FromBody] Hotel htl)
         {
 
             ActionResponse<Hotel> actionResponse = new()
@@ -69,29 +94,29 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            c.Hotels.Add(htl);
-            c.SaveChanges();
+            _context.Hotels.Add(htl);
+            _context.SaveChanges();
             return actionResponse;
         }
 
         [HttpDelete]
         [Route("DeleteHotel")]
-        public ActionResponse<Hotel> DeleteHotel([FromQuery] GetAllHotelDto model)
+        public async Task<ActionResponse<Hotel>> DeleteHotel([FromQuery] GetAllHotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var hotel = c.Hotels.FirstOrDefault(h => h.Id == model.Id);
-            c.Hotels.Remove(hotel);
-            c.SaveChanges();
+            var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == model.Id);
+            _context.Hotels.Remove(hotel);
+            _context.SaveChanges();
             return actionResponse;
         }
 
         [HttpPut]
         [Route("UpdateHotel")]
-        public ActionResponse<Hotel> UpdateHotel([FromQuery] GetAllHotelDto modelID, [FromBody] GetAllHotelDto model)
+        public async Task<ActionResponse<Hotel>> UpdateHotel([FromQuery] GetAllHotelDto modelID, [FromBody] GetAllHotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
@@ -101,7 +126,7 @@ namespace api.Controllers
 
             try
             {
-                var hotel = c.Hotels.FirstOrDefault(h => h.Id == modelID.Id);
+                var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == modelID.Id);
                 if (hotel != null)
                 {
                     hotel.Code = model.Code;
@@ -114,7 +139,7 @@ namespace api.Controllers
                     hotel.CreatedUser = model.CreatedUser;
                     hotel.UpdatedDate = model.UpdatedDate;
                     hotel.UpdateUser = model.UpdateUser;
-                    c.SaveChanges();
+                    _context.SaveChanges();
                 }
                 return actionResponse;
             }

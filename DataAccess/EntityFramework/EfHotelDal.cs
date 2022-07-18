@@ -1,5 +1,6 @@
 ﻿using Application.Concrete;
 using DataAccess.Abstract;
+using DataAccess.Concrate;
 using DataAccess.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EntityFramework
 {
-    public class EfHotelDal : GenericRepository<Hotel>, IHotel    {
+    public class EfHotelDal : GenericRepository<Hotel>, IHotel
+    {
+        public EfHotelDal(Context _context) : base(_context)
+        {
+        }
     }
 }
