@@ -47,7 +47,7 @@ namespace api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResponse<Country>> GetCountry([FromQuery] GetAllCountryDto model)
+        public async Task<ActionResponse<Country>> GetCountry([FromQuery] CountryDto model)
         {
             ActionResponse<Country> actionResponse = new()
             {
@@ -81,7 +81,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("DeleteCountry")]
-        public async Task<ActionResponse<Country>> DeleteCountry([FromQuery] GetAllCountryDto model)
+        public async Task<ActionResponse<Country>> DeleteCountry([FromQuery] CountryDto model)
         {
             ActionResponse<Country> actionResponse = new()
             {
@@ -89,7 +89,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
-            _context.Boards.Remove(country);
+            _context.Remove(country);
             _context.SaveChanges();
             return actionResponse;
         }
@@ -98,7 +98,7 @@ namespace api.Controllers
         [HttpPut]
         [Route("DeleteCountry")]
 
-        public async Task<ActionResponse<Country>> UpdateCountry([FromQuery] GetAllCountryDto modelD, [FromBody] GetAllCountryDto model)
+        public async Task<ActionResponse<Country>> UpdateCountry([FromQuery] CountryDto modelD, [FromBody] CountryDto model)
         {
             ActionResponse<Country> actionResponse = new()
             {

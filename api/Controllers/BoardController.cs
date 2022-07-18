@@ -48,7 +48,7 @@ namespace api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResponse<Board>> GetBoard([FromQuery] GetAllBoardDto model)
+        public async Task<ActionResponse<Board>> GetBoard([FromQuery] BoardDto model)
         {
             ActionResponse<Board> actionResponse = new()
             {
@@ -84,7 +84,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("DeleteHotel")]
-        public async Task<ActionResponse<Board>> DeleteBoard([FromQuery] GetAllBoardDto model)
+        public async Task<ActionResponse<Board>> DeleteBoard([FromQuery] BoardDto model)
         {
             ActionResponse<Board> actionResponse = new()
             {
@@ -101,7 +101,7 @@ namespace api.Controllers
         [HttpPut]
         [Route("DeleteBoard")]
 
-        public async Task<ActionResponse<Board>> UpdateBoard([FromQuery] GetAllBoardDto modelD, [FromBody] GetAllBoardDto model)
+        public async Task<ActionResponse<Board>> UpdateBoard([FromQuery] BoardDto modelD, [FromBody] BoardDto model)
         {
             ActionResponse<Board> actionResponse = new()
             {
