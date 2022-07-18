@@ -16,8 +16,7 @@ namespace api.Controllers
     [ApiController]
     public class BoardController : Controller
     {
- 
-        Context _context = new Context();
+
 
         [HttpGet]
         [Route("AllBoard")]
@@ -27,11 +26,11 @@ namespace api.Controllers
             ActionResponse<List<Board>> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
-                IsSuccessful = true,    
+                IsSuccessful = true,
             };
 
             return actionResponse;
         }
-        
+
     }
 }
