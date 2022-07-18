@@ -116,7 +116,6 @@ namespace api.Controllers
                 {
                     board.Code = model.Code;
                     board.Name = model.Name;
-                    //board.HotelCategoryId = model.HotelCategoryId;
                     board.CreatedDate = model.CreatedDate;
                     board.CreatedUser = model.CreatedUser;
                     board.UpdatedDate = model.UpdatedDate;  
