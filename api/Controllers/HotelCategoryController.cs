@@ -51,9 +51,17 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            _context.HotelCategorys.Add(hotelCategory);
-            _context.SaveChanges();
+
+            var checkHotel =  _context.HotelCategorys.Where(h => h.Name == hotelCategory.Name)?.Count();
+            if (checkHotel <= 0)
+            {
+                _context.HotelCategorys.Add(hotelCategory);
+                _context.SaveChanges();
+            }
             return actionResponse;
+
+
+
         }
 
         [HttpGet]
