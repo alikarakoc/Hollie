@@ -109,14 +109,24 @@ namespace api.Controllers
 
             try
             {
-                var hotelCategory = await _context.HotelCategorys.FirstOrDefaultAsync(h => h.Id == model.Id);
-               
-                if (hotelCategory != null)
+                //var hotelCategory = await _context.HotelCategorys.FirstOrDefaultAsync(h => h.Id == model.Id);
+
+                //if (hotelCategory != null)
+                //{
+                //    hotelCategory.Name = model.Name;
+                //    _context.SaveChanges();
+                //}
+                //return actionResponse;
+
+                var hotelCategory = await _context.HotelCategorys.FirstOrDefaultAsync(h => h.Id == modelID.Id);
+                var checkHotel = _context.HotelCategorys.Where(h => h.Name == model.Name)?.Count();
+                if (checkHotel < 1)
                 {
                     hotelCategory.Name = model.Name;
                     _context.SaveChanges();
                 }
                 return actionResponse;
+
             }
             catch (Exception ex)
             {
