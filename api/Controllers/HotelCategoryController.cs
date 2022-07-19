@@ -53,14 +53,12 @@ namespace api.Controllers
             };
 
             var checkHotel =  _context.HotelCategorys.Where(h => h.Name == hotelCategory.Name)?.Count();
-            if (checkHotel <= 0)
+            if (checkHotel < 1)
             {
                 _context.HotelCategorys.Add(hotelCategory);
                 _context.SaveChanges();
             }
             return actionResponse;
-
-
 
         }
 
@@ -108,9 +106,11 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
+
             try
             {
                 var hotelCategory = await _context.HotelCategorys.FirstOrDefaultAsync(h => h.Id == model.Id);
+               
                 if (hotelCategory != null)
                 {
                     hotelCategory.Name = model.Name;

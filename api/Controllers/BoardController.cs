@@ -63,23 +63,32 @@ namespace api.Controllers
             }
 
             return actionResponse;
+
+         
         }
 
 
         [HttpPost]
-        [Route("AddBoard")]
+        [Route("add")]
 
         public async Task<ActionResponse<Board>> AddBoard([FromBody] Board brd)
         {
             ActionResponse<Board> actionResponse = new()
             {
-                ResponseType=(ResponseType)ResponseType.Ok,
-                IsSuccessful=true,
+                ResponseType = ResponseType.Ok,
+                IsSuccessful = true,
             };
-            _context.Boards.Add(brd);
-            _context.SaveChanges();
+
+            var checkBoard = _context.Boards.Where(h => h.Name == brd.Name)?.Count();
+            if(checkBoard < 1)
+            {
+                _context.Boards.Add(brd);
+                _context.SaveChanges();
+            }
             return actionResponse;
         }
+
+
 
 
         [HttpDelete]
