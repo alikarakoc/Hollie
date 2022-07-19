@@ -81,7 +81,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var checkMarket = _context.Markets.Where(h => h.Id == mrk.Id).Count();
+            var checkMarket = _context.Markets.Where(h => h.Name == mrk.Name).Count();
             if (checkMarket < 1) { 
                  _context.Markets.Add(mrk);
                  _context.SaveChanges();
@@ -117,7 +117,8 @@ namespace api.Controllers
             try
             {
                 var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                if (market != null)
+                var checkMarket =  _context.Markets.Where(h => h.Name == model.Name)?.Count();
+                if (checkMarket<1 && market != null)
                 {
                     market.Code = model.Code;
                     market.Name = model.Name;

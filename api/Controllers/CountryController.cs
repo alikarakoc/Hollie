@@ -112,8 +112,9 @@ namespace api.Controllers
 
             try
             {
-                var country = await _context.Boards.FirstOrDefaultAsync(h => h.Id == modelD.Id);
-                if (country != null)
+                var country = await _context.Countrys.FirstOrDefaultAsync(h => h.Id == modelD.Id);
+                var checkCountry = _context.Countrys.Where(h=>h.Name == modelD.Name)?.Count();
+                if (checkCountry <1 && country != null)
                 {
                     country.Code = model.Code;
                     country.Name = model.Name;

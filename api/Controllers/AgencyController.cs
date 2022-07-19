@@ -117,7 +117,8 @@ namespace api.Controllers
             try
             {
                 var agency = await _context.Agencys.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                if (agency != null)
+                var checkAgency = _context.Agencys.Where(h => h.Name == model.Name)?.Count();         
+                if (checkAgency< 1 && agency != null)
                 {
                     agency.Code = model.Code;
                     agency.Name = model.Name;

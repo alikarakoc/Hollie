@@ -134,7 +134,8 @@ namespace api.Controllers
             try
             {
                 var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                if (hotel != null)
+                var checkHotel =_context.Hotels.Where(h => h.Name == model.Name)?.Count();
+                if (checkHotel<1 && hotel != null)
                 {
                     hotel.Code = model.Code;
                     hotel.Name = model.Name;

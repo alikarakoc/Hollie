@@ -52,7 +52,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var checkHotel =  _context.HotelCategorys.Where(h => h.Name == hotelCategory.Name)?.Count();
+            var checkHotel =  _context.HotelCategorys.Where(h => h.Name == hotelCategory.Name).Count();
             if (checkHotel < 1)
             {
                 _context.HotelCategorys.Add(hotelCategory);

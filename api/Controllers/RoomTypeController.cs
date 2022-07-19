@@ -80,7 +80,7 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var checkRoomType = _context.RoomTypes.Where(h => h.Id == room.Id).Count();
+            var checkRoomType = _context.RoomTypes.Where(h => h.Name == room.Name).Count();
             if(checkRoomType < 1) {
                     _context.RoomTypes.Add(room);
                     _context.SaveChanges();
@@ -116,7 +116,8 @@ namespace api.Controllers
             try
             {
                 var roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                if (roomtype != null)
+                var checkRoomtype = _context.RoomTypes.Where(h => h.Name == model.Name)?.Count();
+                if (checkRoomtype<1 && roomtype != null)
                 {
                     roomtype.Code = model.Code;
                     roomtype.Name = model.Name;

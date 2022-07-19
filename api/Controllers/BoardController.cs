@@ -79,7 +79,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var checkBoard = _context.Boards.Where(h => h.Name == brd.Name)?.Count();
+            var checkBoard = _context.Boards.Where(h => h.Name == brd.Name).Count();
             if(checkBoard < 1)
             {
                 _context.Boards.Add(brd);
@@ -87,7 +87,7 @@ namespace api.Controllers
             }
             return actionResponse;
         }
-
+         
 
 
 
@@ -121,7 +121,8 @@ namespace api.Controllers
             try
             {
                 var board = await _context.Boards.FirstOrDefaultAsync(h =>h.Id == modelD.Id);
-                if(board != null)
+                var checkBoard = _context.Boards.Where(h => h.Name == model.Name)?.Count();
+                if( checkBoard < 1 && board != null)
                 {
                     board.Code = model.Code;
                     board.Name = model.Name;
