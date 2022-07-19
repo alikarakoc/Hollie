@@ -65,22 +65,26 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        [Route("AddCountry")]
+        [Route("add")]
 
         public async Task<ActionResponse<Country>> AddCountry([FromBody] Country cnt)
         {
             ActionResponse<Country> actionResponse = new()
             {
-                ResponseType=(ResponseType)ResponseType.Ok,
+                ResponseType=ResponseType.Ok,
                 IsSuccessful=true,
             };
+
+            var checkCountry = _context.Countrys.Where(h => h.Id == cnt.Id).Count();
+            if (checkCountry < 1)
+            { 
             _context.Countrys.Add(cnt);
             _context.SaveChanges();
-            return actionResponse;
-        }
-
+            }
+            return actionResponse;    
+}
         [HttpDelete]
-        [Route("DeleteCountry")]
+        [Route("delete")]
         public async Task<ActionResponse<Country>> DeleteCountry([FromQuery] CountryDto model)
         {
             ActionResponse<Country> actionResponse = new()
@@ -96,7 +100,7 @@ namespace api.Controllers
 
 
         [HttpPut]
-        [Route("DeleteCountry")]
+        [Route("update")]
 
         public async Task<ActionResponse<Country>> UpdateCountry([FromQuery] CountryDto modelD, [FromBody] CountryDto model)
         {
