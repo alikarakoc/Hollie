@@ -71,7 +71,7 @@ namespace api.Controllers
 
 
         [HttpPost]
-        [Route("AddMarket")]
+        [Route("add")]
         public async Task<ActionResponse<Market>> AddMarket([FromBody] Market mrk)
         {
 
@@ -80,13 +80,17 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            _context.Markets.Add(mrk);
-            _context.SaveChanges();
+
+            var checkMarket = _context.Markets.Where(h => h.Id == mrk.Id).Count();
+            if (checkMarket < 1) { 
+                 _context.Markets.Add(mrk);
+                 _context.SaveChanges();
+            }
             return actionResponse;
         }
 
         [HttpDelete]
-        [Route("DeleteMarket")]
+        [Route("delete")]
         public async Task<ActionResponse<Hotel>> DeleteMarket([FromQuery] MarketDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
@@ -101,7 +105,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateMarket")]
+        [Route("update")]
         public async Task<ActionResponse<Market>> UpdateMarket([FromQuery]MarketDto modelID, [FromBody] MarketDto model)
         {
             ActionResponse<Market> actionResponse = new()

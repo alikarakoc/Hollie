@@ -71,7 +71,7 @@ namespace api.Controllers
 
 
         [HttpPost]
-        [Route("AddRoomType")]
+        [Route("add")]
         public async Task<ActionResponse<RoomType>> AddRoomType([FromBody] RoomType room)
         {
 
@@ -80,13 +80,16 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            _context.RoomTypes.Add(room);
-            _context.SaveChanges();
+            var checkRoomType = _context.RoomTypes.Where(h => h.Id == room.Id).Count();
+            if(checkRoomType < 1) {
+                    _context.RoomTypes.Add(room);
+                    _context.SaveChanges();
+            }
             return actionResponse;
         }
 
         [HttpDelete]
-        [Route("DeleteRoomType")]
+        [Route("delete")]
         public async Task<ActionResponse<RoomType>> DeleteRoomType([FromQuery] RoomTypeDto model)
         {
             ActionResponse<RoomType> actionResponse = new()
@@ -101,7 +104,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateRoomType")]
+        [Route("update")]
         public async Task<ActionResponse<RoomType>> UpdateRoomType([FromQuery]RoomTypeDto modelID, [FromBody] RoomTypeDto model)
         {
             ActionResponse<RoomType> actionResponse = new()
