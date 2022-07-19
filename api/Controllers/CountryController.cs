@@ -34,7 +34,7 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var countries = _context.Countries;
+            var countries = _context.Countrys;
 
             if (countries!= null && countries.Count()>0)
             {
@@ -55,7 +55,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
+            var country = await _context.Countrys.FirstOrDefaultAsync(h => h.Id == model.Id);
             if (country != null)
             {
                 actionResponse.Data = country;
@@ -74,7 +74,7 @@ namespace api.Controllers
                 ResponseType=(ResponseType)ResponseType.Ok,
                 IsSuccessful=true,
             };
-            _context.Countries.Add(cnt);
+            _context.Countrys.Add(cnt);
             _context.SaveChanges();
             return actionResponse;
         }
@@ -88,7 +88,7 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
+            var country = await _context.Countrys.FirstOrDefaultAsync(h => h.Id == model.Id);
             _context.Remove(country);
             _context.SaveChanges();
             return actionResponse;

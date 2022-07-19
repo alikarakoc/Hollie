@@ -20,7 +20,7 @@ namespace DataAccess.Concrate
 
         public DbSet<Agency> Agencys { get; set; }   
         public DbSet<Board> Boards { get; set; }
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<Country> Countrys { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelCategory> HotelCategorys { get; set; }
         public DbSet<Market> Markets { get; set; }

@@ -92,7 +92,7 @@ namespace api.Controllers
 
 
         [HttpDelete]
-        [Route("DeleteHotel")]
+        [Route("delete")]
         public async Task<ActionResponse<Board>> DeleteBoard([FromQuery] BoardDto model)
         {
             ActionResponse<Board> actionResponse = new()
@@ -108,7 +108,7 @@ namespace api.Controllers
 
 
         [HttpPut]
-        [Route("DeleteBoard")]
+        [Route("update")]
 
         public async Task<ActionResponse<Board>> UpdateBoard([FromQuery] BoardDto modelD, [FromBody] BoardDto model)
         {
