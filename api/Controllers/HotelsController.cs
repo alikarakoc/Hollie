@@ -86,7 +86,7 @@ namespace api.Controllers
 
 
         [HttpPost]
-        [Route("AddHotel")]
+        [Route("add")]
         public async Task<ActionResponse<Hotel>> AddHotel([FromBody] Hotel htl)
         {
 
@@ -95,13 +95,19 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            _context.Hotels.Add(htl);
-            _context.SaveChanges();
+
+            var hotelCheck = _context.Hotels.Where(h => h.Name == htl.Name).Count();
+            if(hotelCheck < 1)
+            {
+                _context.Hotels.Add(htl);
+                _context.SaveChanges();
+            }
             return actionResponse;
         }
 
+
         [HttpDelete]
-        [Route("DeleteHotel")]
+        [Route("delete")]
         public async Task<ActionResponse<Hotel>> DeleteHotel([FromQuery] HotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
@@ -116,7 +122,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateHotel")]
+        [Route("update")]
         public async Task<ActionResponse<Hotel>> UpdateHotel([FromQuery] HotelDto modelID, [FromBody] HotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
