@@ -27,7 +27,7 @@ namespace api.Controllers
 
 
         [HttpGet]
-        [Route("AllAgencys")]
+        [Route("AllAgencies")]
         public ActionResponse<List<Agency>> Agency()
         {
             ActionResponse<List<Agency>> actionResponse = new()
@@ -48,7 +48,7 @@ namespace api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResponse<Agency>> GetAgencys([FromQuery] AgencyDto model)
+        public async Task<ActionResponse<Agency>> GetAgencies([FromQuery] AgencyDto model)
         {
             if (model is null)
             {
@@ -60,10 +60,10 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var agencys = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
-            if (agencys != null)
+            var agencies = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
+            if (agencies != null)
             {
-                actionResponse.Data = agencys;
+                actionResponse.Data = agencies;
             }
             return actionResponse;
         }
@@ -72,7 +72,7 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<ActionResponse<Agency>> AddAgencys([FromBody] Agency _agency)
+        public async Task<ActionResponse<Agency>> AddAgencies([FromBody] Agency _agency)
         {
 
             ActionResponse<Agency> actionResponse = new()
