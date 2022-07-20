@@ -36,7 +36,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var agencys = _context.Agencys;
+            var agencys = _context.Agencies;
 
             if (agencys != null && agencys.Count() > 0)
             {
@@ -60,7 +60,7 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var agencys = await _context.Agencys.FirstOrDefaultAsync(h => h.Id == model.Id);
+            var agencys = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
             if (agencys != null)
             {
                 actionResponse.Data = agencys;
@@ -80,10 +80,10 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var agencyCheck = _context.Agencys.Where(h => h.Name == _agency.Name).Count();
+            var agencyCheck = _context.Agencies.Where(h => h.Name == _agency.Name).Count();
             if (agencyCheck < 1)
             {
-                _context.Agencys.Add(_agency);
+                _context.Agencies.Add(_agency);
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -98,8 +98,8 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var agency = await _context.Agencys.FirstOrDefaultAsync(h => h.Id == model.Id);
-            _context.Agencys.Remove(agency);
+            var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
+            _context.Agencies.Remove(agency);
             _context.SaveChanges();
             return actionResponse;
         }
@@ -116,8 +116,8 @@ namespace api.Controllers
 
             try
             {
-                var agency = await _context.Agencys.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkAgency = _context.Agencys.Where(h => h.Name == model.Name)?.Count();         
+                var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == modelID.Id);
+                var checkAgency = _context.Agencies.Where(h => h.Name == model.Name)?.Count();         
                 if (checkAgency< 1 && agency != null)
                 {
                     agency.Code = model.Code;

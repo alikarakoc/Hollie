@@ -34,7 +34,7 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var countries = _context.Countrys;
+            var countries = _context.Countries;
 
             if (countries!= null && countries.Count()>0)
             {
@@ -55,7 +55,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var country = await _context.Countrys.FirstOrDefaultAsync(h => h.Id == model.Id);
+            var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
             if (country != null)
             {
                 actionResponse.Data = country;
@@ -75,10 +75,10 @@ namespace api.Controllers
                 IsSuccessful=true,
             };
 
-            var checkCountry = _context.Countrys.Where(h => h.Id == cnt.Id).Count();
+            var checkCountry = _context.Countries.Where(h => h.Id == cnt.Id).Count();
             if (checkCountry < 1)
             { 
-            _context.Countrys.Add(cnt);
+            _context.Countries.Add(cnt);
             _context.SaveChanges();
             }
             return actionResponse;    
@@ -92,7 +92,7 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var country = await _context.Countrys.FirstOrDefaultAsync(h => h.Id == model.Id);
+            var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
             _context.Remove(country);
             _context.SaveChanges();
             return actionResponse;
@@ -112,8 +112,8 @@ namespace api.Controllers
 
             try
             {
-                var country = await _context.Countrys.FirstOrDefaultAsync(h => h.Id == modelD.Id);
-                var checkCountry = _context.Countrys.Where(h=>h.Name == modelD.Name)?.Count();
+                var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == modelD.Id);
+                var checkCountry = _context.Countries.Where(h=>h.Name == modelD.Name)?.Count();
                 if (checkCountry <1 && country != null)
                 {
                     country.Code = model.Code;

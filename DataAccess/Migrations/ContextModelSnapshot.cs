@@ -62,7 +62,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Agencys");
+                    b.ToTable("Agencies");
                 });
 
             modelBuilder.Entity("Application.Concrete.Board", b =>
@@ -189,13 +189,17 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Code")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("HotelCategorys");
+                    b.ToTable("HotelCategories");
                 });
 
             modelBuilder.Entity("Application.Concrete.Market", b =>

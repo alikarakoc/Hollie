@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace api.Migrations
+namespace DataAccess.Migrations
 {
-    public partial class initial : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Agencys",
+                name: "Agencies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,7 +25,7 @@ namespace api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Agencys", x => x.Id);
+                    table.PrimaryKey("PK_Agencies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,7 +47,7 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Countrys",
+                name: "Countries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -61,20 +61,21 @@ namespace api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countrys", x => x.Id);
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HotelCategorys",
+                name: "HotelCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HotelCategorys", x => x.Id);
+                    table.PrimaryKey("PK_HotelCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,16 +140,16 @@ namespace api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Agencys");
+                name: "Agencies");
 
             migrationBuilder.DropTable(
                 name: "Boards");
 
             migrationBuilder.DropTable(
-                name: "Countrys");
+                name: "Countries");
 
             migrationBuilder.DropTable(
-                name: "HotelCategorys");
+                name: "HotelCategories");
 
             migrationBuilder.DropTable(
                 name: "Hotels");
