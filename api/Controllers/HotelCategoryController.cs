@@ -120,11 +120,20 @@ namespace api.Controllers
 
                 var hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == modelID.Id);
                 var checkHotel = _context.HotelCategories.Where(h => h.Name == model.Name)?.Count();
+                
+                if (hotelCategory.Name == model.Name && hotelCategory.Id != model.Id)
+                {
+                    hotelCategory.Code = model.Code;
+                    _context.SaveChanges();
+                }
+
                 if (checkHotel < 1)
                 {
                     hotelCategory.Name = model.Name;
+                    hotelCategory.Code = model.Code;
                     _context.SaveChanges();
                 }
+                
                 return actionResponse;
 
             }
