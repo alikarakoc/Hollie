@@ -52,8 +52,19 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var checkHotel =  _context.HotelCategories.Where(h => h.Name == hotelCategory.Name).Count();
-            if (checkHotel < 1)
+            //var checkHotel =  _context.HotelCategories.Where(h => h.Name == hotelCategory.Name).Count();
+            
+            //if (checkHotel < 1)
+            //{
+            //    _context.HotelCategories.Add(hotelCategory);
+            //    _context.SaveChanges();
+            //}
+            //return actionResponse;
+
+            var checkHotel = _context.HotelCategories.Where(h => h.Name == hotelCategory.Name).Count();
+            var checkCode = _context.HotelCategories.Where(c => c.Code == hotelCategory.Code)?.Count();
+
+            if (checkHotel < 1 && checkCode < 1)
             {
                 _context.HotelCategories.Add(hotelCategory);
                 _context.SaveChanges();
@@ -120,14 +131,15 @@ namespace api.Controllers
 
                 var hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == modelID.Id);
                 var checkHotel = _context.HotelCategories.Where(h => h.Name == model.Name)?.Count();
+                var checkCode = _context.HotelCategories.Where(c => c.Code == model.Code)?.Count();
                 
-                if (hotelCategory.Name == model.Name && hotelCategory.Id != model.Id)
-                {
-                    hotelCategory.Code = model.Code;
-                    _context.SaveChanges();
-                }
+                //if (hotelCategory.Name == model.Name && hotelCategory.Code != model.Code)
+                //{
+                //    hotelCategory.Code = model.Code;
+                //    _context.SaveChanges();
+                //}
 
-                if (checkHotel < 1)
+                if (checkHotel < 1 ||checkCode < 1)
                 {
                     hotelCategory.Name = model.Name;
                     hotelCategory.Code = model.Code;
