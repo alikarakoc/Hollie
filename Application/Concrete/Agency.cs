@@ -21,10 +21,6 @@ namespace Application.Concrete
         public string Address { get; set; }
         [Column(TypeName = "nvarchar")]
         [StringLength(20)]
-        public string Phone { get; set; }
-        [Column(TypeName = "nvarchar")]
-        [StringLength(50)]
-        public string Email { get; set; }
     }
     
 }
