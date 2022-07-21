@@ -130,7 +130,7 @@ namespace api.Controllers
                 //return actionResponse;
 
                 var hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkHotel = _context.HotelCategories.Where(h => h.Name == model.Name)?.Count();
+                var checkName = _context.HotelCategories.Where(h => h.Name == model.Name)?.Count();
                 var checkCode = _context.HotelCategories.Where(c => c.Code == model.Code)?.Count();
                 
                 //if (hotelCategory.Name == model.Name && hotelCategory.Code != model.Code)
@@ -139,7 +139,7 @@ namespace api.Controllers
                 //    _context.SaveChanges();
                 //}
 
-                if (checkHotel < 1 ||checkCode < 1)
+                if (checkName < 1 ||checkCode < 1)
                 {
                     hotelCategory.Name = model.Name;
                     hotelCategory.Code = model.Code;

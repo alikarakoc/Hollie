@@ -96,8 +96,10 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var hotelCheck = _context.Hotels.Where(h => h.Name == htl.Name).Count();
-            if(hotelCheck < 1)
+            //var checkName = _context.Hotels.Where(h => h.Name == htl.Name).Count();
+            var checkCode = _context.Hotels.Where(c => c.Code == htl.Code).Count();
+            //if(checkName < 1 || checkCode <1 )
+            if (checkCode < 1)
             {
                 _context.Hotels.Add(htl);
                 _context.SaveChanges();
@@ -134,8 +136,24 @@ namespace api.Controllers
             try
             {
                 var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkHotel =_context.Hotels.Where(h => h.Name == model.Name)?.Count();
-                if (checkHotel<1 && hotel != null)
+                //var checkName=_context.Hotels.Where(h => h.Name == model.Name)?.Count();
+                var checkCode = _context.Hotels.Where(c => c.Code == model.Code)?.Count();
+
+                if (hotel.Code == model.Code)
+                {
+                    hotel.Name = model.Name;
+                    hotel.Address = model.Address;
+                    hotel.Phone = model.Phone;
+                    hotel.Email = model.Email;
+                    hotel.HotelCategoryId = model.HotelCategoryId;
+                    hotel.CreatedDate = model.CreatedDate;
+                    hotel.CreatedUser = model.CreatedUser;
+                    hotel.UpdatedDate = model.UpdatedDate;
+                    hotel.UpdateUser = model.UpdateUser;
+                    _context.SaveChanges();
+                }
+             
+                else if (checkCode < 1 && hotel != null)
                 {
                     hotel.Code = model.Code;
                     hotel.Name = model.Name;
