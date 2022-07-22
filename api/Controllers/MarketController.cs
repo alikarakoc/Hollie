@@ -23,9 +23,6 @@ namespace api.Controllers
             this._context = _context;
         }
 
-
-        
-
         [HttpGet]
         [Route("AllMarkets")]
         public ActionResponse<List<Market>> Market()
@@ -72,7 +69,7 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<ActionResponse<Market>> AddMarket([FromBody] Market mrk)
+        public async Task<ActionResponse<Market>> AddMarket([FromBody] Market market)
         {
 
             ActionResponse<Market> actionResponse = new()
@@ -81,9 +78,10 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var checkMarket = _context.Markets.Where(h => h.Name == mrk.Name).Count();
-            if (checkMarket < 1) { 
-                 _context.Markets.Add(mrk);
+            //var checkMarket = _context.Markets.Where(h => h.Name == market.Name).Count();
+            var checkCode = _context.Markets.Where(h => h.Code == market.Code).Count();
+            if (checkCode < 1) { 
+                 _context.Markets.Add(market);
                  _context.SaveChanges();
             }
             return actionResponse;
@@ -117,8 +115,19 @@ namespace api.Controllers
             try
             {
                 var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkMarket =  _context.Markets.Where(h => h.Name == model.Name)?.Count();
-                if (checkMarket<1 && market != null)
+                //var checkMarket =  _context.Markets.Where(h => h.Name == model.Name)?.Count();
+                var checkCode = _context.Markets.Where(h => h.Code == model.Code)?.Count();
+                //if (checkMarket<1 && market != null)
+                if (market.Code == model.Code)
+                { 
+                    market.Name = model.Name;
+                    market.CreatedDate = model.CreatedDate;
+                    market.CreatedUser = model.CreatedUser;
+                    market.UpdatedDate = model.UpdatedDate;
+                    market.UpdateUser = model.UpdateUser;
+                    _context.SaveChanges();
+                }
+                else if (checkCode < 1 && market != null)
                 {
                     market.Code = model.Code;
                     market.Name = model.Name;
@@ -126,10 +135,9 @@ namespace api.Controllers
                     market.CreatedUser = model.CreatedUser;
                     market.UpdatedDate = model.UpdatedDate;
                     market.UpdateUser = model.UpdateUser;
-                
-                   
                     _context.SaveChanges();
                 }
+               
                 return actionResponse;
             }
             catch (Exception ex)
