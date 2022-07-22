@@ -80,8 +80,11 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var checkRoomType = _context.RoomTypes.Where(h => h.Name == room.Name).Count();
-            if(checkRoomType < 1) {
+            //var checkName = _context.RoomTypes.Where(h => h.Name == room.Name).Count();
+            var checkCode = _context.RoomTypes.Where(h => h.Code == room.Code).Count();
+            //if (checkName < 1) 
+            if (checkCode < 1)
+            {
                     _context.RoomTypes.Add(room);
                     _context.SaveChanges();
             }
@@ -116,8 +119,18 @@ namespace api.Controllers
             try
             {
                 var roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkRoomtype = _context.RoomTypes.Where(h => h.Name == model.Name)?.Count();
-                if (checkRoomtype<1 && roomtype != null)
+                //var checkName = _context.RoomTypes.Where(h => h.Name == model.Name)?.Count();
+                var checkCode = _context.RoomTypes.Where(h => h.Code == model.Code)?.Count();
+                if (roomtype.Code == model.Code)
+                {
+                    roomtype.Name = model.Name;
+                    roomtype.CreatedDate = model.CreatedDate;
+                    roomtype.CreatedUser = model.CreatedUser;
+                    roomtype.UpdatedDate = model.UpdatedDate;
+                    roomtype.UpdateUser = model.UpdateUser;
+                    _context.SaveChanges();
+                }
+                else if (checkCode < 1 && roomtype != null)
                 {
                     roomtype.Code = model.Code;
                     roomtype.Name = model.Name;
@@ -125,8 +138,6 @@ namespace api.Controllers
                     roomtype.CreatedUser = model.CreatedUser;
                     roomtype.UpdatedDate = model.UpdatedDate;
                     roomtype.UpdateUser = model.UpdateUser;
-                
-                   
                     _context.SaveChanges();
                 }
                 return actionResponse;
