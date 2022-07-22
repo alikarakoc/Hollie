@@ -67,7 +67,7 @@ namespace api.Controllers
         [HttpPost]
         [Route("add")]
 
-        public async Task<ActionResponse<Country>> AddCountry([FromBody] Country cnt)
+        public async Task<ActionResponse<Country>> AddCountry([FromBody] Country country)
         {
             ActionResponse<Country> actionResponse = new()
             {
@@ -75,10 +75,12 @@ namespace api.Controllers
                 IsSuccessful=true,
             };
 
-            var checkCountry = _context.Countries.Where(h => h.Id == cnt.Id).Count();
-            if (checkCountry < 1)
+            //var checkName = _context.Countries.Where(h => h.Name == country.Name).Count();
+            //if (checkName < 1)
+            var checkCode = _context.Countries.Where(h => h.Code == country.Code).Count();
+            if (checkCode < 1)
             { 
-            _context.Countries.Add(cnt);
+            _context.Countries.Add(country);
             _context.SaveChanges();
             }
             return actionResponse;    
@@ -113,8 +115,20 @@ namespace api.Controllers
             try
             {
                 var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == modelD.Id);
-                var checkCountry = _context.Countries.Where(h=>h.Name == modelD.Name)?.Count();
-                if (checkCountry <1 && country != null)
+                //var checkName = _context.Countries.Where(h=>h.Name == model.Name)?.Count();
+                //if (checkName <1 && country != null)
+                var checkCode = _context.Countries.Where(h => h.Code == model.Code)?.Count();
+                if (country.Code == model.Code)
+                {
+                    country.Name = model.Name;
+                    country.CreatedDate = model.CreatedDate;
+                    country.CreatedUser = model.CreatedUser;
+                    country.UpdatedDate = model.UpdatedDate;
+                    country.UpdateUser = model.UpdateUser;
+                    _context.SaveChanges();
+                }
+
+                else if (checkCode < 1 && country != null)
                 {
                     country.Code = model.Code;
                     country.Name = model.Name;

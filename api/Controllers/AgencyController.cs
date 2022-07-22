@@ -50,10 +50,7 @@ namespace api.Controllers
         [HttpGet]
         public async Task<ActionResponse<Agency>> GetAgencies([FromQuery] AgencyDto model)
         {
-            if (model is null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
+         
 
             ActionResponse<Agency> actionResponse = new()
             {
@@ -80,8 +77,11 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var agencyCheck = _context.Agencies.Where(h => h.Name == _agency.Name).Count();
-            if (agencyCheck < 1)
+            //var checkName = _context.Agencies.Where(h => h.Name == _agency.Name).Count();
+            //if (checkName < 1)
+
+            var checkCode = _context.Agencies.Where(h => h.Code == _agency.Code).Count();
+            if (checkCode < 1)
             {
                 _context.Agencies.Add(_agency);
                 _context.SaveChanges();
@@ -117,8 +117,20 @@ namespace api.Controllers
             try
             {
                 var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkAgency = _context.Agencies.Where(h => h.Name == model.Name)?.Count();         
-                if (checkAgency< 1 && agency != null)
+                //var checkAgency = _context.Agencies.Where(h => h.Name == model.Name)?.Count();         
+                //if (checkAgency< 1 && agency != null)
+                var checkCode = _context.Agencies.Where(h => h.Code == model.Code)?.Count();
+                if(agency.Code == model.Code)
+                {
+                    agency.Name = model.Name;
+                    agency.CreatedDate = model.CreatedDate;
+                    agency.CreatedUser = model.CreatedUser;
+                    agency.UpdatedDate = model.UpdatedDate;
+                    agency.UpdateUser = model.UpdateUser;
+                    _context.SaveChanges();
+                }
+                
+                else if (checkCode < 1 && agency != null)
                 {
                     agency.Code = model.Code;
                     agency.Name = model.Name;
@@ -126,8 +138,6 @@ namespace api.Controllers
                     agency.CreatedUser = model.CreatedUser;
                     agency.UpdatedDate = model.UpdatedDate;
                     agency.UpdateUser = model.UpdateUser;
-
-
                     _context.SaveChanges();
                 }
                 return actionResponse;

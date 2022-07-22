@@ -71,7 +71,7 @@ namespace api.Controllers
         [HttpPost]
         [Route("add")]
 
-        public async Task<ActionResponse<Board>> AddBoard([FromBody] Board brd)
+        public async Task<ActionResponse<Board>> AddBoard([FromBody] Board board)
         {
             ActionResponse<Board> actionResponse = new()
             {
@@ -79,10 +79,12 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var checkBoard = _context.Boards.Where(h => h.Name == brd.Name).Count();
-            if(checkBoard < 1)
+            //var checkName = _context.Boards.Where(h => h.Name == brd.Name).Count();
+            //if(checkName < 1)
+            var checkCode = _context.Boards.Where(h => h.Code == board.Code).Count();
+            if (checkCode < 1)
             {
-                _context.Boards.Add(brd);
+                _context.Boards.Add(board);
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -121,8 +123,20 @@ namespace api.Controllers
             try
             {
                 var board = await _context.Boards.FirstOrDefaultAsync(h =>h.Id == modelD.Id);
-                var checkBoard = _context.Boards.Where(h => h.Name == model.Name)?.Count();
-                if( checkBoard < 1 && board != null)
+                //var checkName = _context.Boards.Where(h => h.Name == model.Name)?.Count();
+                //if( checkName < 1 && board != null)
+                var checkCode = _context.Boards.Where(h => h.Code == model.Code)?.Count();
+                if (board.Code == model.Code)
+                {
+                    board.Name = model.Name;
+                    board.CreatedDate = model.CreatedDate;
+                    board.CreatedUser = model.CreatedUser;
+                    board.UpdatedDate = model.UpdatedDate;
+                    board.UpdateUser = model.UpdateUser;
+                    _context.SaveChanges();
+                }
+
+                else if (checkCode < 1 && board != null)
                 {
                     board.Code = model.Code;
                     board.Name = model.Name;
