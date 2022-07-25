@@ -123,6 +123,9 @@ namespace api.Controllers
                 if(agency.Code == model.Code)
                 {
                     agency.Name = model.Name;
+                    agency.Phone = model.Phone;
+                    agency.Email = model.Email;
+                    agency.Address = model.Address;
                     agency.CreatedDate = model.CreatedDate;
                     agency.CreatedUser = model.CreatedUser;
                     agency.UpdatedDate = model.UpdatedDate;
@@ -134,6 +137,9 @@ namespace api.Controllers
                 {
                     agency.Code = model.Code;
                     agency.Name = model.Name;
+                    agency.Phone = model.Phone;
+                    agency.Email = model.Email;
+                    agency.Address = model.Address;
                     agency.CreatedDate = model.CreatedDate;
                     agency.CreatedUser = model.CreatedUser;
                     agency.UpdatedDate = model.UpdatedDate;
