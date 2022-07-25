@@ -54,10 +54,10 @@ namespace api.Controllers
 
             
 
-            var checkCurrency = _context.Currencies.Where(h => h.name == currency.name).Count();
-            var checkCode = _context.Currencies.Where(c => c.Code == currency.Code)?.Count();
+            var checkName = _context.Currencies.Where(h => h.Name == currency.Name).Count();
+            //var checkCode = _context.Currencies.Where(c => c.Code == currency.Code)?.Count();
 
-            if (checkCurrency < 1 && checkCode < 1)
+            if (checkName < 1 )
             {
                 _context.Currencies.Add(currency);
                 _context.SaveChanges();
@@ -76,7 +76,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.id == model.Id);
+            var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == model.Id);
             if (currency != null)
             {
                 actionResponse.Data = currency;
@@ -94,7 +94,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.id == model.id);
+            var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == model.Id);
             _context.Currencies.Remove(currency);
             _context.SaveChanges();
             return actionResponse;
@@ -113,17 +113,14 @@ namespace api.Controllers
 
             try
             {
-              
-                var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.id == modelID.id);
-                var checkName = _context.Currencies.Where(h => h.name == model.name)?.Count();
+                var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == modelID.Id);
+                var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
                 //var checkCode = _context.HotelCategories.Where(c => c.Code == model.Code)?.Count();
 
-               
 
                 if (checkName < 1)
                 {
-                    currency.name = model.name;
-                   
+                    currency.Name = model.Name;
                     _context.SaveChanges();
                 }
 

@@ -101,7 +101,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Application.Concrete.Contract", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -111,6 +111,10 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("BoardId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
@@ -127,17 +131,17 @@ namespace DataAccess.Migrations
                     b.Property<int>("MarketId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<int>("RoomTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("name")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Contracts");
                 });
@@ -178,7 +182,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Application.Concrete.Currency", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -187,11 +191,11 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("name")
+                    b.Property<string>("Name")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Currencies");
                 });

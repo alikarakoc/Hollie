@@ -10,11 +10,11 @@ namespace Application.Concrete
     public class Currency
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
         [StringLength(20)]
         public string Code { get; set; }
         [StringLength(20)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
     }
 }
