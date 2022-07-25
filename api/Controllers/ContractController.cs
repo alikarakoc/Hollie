@@ -111,10 +111,28 @@ namespace api.Controllers
             try
             {
                 var contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkName = _context.Contracts.Where(h => h.Name == model.Name)?.Count();
-     
-                if (checkName < 1)
+                //var checkName = _context.Contracts.Where(h => h.Name == model.Name)?.Count();
+                var checkCode = _context.Contracts.Where(h => h.Code == model.Code)?.Count();
+
+                if (contract.Code == model.Code)
                 {
+                    contract.Name = model.Name;
+                    contract.HotelId = model.HotelId;
+                    contract.MarketId = model.MarketId;
+                    contract.AgencyId = model.AgencyId;
+                    contract.BoardId = model.BoardId;
+                    contract.RoomTypeId = model.RoomTypeId;
+                    contract.Price = model.Price;
+                    contract.CurrencyId = model.CurrencyId;
+                    contract.EnteredDate = model.EnteredDate;
+                    contract.ExitDate = model.ExitDate;
+
+                    _context.SaveChanges();
+                }
+
+                if (checkCode < 1)
+                {
+                    contract.Code = model.Code;
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
                     contract.MarketId = model.MarketId;
