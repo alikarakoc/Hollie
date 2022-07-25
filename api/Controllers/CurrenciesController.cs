@@ -114,18 +114,11 @@ namespace api.Controllers
             try
             {
                 var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                //var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
+                var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
                 var checkCode = _context.Currencies.Where(c => c.Code == model.Code)?.Count();
 
-                if(currency.Code == model.Code)
-                {
-                    currency.Name = model.Name;
-                    currency.Value = model.Value;
-                    _context.SaveChanges();
-                }
 
-
-                if ( checkCode < 1)
+                if ( checkCode < 1 || checkName < 1 )
                 {
                     currency.Code = model.Code;
                     currency.Name = model.Name;
