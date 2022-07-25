@@ -54,10 +54,10 @@ namespace api.Controllers
 
             
 
-            var checkName = _context.Currencies.Where(h => h.Name == currency.Name).Count();
-            //var checkCode = _context.Currencies.Where(c => c.Code == currency.Code)?.Count();
+            //var checkName = _context.Currencies.Where(h => h.Name == currency.Name).Count();
+            var checkCode = _context.Currencies.Where(c => c.Code == currency.Code)?.Count();
 
-            if (checkName < 1 )
+            if (checkCode < 1 )
             {
                 _context.Currencies.Add(currency);
                 _context.SaveChanges();
@@ -68,7 +68,7 @@ namespace api.Controllers
 
         [HttpGet]
         [Route("getById")]
-        public async Task<ActionResponse<Currency>> GetCurrencyID([FromQuery] HotelCategoryDto model)
+        public async Task<ActionResponse<Currency>> GetCurrencyID([FromQuery] CurrencyDto model)
         {
             ActionResponse<Currency> actionResponse = new()
             {
@@ -114,13 +114,15 @@ namespace api.Controllers
             try
             {
                 var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
-                //var checkCode = _context.HotelCategories.Where(c => c.Code == model.Code)?.Count();
+                //var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
+                var checkCode = _context.Currencies.Where(c => c.Code == model.Code)?.Count();
 
 
-                if (checkName < 1)
+                if ( checkCode < 1)
                 {
+                    currency.Code = model.Code;
                     currency.Name = model.Name;
+                    currency.Value = model.Value;
                     _context.SaveChanges();
                 }
 

@@ -195,6 +195,9 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Currencies");
