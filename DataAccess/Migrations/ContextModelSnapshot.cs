@@ -99,6 +99,24 @@ namespace DataAccess.Migrations
                     b.ToTable("Boards");
                 });
 
+            modelBuilder.Entity("Application.Concrete.CAgencyList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AgencyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ListId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CAgencies");
+                });
+
             modelBuilder.Entity("Application.Concrete.Contract", b =>
                 {
                     b.Property<int>("Id")
