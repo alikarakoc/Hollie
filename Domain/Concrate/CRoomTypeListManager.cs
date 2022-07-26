@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Concrate
 {
-    public class CRoomTypeListManager : ICRoomTypeListService
+    public class CRoomTypeListManager : ICRoomTypeService
     {
         ICRoomType _croomtypeDal;
 
