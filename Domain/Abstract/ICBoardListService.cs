@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Abstract
 {
-    public interface ICAgencyListService : IGenericService<CAgencyList>
+    public interface ICBoardListService : IGenericService<CBoardList>
     {
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Concrate
 {
-    public class CAgencyListManager : ICAgencyService
+    public class CAgencyListManager : ICAgencyListService
     {
         ICAgency _cagencyDal;
 

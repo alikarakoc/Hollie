@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Abstract
+namespace DataAccess.Abstract
 {
-    public interface ICAgencyListService : IGenericService<CAgencyList>
+    public interface ICHotel : IGeneric<CHotelList>
     {
     }
 }
