@@ -56,6 +56,8 @@ namespace api.Controllers
 
             if (checkName < 1)
             {
+                contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
+                contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
                 _context.Contracts.Add(contract);
                 _context.SaveChanges();
             }
@@ -124,8 +126,8 @@ namespace api.Controllers
                     contract.RoomTypeId = model.RoomTypeId;
                     contract.Price = model.Price;
                     contract.CurrencyId = model.CurrencyId;
-                    contract.EnteredDate = model.EnteredDate;
-                    contract.ExitDate = model.ExitDate;
+                    contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);
+                    contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(model.ExitDate, TimeZoneInfo.Local);
 
                     _context.SaveChanges();
                 }

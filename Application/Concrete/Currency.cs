@@ -15,7 +15,7 @@ namespace Application.Concrete
         public string Code { get; set; }
         [StringLength(20)]
         public string Name { get; set; }
-        public int Value { get; set; }
+        public float Value { get; set; }
 
     }
 }

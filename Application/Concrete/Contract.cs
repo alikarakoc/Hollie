@@ -23,7 +23,7 @@ namespace Application.Concrete
         public int AgencyId { get; set; }
         public int BoardId { get; set; }
         public int RoomTypeId { get; set; }
-        public int Price { get; set; }
+        public float Price { get; set; }
         public int CurrencyId { get; set; }
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }

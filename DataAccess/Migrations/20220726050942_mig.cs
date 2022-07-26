@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class Migrations : Migration
+    public partial class mig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,7 +59,7 @@ namespace DataAccess.Migrations
                     AgencyId = table.Column<int>(type: "int", nullable: false),
                     BoardId = table.Column<int>(type: "int", nullable: false),
                     RoomTypeId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
                     CurrencyId = table.Column<int>(type: "int", nullable: false),
                     EnteredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExitDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -95,7 +95,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Value = table.Column<int>(type: "int", nullable: false)
+                    Value = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {

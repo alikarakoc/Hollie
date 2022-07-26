@@ -20,7 +20,7 @@ namespace Application.Dtos
 
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }
-        public int Price { get; set; }
+        public float Price { get; set; }
         public int Currency { get; set; }
     }
 }
