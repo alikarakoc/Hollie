@@ -1,6 +1,7 @@
 ﻿using Application.Concrete;
 using Application.Dtos;
 using Application.Infrastructure;
+using AutoMapper;
 using DataAccess.Concrate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +19,12 @@ namespace api.Controllers
     {
       
         private readonly Context _context;
+        private readonly IMapper _mapper;
 
-        public ContractController(Context _context)
+        public ContractController(Context _context, IMapper mapper)
         {
             this._context = _context;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -43,6 +46,8 @@ namespace api.Controllers
 
         }
 
+       
+
         [HttpPost]
         [Route("add")]
         public async Task<ActionResponse<Contract>> addContract([FromBody] ContractDto contractdto)
@@ -54,22 +59,31 @@ namespace api.Controllers
             };
             var checkName = _context.Contracts.Where(c => c.Name == contractdto.Name)?.Count();
 
+            
+
             if (checkName < 1)
             {
+                
                 Contract contract = new Contract();
+                contract = _mapper.Map<Contract>(contractdto);
+
                 //map
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
-                List<CAgencyList> list = _context.CAgencies.Where(p => p.ListId == contract.Id).ToList();
-                foreach(CAgencyList ag in contract.AgencyList)
+                //List<CAgencyList> list = _context.CAgencies.Where(p => p.ListId == contract.Id).ToList();
+                List<CAgencyList> list = _context.CAgencies.ToList();
+
+                foreach (CAgencyList ag in contract.AgencyList)
                 {
-                    if (list.Any(p=> p.AgencyId==ag.AgencyId))
+                    if (list.Any(p => p.AgencyId == ag.AgencyId))
                     {
-                        _context.CAgencies.Add(ag); 
+                        _context.CAgencies.Add(ag);
                     }
                 }
+
                 _context.Contracts.Add(contract);
                 _context.SaveChanges();
+                
             }
             return actionResponse;
         }

@@ -31,6 +31,7 @@ namespace Application.Concrete
         public int CurrencyId { get; set; }
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }
+        [NotMapped]
         public List<CAgencyList> AgencyList { get; set; }
 
 

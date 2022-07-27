@@ -1,3 +1,4 @@
+using api.Mappers;
 using DataAccess.Concrate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,8 +36,11 @@ namespace api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
 
+            services.AddAutoMapper(typeof(ContractProfile));
+
             services.AddDbContext<Context>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("HollieConnection")));
+
 
             services.AddCors();
         }
