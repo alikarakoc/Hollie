@@ -67,20 +67,24 @@ namespace api.Controllers
                 Contract contract = new Contract();
                 contract = _mapper.Map<Contract>(contractdto);
 
-                //map
+                var lastIdfromContract = _context.Contracts.Max(x => x.Id);
+
+                
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
                 //List<CAgencyList> list = _context.CAgencies.Where(p => p.ListId == contract.Id).ToList();
                 List<CAgencyList> list = _context.CAgencies.ToList();
+                
 
-                foreach (CAgencyList ag in contract.AgencyList)
+                foreach (CAgencyList agencyFromList in contract.AgencyList)
                 {
-                    if (list.Any(p => p.AgencyId == ag.AgencyId))
+                    agencyFromList.ListId = lastIdfromContract + 1;
+                    if (list.Any(p => p.AgencyId == agencyFromList.AgencyId))
                     {
-                        _context.CAgencies.Add(ag);
+                        _context.CAgencies.Add(agencyFromList);
                     }
                 }
-
+                
                 _context.Contracts.Add(contract);
                 _context.SaveChanges();
                 
