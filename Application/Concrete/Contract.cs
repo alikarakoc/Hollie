@@ -10,6 +10,10 @@ namespace Application.Concrete
 {
     public class Contract
     {
+        public Contract()
+        {
+            AgencyList = new List<CAgencyList>();
+        }
         [Key]
         public int Id { get; set; }
         [Column(TypeName = "nvarchar")]
@@ -27,6 +31,7 @@ namespace Application.Concrete
         public int CurrencyId { get; set; }
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }
+        public List<CAgencyList> AgencyList { get; set; }
 
 
 

@@ -10,10 +10,10 @@ namespace Application.Dtos
     public class CAgencyDto
     {
         [Key]
-        public int Id { get; set; }
+        public bool selected { get; set; }
 
         public int AgencyId { get; set; }
 
-        public string ListId { get; set; }
+        public int ListId { get; set; }
     }
 }

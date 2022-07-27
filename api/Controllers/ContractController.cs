@@ -45,19 +45,29 @@ namespace api.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<ActionResponse<Contract>> addContract([FromBody] Contract contract)
+        public async Task<ActionResponse<Contract>> addContract([FromBody] ContractDto contractdto)
         {
             ActionResponse<Contract> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var checkName = _context.Contracts.Where(c => c.Name == contract.Name)?.Count();
+            var checkName = _context.Contracts.Where(c => c.Name == contractdto.Name)?.Count();
 
             if (checkName < 1)
             {
+                Contract contract = new Contract();
+                //map
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
+                List<CAgencyList> list = _context.CAgencies.Where(p => p.ListId == contract.Id).ToList();
+                foreach(CAgencyList ag in contract.AgencyList)
+                {
+                    if (list.Any(p=> p.AgencyId==ag.AgencyId))
+                    {
+                        _context.CAgencies.Add(ag); 
+                    }
+                }
                 _context.Contracts.Add(contract);
                 _context.SaveChanges();
             }
@@ -121,7 +131,6 @@ namespace api.Controllers
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
                     contract.MarketId = model.MarketId;
-                    contract.AgencyId = model.AgencyId;
                     contract.BoardId = model.BoardId;
                     contract.RoomTypeId = model.RoomTypeId;
                     contract.Price = model.Price;
@@ -138,7 +147,6 @@ namespace api.Controllers
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
                     contract.MarketId = model.MarketId;
-                    contract.AgencyId = model.AgencyId;
                     contract.BoardId = model.BoardId;
                     contract.RoomTypeId = model.RoomTypeId;
                     contract.Price = model.Price;
