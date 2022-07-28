@@ -1,4 +1,5 @@
-﻿using Application.Concrete;
+﻿using api.Helpers;
+using Application.Concrete;
 using Application.Dtos;
 using Application.Infrastructure;
 using AutoMapper;
@@ -57,37 +58,28 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var checkName = _context.Contracts.Where(c => c.Name == contractdto.Name)?.Count();
+            int checkCode = (int)_context.Contracts.Where(c => c.Code == contractdto.Code)?.Count();
 
-            
-
-            if (checkName < 1)
+            if (checkCode < 1)
             {
                 
                 Contract contract = new Contract();
                 contract = _mapper.Map<Contract>(contractdto);
 
-                var lastIdfromContract = _context.Contracts.Max(x => x.Id);
-
                 
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
                 //List<CAgencyList> list = _context.CAgencies.Where(p => p.ListId == contract.Id).ToList();
-                List<CAgencyList> list = _context.CAgencies.ToList();
+                List<Agency> list = _context.Agencies.ToList();
                 
-
-                foreach (CAgencyList agencyFromList in contract.AgencyList)
-                {
-                    agencyFromList.ListId = lastIdfromContract + 1;
-                    if (list.Any(p => p.AgencyId == agencyFromList.AgencyId))
-                    {
-                        _context.CAgencies.Add(agencyFromList);
-                    }
-                }
                 
                 _context.Contracts.Add(contract);
                 _context.SaveChanges();
-                
+
+                ContractAgenciesAdd.AddAgencies(contract.Id, contract.AgencyList, _context);
+                _context.SaveChanges();
+
+
             }
             return actionResponse;
         }
@@ -113,7 +105,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Contract>> DeleteHotelCategory([FromQuery] ContractDto model)
+        public async Task<ActionResponse<Contract>> DeleteHotelCategory([FromBody] ContractDto model)
         {
             ActionResponse<Contract> actionResponse = new()
             {
@@ -121,7 +113,14 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == model.Id);
+            Contract contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == model.Id);
+
+            contract.AgencyList = _context.CAgencies.Where(c => c.ListId == model.Id).ToList();
+
+            foreach (CAgencyList agencyFromList in contract.AgencyList)
+            {
+                _context.CAgencies.Remove(agencyFromList);
+            }
             _context.Contracts.Remove(contract);
             _context.SaveChanges();
             return actionResponse;
@@ -129,7 +128,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<Contract>> UpdateHotelCategory([FromQuery] ContractDto modelID, [FromBody] ContractDto model)
+        public async Task<ActionResponse<Contract>> UpdateHotelCategory([FromBody] ContractDto model)
         {
             ActionResponse<Contract> actionResponse = new()
             {
@@ -137,15 +136,20 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-
             try
             {
-                var contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                //var checkName = _context.Contracts.Where(h => h.Name == model.Name)?.Count();
-                var checkCode = _context.Contracts.Where(h => h.Code == model.Code)?.Count();
+                Contract contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == model.Id);
+                contract.AgencyList =_context.CAgencies.Where(c => c.ListId == model.Id).ToList();
 
+                int checkCode = _context.Contracts.Where(h => h.Code == model.Code && h.Id!=model.Id).Count();
+                if (checkCode > 0)
+                {
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
+                }
                 if (contract.Code == model.Code)
                 {
+                    contract.Code = model.Code;
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
                     contract.MarketId = model.MarketId;
@@ -156,26 +160,16 @@ namespace api.Controllers
                     contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);
                     contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(model.ExitDate, TimeZoneInfo.Local);
 
+                    List<Agency> list = _context.Agencies.ToList();
+
+                    foreach (CAgencyList agencyFromList in contract.AgencyList)
+                    {
+                        _context.CAgencies.Remove(agencyFromList);
+                    }
+
+                    ContractAgenciesAdd.AddAgencies(model.Id, model.AgencyList, _context);
                     _context.SaveChanges();
                 }
-
-                if (checkCode < 1)
-                {
-                    contract.Code = model.Code;
-                    contract.Name = model.Name;
-                    contract.HotelId = model.HotelId;
-                    contract.MarketId = model.MarketId;
-                    contract.BoardId = model.BoardId;
-                    contract.RoomTypeId = model.RoomTypeId;
-                    contract.Price = model.Price;
-                    contract.CurrencyId = model.CurrencyId;
-                    contract.EnteredDate = model.EnteredDate;
-                    contract.ExitDate = model.ExitDate;
-
-                    _context.SaveChanges();
-                }
-                
-
                 return actionResponse;
 
             }
