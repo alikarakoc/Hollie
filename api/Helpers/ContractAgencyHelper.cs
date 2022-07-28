@@ -12,7 +12,7 @@ namespace api.Helpers
             List<Agency> list = context.Agencies.ToList();
             foreach (CAgencyList agencyFromList in listAgencies)
             {
-                var c = agencyFromList;
+   
                 agencyFromList.ListId = id;
                 if (list.Any(p => p.Id == agencyFromList.AgencyId))
                 {

@@ -18,7 +18,7 @@ namespace Application.Dtos
         public string Code { get; set; }
         public int HotelId { get; set; }
         //public int MarketId { get; set; }
-        public int BoardId { get; set; }
+        //public int BoardId { get; set; }
         public int RoomTypeId { get; set; }
         public int CurrencyId { get; set; }
 
@@ -28,6 +28,7 @@ namespace Application.Dtos
         //public int Currency { get; set; }
         public List<CAgencyList> AgencyList { get; set; }
         public List<CMarketList> MarketList { get; set; }
+        public List<CBoardList> BoardList { get; set; }
         
     }
 }

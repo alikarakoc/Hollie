@@ -34,7 +34,8 @@ namespace Application.Concrete
         [NotMapped]
         public List<CAgencyList> AgencyList { get; set; }
 
-
+        [NotMapped]
+        public List<CBoardList> BoardList { get; set; }
 
 
 

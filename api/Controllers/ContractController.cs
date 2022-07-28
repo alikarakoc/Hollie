@@ -75,6 +75,7 @@ namespace api.Controllers
                 _context.SaveChanges();
 
                 ContractAgencyHelper.AddAgencies(contract.Id, contract.AgencyList, _context);
+                ContractBoardHelper.AddBoards(contract.Id, contract.BoardList, _context);
                 _context.SaveChanges();
 
 
@@ -115,6 +116,8 @@ namespace api.Controllers
             contract.AgencyList = _context.CAgencies.Where(c => c.ListId == model.Id).ToList();
 
             ContractAgencyHelper.DeleteAgencies(contract.AgencyList, _context);
+            ContractBoardHelper.DeleteBoards(contract.BoardList, _context);
+
             _context.Contracts.Remove(contract);
             _context.SaveChanges();
             return actionResponse;
@@ -147,7 +150,7 @@ namespace api.Controllers
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
                     //contract.MarketId = model.MarketId;
-                    contract.BoardId = model.BoardId;
+                    //contract.BoardId = model.BoardId;
                     contract.RoomTypeId = model.RoomTypeId;
                     contract.Price = model.Price;
                     contract.CurrencyId = model.CurrencyId;
@@ -159,6 +162,11 @@ namespace api.Controllers
                     
                     ContractAgencyHelper.DeleteAgencies(contract.AgencyList, _context);
                     ContractAgencyHelper.AddAgencies(model.Id, model.AgencyList, _context);
+
+                    ContractBoardHelper.DeleteBoards(contract.BoardList, _context);
+                    ContractBoardHelper.AddBoards(model.Id, model.BoardList, _context);
+
+                   
                     _context.SaveChanges();
                 }
                 return actionResponse;

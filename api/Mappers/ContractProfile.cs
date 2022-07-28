@@ -28,8 +28,9 @@ namespace api.Mappers
                 .ForMember(destination => destination.Price,
                 operation => operation.MapFrom(source => source.Price))
                 .ForMember(destination => destination.AgencyList,
-                operation => operation.MapFrom(source => source.AgencyList));
-                
+                operation => operation.MapFrom(source => source.AgencyList))
+                .ForMember(destination => destination.BoardList,
+                operation => operation.MapFrom(source => source.BoardList));
 
 
 
