@@ -75,17 +75,17 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CHotels",
+                name: "CMarkets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HotelId = table.Column<int>(type: "int", nullable: false),
-                    ListId = table.Column<int>(type: "int", nullable: false)
+                    ListId = table.Column<int>(type: "int", nullable: false),
+                    MarketId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CHotels", x => x.Id);
+                    table.PrimaryKey("PK_CMarkets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,6 +127,20 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CRoomTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomTypeId = table.Column<int>(type: "int", nullable: false),
+                    ListId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CRoomTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -232,13 +246,16 @@ namespace DataAccess.Migrations
                 name: "CBoards");
 
             migrationBuilder.DropTable(
-                name: "CHotels");
+                name: "CMarkets");
 
             migrationBuilder.DropTable(
                 name: "Contracts");
 
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "CRoomTypes");
 
             migrationBuilder.DropTable(
                 name: "Currencies");

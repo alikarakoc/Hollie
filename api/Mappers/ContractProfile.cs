@@ -15,8 +15,6 @@ namespace api.Mappers
                 operation => operation.MapFrom(source => source.Code))
                 .ForMember(destination => destination.HotelId,
                 operation => operation.MapFrom(source => source.HotelId))
-                .ForMember(destination => destination.MarketId,
-                operation => operation.MapFrom(source => source.MarketId))
                 .ForMember(destination => destination.BoardId,
                 operation => operation.MapFrom(source => source.BoardId))
                 .ForMember(destination => destination.RoomTypeId,
@@ -31,6 +29,11 @@ namespace api.Mappers
                 operation => operation.MapFrom(source => source.Price))
                 .ForMember(destination => destination.AgencyList,
                 operation => operation.MapFrom(source => source.AgencyList));
+                
+
+
+
+
 
 
         }

@@ -135,22 +135,40 @@ namespace DataAccess.Migrations
                     b.ToTable("CBoards");
                 });
 
-            modelBuilder.Entity("Application.Concrete.CHotelList", b =>
+            modelBuilder.Entity("Application.Concrete.CMarketList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("HotelId")
+                    b.Property<int>("ListId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ListId")
+                    b.Property<int>("MarketId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CHotels");
+                    b.ToTable("CMarkets");
+                });
+
+            modelBuilder.Entity("Application.Concrete.CRoomTypeList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ListId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CRoomTypes");
                 });
 
             modelBuilder.Entity("Application.Concrete.Contract", b =>

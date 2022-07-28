@@ -146,7 +146,7 @@ namespace api.Controllers
                     contract.Code = model.Code;
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
-                    contract.MarketId = model.MarketId;
+                    //contract.MarketId = model.MarketId;
                     contract.BoardId = model.BoardId;
                     contract.RoomTypeId = model.RoomTypeId;
                     contract.Price = model.Price;

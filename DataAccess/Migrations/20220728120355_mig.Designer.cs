@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220726115227_mig")]
+    [Migration("20220728120355_mig")]
     partial class mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,22 +137,40 @@ namespace DataAccess.Migrations
                     b.ToTable("CBoards");
                 });
 
-            modelBuilder.Entity("Application.Concrete.CHotelList", b =>
+            modelBuilder.Entity("Application.Concrete.CMarketList", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("HotelId")
+                    b.Property<int>("ListId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ListId")
+                    b.Property<int>("MarketId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CHotels");
+                    b.ToTable("CMarkets");
+                });
+
+            modelBuilder.Entity("Application.Concrete.CRoomTypeList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ListId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CRoomTypes");
                 });
 
             modelBuilder.Entity("Application.Concrete.Contract", b =>
