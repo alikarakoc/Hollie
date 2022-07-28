@@ -15,10 +15,6 @@ namespace api.Mappers
                 operation => operation.MapFrom(source => source.Code))
                 .ForMember(destination => destination.HotelId,
                 operation => operation.MapFrom(source => source.HotelId))
-                .ForMember(destination => destination.BoardId,
-                operation => operation.MapFrom(source => source.BoardId))
-                .ForMember(destination => destination.RoomTypeId,
-                operation => operation.MapFrom(source => source.RoomTypeId))
                 .ForMember(destination => destination.CurrencyId,
                 operation => operation.MapFrom(source => source.CurrencyId))
                 .ForMember(destination => destination.EnteredDate,
@@ -30,7 +26,16 @@ namespace api.Mappers
                 .ForMember(destination => destination.AgencyList,
                 operation => operation.MapFrom(source => source.AgencyList))
                 .ForMember(destination => destination.BoardList,
-                operation => operation.MapFrom(source => source.BoardList));
+                operation => operation.MapFrom(source => source.BoardList))
+                .ForMember(destination => destination.RoomTypeList,
+                operation => operation.MapFrom(source => source.RoomTypeList))
+                 .ForMember(destination => destination.MarketList,
+                operation => operation.MapFrom(source => source.MarketList));
+
+
+
+
+
 
 
 

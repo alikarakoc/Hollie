@@ -19,7 +19,7 @@ namespace Application.Dtos
         public int HotelId { get; set; }
         //public int MarketId { get; set; }
         //public int BoardId { get; set; }
-        public int RoomTypeId { get; set; }
+       // public int RoomTypeId { get; set; }
         public int CurrencyId { get; set; }
 
         public DateTime EnteredDate { get; set; }
@@ -29,6 +29,8 @@ namespace Application.Dtos
         public List<CAgencyList> AgencyList { get; set; }
         public List<CMarketList> MarketList { get; set; }
         public List<CBoardList> BoardList { get; set; }
-        
+        public List<CRoomTypeList> RoomTypeList { get; set; }
+
+
     }
 }
