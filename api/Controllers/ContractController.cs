@@ -66,17 +66,15 @@ namespace api.Controllers
                 Contract contract = new Contract();
                 contract = _mapper.Map<Contract>(contractdto);
 
-                
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
-                //List<CAgencyList> list = _context.CAgencies.Where(p => p.ListId == contract.Id).ToList();
-                List<Agency> list = _context.Agencies.ToList();
                 
+                List<Agency> list = _context.Agencies.ToList();
                 
                 _context.Contracts.Add(contract);
                 _context.SaveChanges();
 
-                ContractAgenciesAdd.AddAgencies(contract.Id, contract.AgencyList, _context);
+                ContractAgencyHelper.AddAgencies(contract.Id, contract.AgencyList, _context);
                 _context.SaveChanges();
 
 
@@ -114,13 +112,9 @@ namespace api.Controllers
             };
 
             Contract contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == model.Id);
-
             contract.AgencyList = _context.CAgencies.Where(c => c.ListId == model.Id).ToList();
 
-            foreach (CAgencyList agencyFromList in contract.AgencyList)
-            {
-                _context.CAgencies.Remove(agencyFromList);
-            }
+            ContractAgencyHelper.DeleteAgencies(contract.AgencyList, _context);
             _context.Contracts.Remove(contract);
             _context.SaveChanges();
             return actionResponse;
@@ -162,12 +156,9 @@ namespace api.Controllers
 
                     List<Agency> list = _context.Agencies.ToList();
 
-                    foreach (CAgencyList agencyFromList in contract.AgencyList)
-                    {
-                        _context.CAgencies.Remove(agencyFromList);
-                    }
-
-                    ContractAgenciesAdd.AddAgencies(model.Id, model.AgencyList, _context);
+                    
+                    ContractAgencyHelper.DeleteAgencies(contract.AgencyList, _context);
+                    ContractAgencyHelper.AddAgencies(model.Id, model.AgencyList, _context);
                     _context.SaveChanges();
                 }
                 return actionResponse;

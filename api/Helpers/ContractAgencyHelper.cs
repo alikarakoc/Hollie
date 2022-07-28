@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace api.Helpers
 {
-    public class ContractAgenciesAdd
+    public class ContractAgencyHelper
     {
         public static void AddAgencies(int id, List<CAgencyList> listAgencies, Context context)
         {
@@ -21,6 +21,14 @@ namespace api.Helpers
             }
         }
 
+        public static void DeleteAgencies(List<CAgencyList> listAgencies, Context context)
+        {
+            foreach (CAgencyList agencyFromList in listAgencies)
+            {
+                context.CAgencies.Remove(agencyFromList);
+            }
+        }
+
     }
 
 
@@ -30,19 +38,3 @@ namespace api.Helpers
 
 
 
-
-/*
-  //private void AddContractAgencies(int id, List<CAgencyList> list)
-        //{
-        //    foreach (CAgencyList agencyFromList in list)
-        //    {
-        //        agencyFromList.ListId = id;
-        //        if (list.Any(p => p.Id == agencyFromList.AgencyId))
-        //        {
-        //            _context.CAgencies.Add(agencyFromList);
-
-        //        }
-        //    }
-        //    _context.SaveChanges();
-        //}
- */
