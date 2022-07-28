@@ -38,6 +38,28 @@ namespace api.Controllers
         //    return actionResponse;
         //}
 
+
+        [HttpGet]
+        [Route("AllCAgencies")]
+
+        public ActionResponse<List<CAgencyList>> GetAllCAgencies()
+        {
+            ActionResponse<List<CAgencyList>> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok,
+                IsSuccessful = true,
+            };
+            var cAgencyList = _context.CAgencies;
+            if (cAgencyList != null&& cAgencyList.Count()>0)
+            {
+                actionResponse.Data= cAgencyList.ToList();
+            }
+            return actionResponse;
+        }
+
+
+
+
         
 
 
