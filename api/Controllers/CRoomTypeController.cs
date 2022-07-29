@@ -21,9 +21,9 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Route("AllRoomTypes")]
+        [Route("AllCRoomTypes")]
 
-        public ActionResponse<List<CRoomTypeList>> GetAllRoomTypes()
+        public ActionResponse<List<CRoomTypeList>> GetAllCRoomTypes()
         {
             ActionResponse<List<CRoomTypeList>> actionResponse = new()
             {

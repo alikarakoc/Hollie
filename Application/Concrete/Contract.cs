@@ -33,14 +33,11 @@ namespace Application.Concrete
         public DateTime ExitDate { get; set; }
         [NotMapped]
         public List<CAgencyList> AgencyList { get; set; }
-
         [NotMapped]
         public List<CBoardList> BoardList { get; set; }
         [NotMapped]
         public List<CRoomTypeList>RoomTypeList { get; set; }
-
         [NotMapped]
-
         public List<CMarketList> MarketList { get; set; }
 
 

@@ -19,24 +19,6 @@ namespace api.Controllers
             _context = context;
         }
 
-        //[HttpGet]
-        //[Route("ContextAgenciesAll")]
-        //public ActionResponse<List<CAgencyList>> Agency()
-        //{
-        //    ActionResponse<List<CAgencyList>> actionResponse = new()
-        //    {
-        //        ResponseType = ResponseType.Ok,
-        //        IsSuccessful = true,
-        //    };
-
-        //    var agencys = _context.CAgencies;
-
-        //    if (agencys != null && agencys.Count() > 0)
-        //    {
-        //        actionResponse.Data = agencys.ToList();
-        //    }
-        //    return actionResponse;
-        //}
 
 
         [HttpGet]

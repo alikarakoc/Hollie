@@ -18,3 +18,5 @@ namespace Application.Concrete
         public int MarketId { get; set; }
     }
 }
+
+//düzeltme gerekli

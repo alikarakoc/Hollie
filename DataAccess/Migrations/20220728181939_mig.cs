@@ -82,6 +82,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ListId = table.Column<int>(type: "int", nullable: false),
                     MarketId = table.Column<int>(type: "int", nullable: false)
+                     
                 },
                 constraints: table =>
                 {

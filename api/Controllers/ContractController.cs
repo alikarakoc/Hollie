@@ -69,8 +69,11 @@ namespace api.Controllers
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
                 
-                List<Agency> list = _context.Agencies.ToList();
-                
+                List<Agency> listAgency = _context.Agencies.ToList();
+                //List<Board> listBoard = _context.Boards.ToList();
+                //List<RoomType> listRoomType = _context.RoomTypes.ToList();
+                //List<Market> listMarket = _context.Markets.ToList();
+
                 _context.Contracts.Add(contract);
 
                 _context.SaveChanges();
@@ -121,6 +124,9 @@ namespace api.Controllers
 
             Contract contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == model.Id);
             contract.AgencyList = _context.CAgencies.Where(c => c.ListId == model.Id).ToList();
+            contract.BoardList = _context.CBoards.Where(c => c.ListId == model.Id).ToList();
+            contract.RoomTypeList = _context.CRoomTypes.Where(c => c.ListId == model.Id).ToList();
+            contract.MarketList = _context.CMarkets.Where(c => c.ListId == model.Id).ToList();
 
             ContractAgencyHelper.DeleteAgencies(contract.AgencyList, _context);
 
@@ -129,8 +135,6 @@ namespace api.Controllers
             ContractRoomTypeHelper.DeleteRoomTypes(contract.RoomTypeList, _context);
 
             ContractMarketHelper.DeleteMarkets(contract.MarketList, _context);
-
-
 
             _context.Contracts.Remove(contract);
             _context.SaveChanges();

@@ -11,7 +11,7 @@ namespace Application.Dtos
     {
         [Key]
 
-        public int Id { get; set; }
+        public bool selected { get; set; }
 
         public int MarketId { get; set; }
 
