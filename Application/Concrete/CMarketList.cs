@@ -13,10 +13,9 @@ namespace Application.Concrete
         [Key]
         public int Id { get; set; }
 
-        public int ListId { get; set; }
-
         public int MarketId { get; set; }
+        public int ListId { get; set; }
     }
 }
 
-//düzeltme gerekli
+

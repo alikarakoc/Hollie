@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class mig : Migration
+    public partial class mig8 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,9 +80,8 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ListId = table.Column<int>(type: "int", nullable: false),
-                    MarketId = table.Column<int>(type: "int", nullable: false)
-                     
+                    MarketId = table.Column<int>(type: "int", nullable: false),
+                    ListId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
