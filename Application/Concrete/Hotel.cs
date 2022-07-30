@@ -27,6 +27,9 @@ namespace Application.Concrete
         [StringLength(50)]
         public string Email { get; set; }
         public int HotelCategoryId { get; set; }
+
+        public bool status { get; set; }
+
     }
 }
 

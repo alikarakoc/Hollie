@@ -23,6 +23,7 @@ namespace Application.Dtos
 
         public string UpdateUser { get; set; }
 
+        public bool status { get; set; }
 
 
     }

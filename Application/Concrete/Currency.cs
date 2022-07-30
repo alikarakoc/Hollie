@@ -17,5 +17,8 @@ namespace Application.Concrete
         public string Name { get; set; }
         public float Value { get; set; }
 
+        public bool status { get; set; }
+
+
     }
 }

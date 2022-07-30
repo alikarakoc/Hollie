@@ -15,5 +15,6 @@ namespace Application.Dtos
         public int BoardId { get; set; }
 
         public int ListId { get; set; }
+
     }
 }

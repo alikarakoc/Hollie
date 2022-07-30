@@ -15,5 +15,6 @@ namespace Application.Dtos
         public int AgencyId { get; set; }
 
         public int ListId { get; set; }
+
     }
 }

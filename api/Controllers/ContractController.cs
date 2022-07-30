@@ -41,7 +41,7 @@ namespace api.Controllers
             var contract = _context.Contracts;
             if (contract != null && contract.Count() > 0)
             {
-                actionResponse.Data = contract.ToList();
+                actionResponse.Data = _context.Contracts.Where(x => x.status == true).ToList();
             }
             return actionResponse;
 
@@ -75,6 +75,7 @@ namespace api.Controllers
                 //List<Market> listMarket = _context.Markets.ToList();
 
                 _context.Contracts.Add(contract);
+                contract.status = true;
 
                 _context.SaveChanges();
 
@@ -136,7 +137,7 @@ namespace api.Controllers
 
             ContractMarketHelper.DeleteMarkets(contract.MarketList, _context);
 
-            _context.Contracts.Remove(contract);
+            contract.status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -176,6 +177,7 @@ namespace api.Controllers
                    // contract.RoomTypeId = model.RoomTypeId;
                     contract.Price = model.Price;
                     contract.CurrencyId = model.CurrencyId;
+                    contract.status = true;
                     contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);
                     contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(model.ExitDate, TimeZoneInfo.Local);
 

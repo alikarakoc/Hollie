@@ -40,12 +40,10 @@ namespace api.Controllers
 
             if (agencys != null && agencys.Count() > 0)
             {
-                actionResponse.Data = agencys.ToList();
+                actionResponse.Data = _context.Agencies.Where(x => x.status == true).ToList();
             }
             return actionResponse;
         }
-
-
 
         [HttpGet]
         public async Task<ActionResponse<Agency>> GetAgencies([FromQuery] AgencyDto model)
@@ -84,6 +82,7 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Agencies.Add(_agency);
+                _agency.status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -99,7 +98,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
-            _context.Agencies.Remove(agency);
+            agency.status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -130,6 +129,8 @@ namespace api.Controllers
                     agency.CreatedUser = model.CreatedUser;
                     agency.UpdatedDate = model.UpdatedDate;
                     agency.UpdateUser = model.UpdateUser;
+                    agency.status = true;
+
                     _context.SaveChanges();
                 }
                 
@@ -144,6 +145,8 @@ namespace api.Controllers
                     agency.CreatedUser = model.CreatedUser;
                     agency.UpdatedDate = model.UpdatedDate;
                     agency.UpdateUser = model.UpdateUser;
+                    agency.status = true;
+
                     _context.SaveChanges();
                 }
                 return actionResponse;

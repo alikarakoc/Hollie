@@ -12,5 +12,7 @@ namespace Application.Dtos
         public string Name { get; set; }
 
         public string Code { get; set; }
+        public bool status { get; set; }
+
     }
 }

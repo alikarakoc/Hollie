@@ -23,10 +23,6 @@ namespace Application.Concrete
         [StringLength(20)]
         public string Code { get; set; }
         public int HotelId { get; set; }
-        public int MarketId { get; set; }
-        public int AgencyId { get; set; }
-        public int BoardId { get; set; }
-        public int RoomTypeId { get; set; }
         public float Price { get; set; }
         public int CurrencyId { get; set; }
         public DateTime EnteredDate { get; set; }
@@ -39,6 +35,9 @@ namespace Application.Concrete
         public List<CRoomTypeList>RoomTypeList { get; set; }
         [NotMapped]
         public List<CMarketList> MarketList { get; set; }
+
+        public bool status { get; set; }
+
 
 
 
