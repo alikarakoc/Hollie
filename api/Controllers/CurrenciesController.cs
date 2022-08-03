@@ -37,7 +37,8 @@ namespace api.Controllers
             var currencies = _context.Currencies;
             if (currencies != null && currencies.Count() > 0)
             {
-                actionResponse.Data = currencies.ToList();
+                actionResponse.Data = _context.Currencies.Where(x => x.status == true).ToList();
+
             }
             return actionResponse;
         }
@@ -60,6 +61,7 @@ namespace api.Controllers
             if (checkCode < 1 )
             {
                 _context.Currencies.Add(currency);
+                currency.status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -95,7 +97,7 @@ namespace api.Controllers
             };
 
             var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == model.Id);
-            _context.Currencies.Remove(currency);
+            currency.status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -117,14 +119,12 @@ namespace api.Controllers
                 //var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
                 //var checkCode = _context.Currencies.Where(c => c.Code == model.Code)?.Count();
 
-
+                currency.status = true;
+                currency.Code = model.Code;
+                currency.Name = model.Name;
+                currency.Value = model.Value;
+                _context.SaveChanges();
                 
-                    currency.Code = model.Code;
-                    currency.Name = model.Name;
-                    currency.Value = model.Value;
-                    _context.SaveChanges();
-                
-
                 return actionResponse;
 
             }

@@ -12,7 +12,6 @@ namespace api.Helpers
             List<RoomType> list = context.RoomTypes.ToList();
             foreach (CRoomTypeList roomtypeFromList in listRoomTypes)
             {
-                var c = roomtypeFromList;
                 roomtypeFromList.ListId = id;
                 if (list.Any(p => p.Id == roomtypeFromList.RoomTypeId))
                 {

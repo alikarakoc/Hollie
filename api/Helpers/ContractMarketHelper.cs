@@ -12,7 +12,6 @@ namespace api.Helpers
             List<Market> list = context.Markets.ToList();
             foreach (CMarketList marketFromList in listMarkets)
             {
-                var c = marketFromList;
                 marketFromList.ListId = id;
                 if (list.Any(p => p.Id == marketFromList.MarketId))
                 {
