@@ -167,7 +167,7 @@ namespace api.Controllers
                     actionResponse.Message = "Same code exists";
                     actionResponse.IsSuccessful = false;
                 }
-                if (contract.Code == model.Code)
+                if (contract.Code == model.Code || checkCode == 0)
                 {
                     contract.Code = model.Code;
                     contract.Name = model.Name;
