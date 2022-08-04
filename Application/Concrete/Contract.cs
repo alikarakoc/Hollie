@@ -25,6 +25,7 @@ namespace Application.Concrete
         public int HotelId { get; set; }
         public float AdultPrice { get; set; }
         public float ChildPrice { get; set; }
+        public int ContDay { get; set; }
         public int CurrencyId { get; set; }
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }

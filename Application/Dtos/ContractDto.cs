@@ -23,6 +23,7 @@ namespace Application.Dtos
         public DateTime ExitDate { get; set; }
         public float AdultPrice { get; set; }
         public float ChildPrice { get; set; }
+        public int ContDay { get; set; }
         public bool status { get; set; }
 
         public List<CAgencyList> AgencyList { get; set; }

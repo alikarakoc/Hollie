@@ -177,6 +177,7 @@ namespace api.Controllers
                    // contract.RoomTypeId = model.RoomTypeId;
                     contract.AdultPrice = model.AdultPrice;
                     contract.ChildPrice = model.ChildPrice;
+                    contract.ContDay = model.ContDay;
                     contract.CurrencyId = model.CurrencyId;
                     contract.status = true;
                     contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);

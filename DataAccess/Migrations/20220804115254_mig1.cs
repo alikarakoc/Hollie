@@ -101,6 +101,7 @@ namespace DataAccess.Migrations
                     HotelId = table.Column<int>(type: "int", nullable: false),
                     AdultPrice = table.Column<float>(type: "real", nullable: false),
                     ChildPrice = table.Column<float>(type: "real", nullable: false),
+                    ContDay = table.Column<int>(type: "int", nullable: false),
                     CurrencyId = table.Column<int>(type: "int", nullable: false),
                     EnteredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
