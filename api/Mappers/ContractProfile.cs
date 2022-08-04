@@ -21,8 +21,10 @@ namespace api.Mappers
                 operation => operation.MapFrom(source => source.EnteredDate))
                 .ForMember(destination => destination.ExitDate,
                 operation => operation.MapFrom(source => source.ExitDate))
-                .ForMember(destination => destination.Price,
-                operation => operation.MapFrom(source => source.Price))
+                .ForMember(destination => destination.AdultPrice,
+                operation => operation.MapFrom(source => source.AdultPrice))
+                .ForMember(destination => destination.ChildPrice,
+                operation => operation.MapFrom(source => source.ChildPrice))
                 .ForMember(destination => destination.AgencyList,
                 operation => operation.MapFrom(source => source.AgencyList))
                 .ForMember(destination => destination.BoardList,

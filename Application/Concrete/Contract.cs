@@ -23,7 +23,8 @@ namespace Application.Concrete
         [StringLength(20)]
         public string Code { get; set; }
         public int HotelId { get; set; }
-        public float Price { get; set; }
+        public float AdultPrice { get; set; }
+        public float ChildPrice { get; set; }
         public int CurrencyId { get; set; }
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }

@@ -21,7 +21,8 @@ namespace Application.Dtos
 
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }
-        public float Price { get; set; }
+        public float AdultPrice { get; set; }
+        public float ChildPrice { get; set; }
         public bool status { get; set; }
 
         public List<CAgencyList> AgencyList { get; set; }

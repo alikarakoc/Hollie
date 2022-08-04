@@ -184,6 +184,12 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<float>("AdultPrice")
+                        .HasColumnType("real");
+
+                    b.Property<float>("ChildPrice")
+                        .HasColumnType("real");
+
                     b.Property<string>("Code")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
@@ -203,9 +209,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
 
                     b.Property<bool>("status")
                         .HasColumnType("bit");
