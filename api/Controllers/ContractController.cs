@@ -68,7 +68,10 @@ namespace api.Controllers
 
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
-                
+                contract.ContDay = ((int)(contract.ExitDate - contract.EnteredDate).TotalDays);
+
+
+
                 List<Agency> listAgency = _context.Agencies.ToList();
                 //List<Board> listBoard = _context.Boards.ToList();
                 //List<RoomType> listRoomType = _context.RoomTypes.ToList();
@@ -182,6 +185,7 @@ namespace api.Controllers
                     contract.status = true;
                     contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);
                     contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(model.ExitDate, TimeZoneInfo.Local);
+                    contract.ContDay = ((int)(contract.ExitDate - contract.EnteredDate).TotalDays);
 
                     List<Agency> list = _context.Agencies.ToList();
 
