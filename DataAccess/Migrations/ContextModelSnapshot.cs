@@ -270,14 +270,14 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<float>("Value")
-                        .HasColumnType("real");
+                    b.Property<double?>("Value")
+                        .HasColumnType("float");
 
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
+                    b.Property<DateTime>("tarih")
+                        .HasColumnType("date");
 
                     b.HasKey("Id");
 

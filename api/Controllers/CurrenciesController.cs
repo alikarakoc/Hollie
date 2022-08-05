@@ -4,10 +4,12 @@ using Application.Infrastructure;
 using DataAccess.Concrate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,10 +39,39 @@ namespace api.Controllers
             var currencies = _context.Currencies;
             if (currencies != null && currencies.Count() > 0)
             {
-                actionResponse.Data = _context.Currencies.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Currencies.ToList();
 
             }
             return actionResponse;
+        }
+
+        [HttpGet]
+        [Route("updateCurrency")]
+        public async Task<ActionResponse<List<Currency>>> UpdateCurrencies()
+        {
+            ActionResponse<List<Currency>> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok,
+                IsSuccessful = true,
+            };
+
+            if(DateTime.Now.ToString("dddd") != "Cumartesi" || DateTime.Now.ToString("dddd") != "Pazar")
+            { 
+                SqlConnection con = new SqlConnection("Data source = 192.168.40.222; initial catalog = Hollie; user id = sa; password = 1");
+                SqlCommand cmd = new SqlCommand();
+                con.Open();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "UPR_GetDovizKurlari_MerkezBankasi";
+                cmd.Parameters.Add("pYil", SqlDbType.NVarChar, 50).Value = DateTime.Now.Year;
+                cmd.Parameters.Add("pAy", SqlDbType.NVarChar, 50).Value = DateTime.Now.Month; 
+                cmd.Parameters.Add("pGun", SqlDbType.NVarChar, 50).Value = DateTime.Now.Day;
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            return actionResponse;
+
+
         }
 
         [HttpPost]
@@ -61,7 +92,6 @@ namespace api.Controllers
             if (checkCode < 1 )
             {
                 _context.Currencies.Add(currency);
-                currency.status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -97,7 +127,7 @@ namespace api.Controllers
             };
 
             var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == model.Id);
-            currency.status = false;
+            _context.Remove(currency);
             _context.SaveChanges();
             return actionResponse;
         }
@@ -119,7 +149,6 @@ namespace api.Controllers
                 //var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
                 //var checkCode = _context.Currencies.Where(c => c.Code == model.Code)?.Count();
 
-                currency.status = true;
                 currency.Code = model.Code;
                 currency.Name = model.Name;
                 currency.Value = model.Value;

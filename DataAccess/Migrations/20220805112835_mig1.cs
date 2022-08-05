@@ -152,9 +152,9 @@ namespace DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Value = table.Column<float>(type: "real", nullable: false),
-                    status = table.Column<bool>(type: "bit", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Value = table.Column<double>(type: "float", nullable: true),
+                    tarih = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,13 @@ namespace Application.Concrete
         public int Id { get; set; }
         [StringLength(20)]
         public string Code { get; set; }
-        [StringLength(20)]
-        public string Name { get; set; }
-        public float Value { get; set; }
-
-        public bool status { get; set; }
+        [StringLength(100)]
+        [Column(TypeName = "nvarchar")]
+        public string? Name { get; set; }
+        [Column(TypeName = "float")]
+        public float? Value { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime tarih { get; set; }
 
 
     }
