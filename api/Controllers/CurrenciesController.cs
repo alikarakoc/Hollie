@@ -17,6 +17,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class CurrenciesController : Controller
     {
         private readonly Context _context;
@@ -54,8 +55,8 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-
-            if(DateTime.Now.ToString("dddd") != "Cumartesi" || DateTime.Now.ToString("dddd") != "Pazar")
+            var currencies = _context.Currencies;
+            if (DateTime.Now.ToString("dddd") != "Cumartesi" || DateTime.Now.ToString("dddd") != "Pazar")
             { 
                 SqlConnection con = new SqlConnection("Data source = 192.168.40.222; initial catalog = Hollie; user id = sa; password = 1");
                 SqlCommand cmd = new SqlCommand();
@@ -64,10 +65,31 @@ namespace api.Controllers
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "UPR_GetDovizKurlari_MerkezBankasi";
                 cmd.Parameters.Add("pYil", SqlDbType.NVarChar, 50).Value = DateTime.Now.Year;
-                cmd.Parameters.Add("pAy", SqlDbType.NVarChar, 50).Value = DateTime.Now.Month; 
+                cmd.Parameters.Add("pAy", SqlDbType.NVarChar, 50).Value = DateTime.Now.Month;
                 cmd.Parameters.Add("pGun", SqlDbType.NVarChar, 50).Value = DateTime.Now.Day;
                 cmd.ExecuteNonQuery();
                 con.Close();
+                var deger3 = currencies.Count();
+                if(deger3 <1)
+                {
+                    int i = 0;
+                    while(deger3 <= 0)
+                    {
+                        i++;
+                        SqlCommand cmd2 = new SqlCommand();
+                        con.Open();
+                        cmd2.Connection = con;
+                        cmd2.CommandType = CommandType.StoredProcedure;
+                        cmd2.CommandText = "UPR_GetDovizKurlari_MerkezBankasi";
+                        cmd2.Parameters.Add("pYil", SqlDbType.NVarChar, 50).Value = DateTime.Now.Year;
+                        cmd2.Parameters.Add("pAy", SqlDbType.NVarChar, 50).Value = DateTime.Now.Month;
+                        cmd2.Parameters.Add("pGun", SqlDbType.NVarChar, 50).Value = DateTime.Now.Day - i;
+                        cmd2.ExecuteNonQuery();
+                        con.Close();
+                        deger3 = currencies.Count();
+                    }
+                }
+              
             }
             return actionResponse;
 
