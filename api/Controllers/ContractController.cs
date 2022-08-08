@@ -87,6 +87,7 @@ namespace api.Controllers
                 ContractBoardHelper.AddBoards(contract.Id, contract.BoardList, _context);
 
                 ContractRoomTypeHelper.AddRoomTypes(contract.Id, contract.RoomTypeList, _context);
+                ContractRoomHelper.AddRooms(contract.Id, contract.RoomTypeList, _context);
 
                 ContractMarketHelper.AddMarkets(contract.Id, contract.MarketList, _context);
 
