@@ -87,7 +87,7 @@ namespace api.Controllers
                 ContractBoardHelper.AddBoards(contract.Id, contract.BoardList, _context);
 
                 ContractRoomTypeHelper.AddRoomTypes(contract.Id, contract.RoomTypeList, _context);
-                ContractRoomHelper.AddRooms(contract.Id, contract.RoomTypeList, _context);
+                ContractRoomHelper.AddRooms(contract.Id, contract.RoomList, _context);
 
                 ContractMarketHelper.AddMarkets(contract.Id, contract.MarketList, _context);
 
@@ -131,6 +131,7 @@ namespace api.Controllers
             contract.AgencyList = _context.CAgencies.Where(c => c.ListId == model.Id).ToList();
             contract.BoardList = _context.CBoards.Where(c => c.ListId == model.Id).ToList();
             contract.RoomTypeList = _context.CRoomTypes.Where(c => c.ListId == model.Id).ToList();
+            contract.RoomList = _context.CRooms.Where(c => c.ListId == model.Id).ToList();
             contract.MarketList = _context.CMarkets.Where(c => c.ListId == model.Id).ToList();
 
             ContractAgencyHelper.DeleteAgencies(contract.AgencyList, _context);
@@ -138,6 +139,7 @@ namespace api.Controllers
             ContractBoardHelper.DeleteBoards(contract.BoardList, _context);
 
             ContractRoomTypeHelper.DeleteRoomTypes(contract.RoomTypeList, _context);
+            ContractRoomHelper.DeleteRooms(contract.RoomList, _context);
 
             ContractMarketHelper.DeleteMarkets(contract.MarketList, _context);
 
@@ -162,7 +164,7 @@ namespace api.Controllers
 
                 contract.AgencyList =_context.CAgencies.Where(c => c.ListId == model.Id).ToList();
                 contract.BoardList = _context.CBoards.Where(c => c.ListId == model.Id).ToList();
-                contract.RoomTypeList = _context.CRoomTypes.Where(c => c.ListId == model.Id).ToList();
+                contract.RoomList = _context.CRooms.Where(c => c.ListId == model.Id).ToList();
                 contract.MarketList = _context.CMarkets.Where(c => c.ListId == model.Id).ToList();
 
                 int checkCode = _context.Contracts.Where(h => h.Code == model.Code && h.Id!=model.Id).Count();
@@ -199,6 +201,9 @@ namespace api.Controllers
 
                     ContractRoomTypeHelper.DeleteRoomTypes(contract.RoomTypeList, _context);
                     ContractRoomTypeHelper.AddRoomTypes(model.Id, model.RoomTypeList, _context);
+
+                    ContractRoomHelper.DeleteRooms(contract.RoomList, _context);
+                    ContractRoomHelper.AddRooms(model.Id, model.RoomList, _context);
 
                     ContractMarketHelper.DeleteMarkets(contract.MarketList, _context);
                     ContractMarketHelper.AddMarkets(model.Id, model.MarketList, _context);
