@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220808084119_mig1")]
+    [Migration("20220808123548_mig1")]
     partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,6 +159,24 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CMarkets");
+                });
+
+            modelBuilder.Entity("Application.Concrete.CRoomList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ListId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CRooms");
                 });
 
             modelBuilder.Entity("Application.Concrete.CRoomTypeList", b =>

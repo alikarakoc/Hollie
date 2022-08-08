@@ -24,6 +24,7 @@ namespace DataAccess.Concrate
         public DbSet<Room> Rooms { get; set; }
         public DbSet<CMarketList> CMarkets { get; set; }
         public DbSet<CRoomTypeList> CRoomTypes { get; set; }
+        public DbSet<CRoomList> CRooms { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelCategory> HotelCategories { get; set; }
         public DbSet<Market> Markets { get; set; }

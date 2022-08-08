@@ -132,6 +132,20 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CRooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomId = table.Column<int>(type: "int", nullable: false),
+                    ListId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CRooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CRoomTypes",
                 columns: table => new
                 {
@@ -279,6 +293,9 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "CRooms");
 
             migrationBuilder.DropTable(
                 name: "CRoomTypes");
