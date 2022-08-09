@@ -37,7 +37,7 @@ namespace api.Controllers
             
             if (markets != null && markets.Count() > 0)
             {
-                actionResponse.Data = _context.Markets.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Markets.Where(x => x.Status == true).ToList();
             }
             return actionResponse;
         }
@@ -79,7 +79,7 @@ namespace api.Controllers
             };
 
             //var checkMarket = _context.Markets.Where(h => h.Name == market.Name).Count();
-            market.status = true;
+            market.Status = true;
             var checkCode = _context.Markets.Where(h => h.Code == market.Code).Count();
             if (checkCode < 1) { 
                  _context.Markets.Add(market);
@@ -98,7 +98,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == model.Id);
-            market.status = false;
+            market.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -126,7 +126,7 @@ namespace api.Controllers
                     market.CreatedUser = model.CreatedUser;
                     market.UpdatedDate = model.UpdatedDate;
                     market.UpdateUser = model.UpdateUser;
-                    market.status = true;
+                    market.Status = true;
                     _context.SaveChanges();
                 }
                 else if (checkCode < 1 && market != null)
@@ -137,7 +137,7 @@ namespace api.Controllers
                     market.CreatedUser = model.CreatedUser;
                     market.UpdatedDate = model.UpdatedDate;
                     market.UpdateUser = model.UpdateUser;
-                    market.status = true;
+                    market.Status = true;
                     _context.SaveChanges();
                 }
                

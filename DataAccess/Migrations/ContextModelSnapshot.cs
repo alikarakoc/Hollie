@@ -53,15 +53,15 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UpdateUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -90,15 +90,15 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UpdateUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -177,24 +177,6 @@ namespace DataAccess.Migrations
                     b.ToTable("CRooms");
                 });
 
-            modelBuilder.Entity("Application.Concrete.CRoomTypeList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ListId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CRoomTypes");
-                });
-
             modelBuilder.Entity("Application.Concrete.Contract", b =>
                 {
                     b.Property<int>("Id")
@@ -231,7 +213,7 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<bool>("status")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -261,15 +243,15 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UpdateUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -287,15 +269,15 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<DateTime>("CurrencyDate")
+                        .HasColumnType("date");
+
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<double?>("Value")
                         .HasColumnType("float");
-
-                    b.Property<DateTime>("tarih")
-                        .HasColumnType("date");
 
                     b.HasKey("Id");
 
@@ -339,15 +321,15 @@ namespace DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UpdateUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -369,7 +351,7 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("status")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -399,15 +381,15 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UpdateUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -420,6 +402,10 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Bed")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
 
                     b.Property<string>("Code")
                         .HasMaxLength(20)
@@ -435,14 +421,10 @@ namespace DataAccess.Migrations
                     b.Property<int>("RoomTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("bed")
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
-
-                    b.Property<int>("slot")
+                    b.Property<int>("Slot")
                         .HasColumnType("int");
 
-                    b.Property<bool>("status")
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -472,15 +454,15 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<string>("UpdateUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

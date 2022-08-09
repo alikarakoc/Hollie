@@ -59,7 +59,7 @@ namespace api.Controllers
             //actionResponse.Data = "çekilen otel listesi";
             if (hotels != null && hotels.Count() > 0)
             {
-                actionResponse.Data = _context.Hotels.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Hotels.Where(x => x.Status == true).ToList();
             }
             return actionResponse;
         }
@@ -102,7 +102,7 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Hotels.Add(htl);
-                htl.status = true;
+                htl.Status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -119,7 +119,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == model.Id);
-            hotel.status = false;
+            hotel.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -151,7 +151,7 @@ namespace api.Controllers
                     hotel.CreatedUser = model.CreatedUser;
                     hotel.UpdatedDate = model.UpdatedDate;
                     hotel.UpdateUser = model.UpdateUser;
-                    hotel.status = true;
+                    hotel.Status = true;
                     _context.SaveChanges();
                 }
              
@@ -167,7 +167,7 @@ namespace api.Controllers
                     hotel.CreatedUser = model.CreatedUser;
                     hotel.UpdatedDate = model.UpdatedDate;
                     hotel.UpdateUser = model.UpdateUser;
-                    hotel.status = true;
+                    hotel.Status = true;
                     _context.SaveChanges();
                 }
                 return actionResponse;

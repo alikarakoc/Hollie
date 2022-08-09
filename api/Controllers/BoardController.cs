@@ -39,7 +39,7 @@ namespace api.Controllers
 
             if(boards!= null && boards.Count()>0)
             {
-                actionResponse.Data = _context.Boards.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Boards.Where(x => x.Status == true).ToList();
             }
 
             return actionResponse;
@@ -85,7 +85,7 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Boards.Add(board);
-                board.status = true;
+                board.Status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -104,7 +104,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var board = await _context.Boards.FirstOrDefaultAsync(h => h.Id == model.Id);
-            board.status = false;
+            board.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -134,7 +134,7 @@ namespace api.Controllers
                     board.CreatedUser = model.CreatedUser;
                     board.UpdatedDate = model.UpdatedDate;
                     board.UpdateUser = model.UpdateUser;
-                    board.status = true;
+                    board.Status = true;
                     _context.SaveChanges();
                 }
 
@@ -146,7 +146,7 @@ namespace api.Controllers
                     board.CreatedUser = model.CreatedUser;
                     board.UpdatedDate = model.UpdatedDate;  
                     board.UpdateUser = model.UpdateUser;
-                    board.status = true;
+                    board.Status = true;
                     _context.SaveChanges();
                 }
                 return actionResponse;

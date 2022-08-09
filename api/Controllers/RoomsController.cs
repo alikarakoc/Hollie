@@ -38,7 +38,7 @@ namespace api.Controllers
             //actionResponse.Data = "çekilen otel listesi";
             if (rooms != null && rooms.Count() > 0)
             {
-                actionResponse.Data = _context.Rooms.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Rooms.Where(x => x.Status == true).ToList();
             }
             return actionResponse;
         }
@@ -73,7 +73,7 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Rooms.Add(rom);
-                rom.status = true;
+                rom.Status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -88,7 +88,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             Room room = await _context.Rooms.FirstOrDefaultAsync(h => h.Id == model.Id);
-            room.status = false;
+            room.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -119,11 +119,11 @@ namespace api.Controllers
                 {
                     room.Code = model.Code;
                     room.Name = model.Name;
-                    room.bed = model.bed;
-                    room.slot = model.slot;
+                    room.Bed = model.Bed;
+                    room.Slot = model.Slot;
                     room.RoomTypeId = model.RoomTypeId;
                     room.HotelId = model.HotelId;
-                    room.status = true;
+                    room.Status = true;
                     _context.SaveChanges();
                 }
                 return actionResponse;

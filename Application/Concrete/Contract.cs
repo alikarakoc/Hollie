@@ -36,11 +36,9 @@ namespace Application.Concrete
         [NotMapped]
         public List<CRoomList> RoomList { get; set; }
         [NotMapped]
-        public List<CRoomTypeList>RoomTypeList { get; set; }
-        [NotMapped]
         public List<CMarketList> MarketList { get; set; }
 
-        public bool status { get; set; }
+        public bool Status { get; set; }
 
 
 

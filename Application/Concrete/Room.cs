@@ -19,11 +19,11 @@ namespace Application.Concrete
         public string Name { get; set; }
         public int RoomTypeId { get; set; }
         public int HotelId { get; set; }
-        public int slot { get; set; }
+        public int Slot { get; set; }
         [Column(TypeName = "nvarchar")]
         [StringLength(7)]
-        public string bed { get; set; }
-        public bool status { get; set; }
+        public string Bed { get; set; }
+        public bool Status { get; set; }
 
     }
 }

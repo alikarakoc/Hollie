@@ -13,8 +13,8 @@ namespace Application.Dtos
         public string Name { get; set; }
         public int RoomTypeId { get; set; }
         public int HotelId { get; set; }
-        public int slot { get; set; }
-        public string bed { get; set; }
-        public bool status { get; set; }
+        public int Slot { get; set; }
+        public string Bed { get; set; }
+        public bool Status { get; set; }
     }
 }

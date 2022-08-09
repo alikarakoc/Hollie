@@ -18,7 +18,7 @@ namespace Application.Concrete
         [StringLength(50)]
         public string Name { get; set; }
 
-        public bool status { get; set; }
+        public bool Status { get; set; }
 
     }
 }

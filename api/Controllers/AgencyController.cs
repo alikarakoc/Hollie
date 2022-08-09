@@ -40,7 +40,7 @@ namespace api.Controllers
 
             if (agencys != null && agencys.Count() > 0)
             {
-                actionResponse.Data = _context.Agencies.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Agencies.Where(x => x.Status == true).ToList();
             }
             return actionResponse;
         }
@@ -82,7 +82,7 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Agencies.Add(_agency);
-                _agency.status = true;
+                _agency.Status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -98,7 +98,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
-            agency.status = false;
+            agency.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -129,7 +129,7 @@ namespace api.Controllers
                     agency.CreatedUser = model.CreatedUser;
                     agency.UpdatedDate = model.UpdatedDate;
                     agency.UpdateUser = model.UpdateUser;
-                    agency.status = true;
+                    agency.Status = true;
 
                     _context.SaveChanges();
                 }
@@ -145,7 +145,7 @@ namespace api.Controllers
                     agency.CreatedUser = model.CreatedUser;
                     agency.UpdatedDate = model.UpdatedDate;
                     agency.UpdateUser = model.UpdateUser;
-                    agency.status = true;
+                    agency.Status = true;
 
                     _context.SaveChanges();
                 }

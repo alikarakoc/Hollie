@@ -38,7 +38,7 @@ namespace api.Controllers
 
             if (countries!= null && countries.Count()>0)
             {
-                actionResponse.Data = _context.Countries.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Countries.Where(x => x.Status == true).ToList();
             }
 
             return actionResponse;
@@ -81,7 +81,7 @@ namespace api.Controllers
             if (checkCode < 1)
             { 
             _context.Countries.Add(country);
-            country.status = true;
+            country.Status = true;
             _context.SaveChanges();
             }
             return actionResponse;    
@@ -96,7 +96,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
-            country.status = false;
+            country.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -126,7 +126,7 @@ namespace api.Controllers
                     country.CreatedUser = model.CreatedUser;
                     country.UpdatedDate = model.UpdatedDate;
                     country.UpdateUser = model.UpdateUser;
-                    country.status = true;
+                    country.Status = true;
                     _context.SaveChanges();
                 }
 
@@ -138,7 +138,7 @@ namespace api.Controllers
                     country.CreatedUser = model.CreatedUser;
                     country.UpdatedDate = model.UpdatedDate;
                     country.UpdateUser = model.UpdateUser;
-                    country.status = true;
+                    country.Status = true;
                     _context.SaveChanges();
                 }
                 return actionResponse;

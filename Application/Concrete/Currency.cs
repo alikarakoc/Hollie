@@ -20,7 +20,7 @@ namespace Application.Concrete
         [Column(TypeName = "float")]
         public float? Value { get; set; }
         [Column(TypeName = "date")]
-        public DateTime tarih { get; set; }
+        public DateTime CurrencyDate { get; set; }
 
 
     }

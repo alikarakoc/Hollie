@@ -40,7 +40,7 @@ namespace api.Controllers
             
             if (roomtypes != null && roomtypes.Count() > 0)
             {
-                actionResponse.Data = _context.RoomTypes.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.RoomTypes.Where(x => x.Status == true).ToList();
             }
             return actionResponse;
         }
@@ -86,7 +86,7 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                     _context.RoomTypes.Add(room);
-                room.status = true;
+                room.Status = true;
                     _context.SaveChanges();
             }
             return actionResponse;
@@ -102,7 +102,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
-            roomtype.status = false;
+            roomtype.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -129,7 +129,7 @@ namespace api.Controllers
                     roomtype.CreatedUser = model.CreatedUser;
                     roomtype.UpdatedDate = model.UpdatedDate;
                     roomtype.UpdateUser = model.UpdateUser;
-                    roomtype.status = true;
+                    roomtype.Status = true;
                     _context.SaveChanges();
                 }
                 else if (checkCode < 1 && roomtype != null)
@@ -140,7 +140,7 @@ namespace api.Controllers
                     roomtype.CreatedUser = model.CreatedUser;
                     roomtype.UpdatedDate = model.UpdatedDate;
                     roomtype.UpdateUser = model.UpdateUser;
-                    roomtype.status = true;
+                    roomtype.Status = true;
                     _context.SaveChanges();
                 }
                 return actionResponse;

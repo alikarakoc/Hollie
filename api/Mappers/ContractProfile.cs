@@ -31,8 +31,6 @@ namespace api.Mappers
                 operation => operation.MapFrom(source => source.AgencyList))
                 .ForMember(destination => destination.BoardList,
                 operation => operation.MapFrom(source => source.BoardList))
-                .ForMember(destination => destination.RoomTypeList,
-                operation => operation.MapFrom(source => source.RoomTypeList))
                  .ForMember(destination => destination.MarketList,
                 operation => operation.MapFrom(source => source.MarketList));
 

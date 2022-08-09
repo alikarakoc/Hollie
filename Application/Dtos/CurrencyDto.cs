@@ -18,6 +18,6 @@ namespace Application.Dtos
         [Column(TypeName = "float")]
         public float? Value { get; set; }
 
-        public DateTime tarih { get; set; }
+        public DateTime CurrencyDate { get; set; }
     }
 }

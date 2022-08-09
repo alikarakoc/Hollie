@@ -18,7 +18,7 @@ namespace DataAccess.Migrations
                     Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -37,7 +37,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -105,7 +105,7 @@ namespace DataAccess.Migrations
                     CurrencyId = table.Column<int>(type: "int", nullable: false),
                     EnteredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    status = table.Column<bool>(type: "bit", nullable: false)
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,7 +120,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -146,20 +146,6 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CRoomTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoomTypeId = table.Column<int>(type: "int", nullable: false),
-                    ListId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CRoomTypes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Currencies",
                 columns: table => new
                 {
@@ -168,7 +154,7 @@ namespace DataAccess.Migrations
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Value = table.Column<double>(type: "float", nullable: true),
-                    tarih = table.Column<DateTime>(type: "date", nullable: false)
+                    CurrencyDate = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,7 +169,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false)
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,7 +188,7 @@ namespace DataAccess.Migrations
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     HotelCategoryId = table.Column<int>(type: "int", nullable: false),
-                    status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -221,7 +207,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -242,9 +228,9 @@ namespace DataAccess.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     RoomTypeId = table.Column<int>(type: "int", nullable: false),
                     HotelId = table.Column<int>(type: "int", nullable: false),
-                    slot = table.Column<int>(type: "int", nullable: false),
-                    bed = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false)
+                    Slot = table.Column<int>(type: "int", nullable: false),
+                    Bed = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -259,7 +245,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -296,9 +282,6 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "CRooms");
-
-            migrationBuilder.DropTable(
-                name: "CRoomTypes");
 
             migrationBuilder.DropTable(
                 name: "Currencies");

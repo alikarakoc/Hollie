@@ -37,7 +37,7 @@ namespace api.Controllers
             var hotelCategories = _context.HotelCategories;
             if (hotelCategories != null && hotelCategories.Count() > 0)
             {
-                actionResponse.Data = _context.HotelCategories.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.HotelCategories.Where(x => x.Status == true).ToList();
             }
             return actionResponse;
         }
@@ -67,7 +67,7 @@ namespace api.Controllers
             if (checkHotel < 1 && checkCode < 1)
             {
                 _context.HotelCategories.Add(hotelCategory);
-                hotelCategory.status = true;
+                hotelCategory.Status = true;
                 _context.SaveChanges();
             }
             return actionResponse;
@@ -103,7 +103,7 @@ namespace api.Controllers
             };
 
             var hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == model.Id);
-            hotelCategory.status = false;
+            hotelCategory.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -144,7 +144,7 @@ namespace api.Controllers
                 {
                     hotelCategory.Name = model.Name;
                     hotelCategory.Code = model.Code;
-                    hotelCategory.status = true;
+                    hotelCategory.Status = true;
                     _context.SaveChanges();
                 }
                 

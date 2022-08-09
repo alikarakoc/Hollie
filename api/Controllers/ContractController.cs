@@ -41,7 +41,7 @@ namespace api.Controllers
             var contract = _context.Contracts;
             if (contract != null && contract.Count() > 0)
             {
-                actionResponse.Data = _context.Contracts.Where(x => x.status == true).ToList();
+                actionResponse.Data = _context.Contracts.Where(x => x.Status == true).ToList();
             }
             return actionResponse;
 
@@ -73,12 +73,8 @@ namespace api.Controllers
 
 
                 List<Agency> listAgency = _context.Agencies.ToList();
-                //List<Board> listBoard = _context.Boards.ToList();
-                //List<RoomType> listRoomType = _context.RoomTypes.ToList();
-                //List<Market> listMarket = _context.Markets.ToList();
-
                 _context.Contracts.Add(contract);
-                contract.status = true;
+                contract.Status = true;
 
                 _context.SaveChanges();
 
@@ -86,7 +82,6 @@ namespace api.Controllers
 
                 ContractBoardHelper.AddBoards(contract.Id, contract.BoardList, _context);
 
-                ContractRoomTypeHelper.AddRoomTypes(contract.Id, contract.RoomTypeList, _context);
                 ContractRoomHelper.AddRooms(contract.Id, contract.RoomList, _context);
 
                 ContractMarketHelper.AddMarkets(contract.Id, contract.MarketList, _context);
@@ -130,7 +125,6 @@ namespace api.Controllers
             Contract contract = await _context.Contracts.FirstOrDefaultAsync(h => h.Id == model.Id);
             contract.AgencyList = _context.CAgencies.Where(c => c.ListId == model.Id).ToList();
             contract.BoardList = _context.CBoards.Where(c => c.ListId == model.Id).ToList();
-            contract.RoomTypeList = _context.CRoomTypes.Where(c => c.ListId == model.Id).ToList();
             contract.RoomList = _context.CRooms.Where(c => c.ListId == model.Id).ToList();
             contract.MarketList = _context.CMarkets.Where(c => c.ListId == model.Id).ToList();
 
@@ -138,12 +132,11 @@ namespace api.Controllers
 
             ContractBoardHelper.DeleteBoards(contract.BoardList, _context);
 
-            ContractRoomTypeHelper.DeleteRoomTypes(contract.RoomTypeList, _context);
             ContractRoomHelper.DeleteRooms(contract.RoomList, _context);
 
             ContractMarketHelper.DeleteMarkets(contract.MarketList, _context);
 
-            contract.status = false;
+            contract.Status = false;
             _context.SaveChanges();
             return actionResponse;
         }
@@ -178,14 +171,11 @@ namespace api.Controllers
                     contract.Code = model.Code;
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
-                    //contract.MarketId = model.MarketId;
-                    //contract.BoardId = model.BoardId;
-                   // contract.RoomTypeId = model.RoomTypeId;
                     contract.AdultPrice = model.AdultPrice;
                     contract.ChildPrice = model.ChildPrice;
                     contract.ContDay = model.ContDay;
                     contract.CurrencyId = model.CurrencyId;
-                    contract.status = true;
+                    contract.Status = true;
                     contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);
                     contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(model.ExitDate, TimeZoneInfo.Local);
                     contract.ContDay = ((int)(contract.ExitDate - contract.EnteredDate).TotalDays);
@@ -198,9 +188,6 @@ namespace api.Controllers
 
                     ContractBoardHelper.DeleteBoards(contract.BoardList, _context);
                     ContractBoardHelper.AddBoards(model.Id, model.BoardList, _context);
-
-                    ContractRoomTypeHelper.DeleteRoomTypes(contract.RoomTypeList, _context);
-                    ContractRoomTypeHelper.AddRoomTypes(model.Id, model.RoomTypeList, _context);
 
                     ContractRoomHelper.DeleteRooms(contract.RoomList, _context);
                     ContractRoomHelper.AddRooms(model.Id, model.RoomList, _context);
