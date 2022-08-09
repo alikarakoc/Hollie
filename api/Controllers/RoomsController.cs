@@ -87,7 +87,7 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var room = await _context.Rooms.FirstOrDefaultAsync(h => h.Id == model.Id);
+            Room room = await _context.Rooms.FirstOrDefaultAsync(h => h.Id == model.Id);
             room.status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -96,7 +96,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<Room>> UpdateRoom([FromQuery] RoomDto modelID, [FromBody] RoomDto model)
+        public async Task<ActionResponse<Room>> UpdateRoom([FromBody] RoomDto model)
         {
             ActionResponse<Room> actionResponse = new()
             {
@@ -106,26 +106,22 @@ namespace api.Controllers
 
             try
             {
-                var room = await _context.Rooms.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkCode = _context.Rooms.Where(c => c.Code == model.Code)?.Count();
+                Room room = await _context.Rooms.FirstOrDefaultAsync(h => h.Id == model.Id);
+                int checkCode = _context.Rooms.Where(h => h.Code == model.Code && h.Id != model.Id).Count();
 
-                if (room.Code == model.Code)
+                if (checkCode > 0)
                 {
-                    room.Name = model.Name;
-                    room.bed = model.bed;
-                    room.slot = model.slot;
-                    room.RoomTypeId = model.RoomTypeId;
-                    room.HotelId = model.HotelId;
-                    room.status = true;
-                    _context.SaveChanges();
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
                 }
 
-                else if (checkCode < 1 && room != null)
+                if (room.Code == model.Code || checkCode == 0)
                 {
                     room.Code = model.Code;
                     room.Name = model.Name;
                     room.bed = model.bed;
                     room.slot = model.slot;
+                    room.RoomTypeId = model.RoomTypeId;
                     room.HotelId = model.HotelId;
                     room.status = true;
                     _context.SaveChanges();
