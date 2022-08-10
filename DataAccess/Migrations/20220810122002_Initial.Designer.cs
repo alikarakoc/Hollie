@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220809112751_mig1")]
-    partial class mig1
+    [Migration("20220810122002_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,8 +186,17 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<double>("ADP")
+                        .HasColumnType("float");
+
                     b.Property<float>("AdultPrice")
                         .HasColumnType("real");
+
+                    b.Property<double>("CH07")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CH14")
+                        .HasColumnType("float");
 
                     b.Property<float>("ChildPrice")
                         .HasColumnType("real");
@@ -405,26 +414,16 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Bed")
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
-
                     b.Property<string>("Code")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("RoomTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Slot")
-                        .HasColumnType("int");
+                    b.Property<short>("RoomTypeId")
+                        .HasColumnType("smallint");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -452,12 +451,24 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<short>("HotelId")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("MaxAD")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("MaxCH")
+                        .HasColumnType("smallint");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                    b.Property<short>("Pax")
+                        .HasColumnType("smallint");
+
+                    b.Property<double>("Status")
+                        .HasColumnType("float");
 
                     b.Property<string>("UpdateUser")
                         .HasMaxLength(50)

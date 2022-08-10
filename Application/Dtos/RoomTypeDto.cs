@@ -14,6 +14,11 @@ namespace Application.Dtos
         public string Code { get; set; }
 
         public string Name { get; set; }
+        public short HotelId { get; set; }
+        public short MaxAD { get; set; }
+        public short MaxCH { get; set; }
+        public short Pax { get; set; }
+
 
         public DateTime CreatedDate { get; set; }
 

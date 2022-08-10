@@ -26,4 +26,3 @@ using System.Security.Claims;
 //        JwtSecurityToken token = handler.CreateJwtSecurityToken(descriptor);
 //        return handler.WriteToken(token);
 //    }
-}

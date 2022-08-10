@@ -26,6 +26,10 @@ namespace Application.Dtos
         public int ContDay { get; set; }
         public bool status { get; set; }
 
+        public float ADP { get; set; }
+        public float CH07 { get; set; }
+        public float CH14 { get; set; }
+
         public List<CAgencyList> AgencyList { get; set; }
         public List<CMarketList> MarketList { get; set; }
         public List<CBoardList> BoardList { get; set; }

@@ -105,6 +105,9 @@ namespace DataAccess.Migrations
                     CurrencyId = table.Column<int>(type: "int", nullable: false),
                     EnteredDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ADP = table.Column<double>(type: "float", nullable: false),
+                    CH07 = table.Column<double>(type: "float", nullable: false),
+                    CH14 = table.Column<double>(type: "float", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -226,10 +229,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    RoomTypeId = table.Column<int>(type: "int", nullable: false),
-                    HotelId = table.Column<int>(type: "int", nullable: false),
-                    Slot = table.Column<int>(type: "int", nullable: false),
-                    Bed = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
+                    RoomTypeId = table.Column<short>(type: "smallint", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -245,7 +245,11 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    HotelId = table.Column<short>(type: "smallint", nullable: false),
+                    MaxAD = table.Column<short>(type: "smallint", nullable: false),
+                    MaxCH = table.Column<short>(type: "smallint", nullable: false),
+                    Pax = table.Column<short>(type: "smallint", nullable: false),
+                    Status = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),

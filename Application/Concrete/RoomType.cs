@@ -17,7 +17,13 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Name { get; set; }
+        public short HotelId { get; set; }
+        public short MaxAD { get; set; }
+        public short MaxCH { get; set; }
+        public short Pax { get; set; }
+        [Column(TypeName = "float")]
         public bool Status { get; set; }
+
 
     }
 }

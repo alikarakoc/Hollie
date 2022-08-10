@@ -17,12 +17,8 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Name { get; set; }
-        public int RoomTypeId { get; set; }
-        public int HotelId { get; set; }
-        public int Slot { get; set; }
-        [Column(TypeName = "nvarchar")]
-        [StringLength(7)]
-        public string Bed { get; set; }
+        public short RoomTypeId { get; set; }
+       // public int Slot { get; set; }
         public bool Status { get; set; }
 
     }

@@ -127,6 +127,7 @@ namespace api.Controllers
                     roomtype.Name = model.Name;
                     roomtype.CreatedDate = model.CreatedDate;
                     roomtype.CreatedUser = model.CreatedUser;
+                    roomtype.HotelId = model.HotelId;
                     roomtype.UpdatedDate = model.UpdatedDate;
                     roomtype.UpdateUser = model.UpdateUser;
                     roomtype.Status = true;
@@ -136,6 +137,7 @@ namespace api.Controllers
                 {
                     roomtype.Code = model.Code;
                     roomtype.Name = model.Name;
+                    roomtype.HotelId = model.HotelId;
                     roomtype.CreatedDate = model.CreatedDate;
                     roomtype.CreatedUser = model.CreatedUser;
                     roomtype.UpdatedDate = model.UpdatedDate;

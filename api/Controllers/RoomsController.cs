@@ -119,10 +119,7 @@ namespace api.Controllers
                 {
                     room.Code = model.Code;
                     room.Name = model.Name;
-                    room.Bed = model.Bed;
-                    room.Slot = model.Slot;
                     room.RoomTypeId = model.RoomTypeId;
-                    room.HotelId = model.HotelId;
                     room.Status = true;
                     _context.SaveChanges();
                 }
