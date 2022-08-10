@@ -21,10 +21,6 @@ namespace api.Mappers
                 operation => operation.MapFrom(source => source.EnteredDate))
                 .ForMember(destination => destination.ExitDate,
                 operation => operation.MapFrom(source => source.ExitDate))
-                .ForMember(destination => destination.AdultPrice,
-                operation => operation.MapFrom(source => source.AdultPrice))
-                .ForMember(destination => destination.ChildPrice,
-                operation => operation.MapFrom(source => source.ChildPrice))
                 .ForMember(destination => destination.ContDay,
                 operation => operation.MapFrom(source => source.ContDay))
                 .ForMember(destination => destination.AgencyList,

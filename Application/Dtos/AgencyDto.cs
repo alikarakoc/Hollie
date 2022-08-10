@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace Application.Dtos
         public DateTime CreatedDate { get; set; }
         public string CreatedUser { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public List<MarketListA> MarketList { get; set; }
+
         public string UpdateUser { get; set; }
 
         public bool Status { get; set; }

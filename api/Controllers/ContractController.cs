@@ -171,8 +171,6 @@ namespace api.Controllers
                     contract.Code = model.Code;
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
-                    contract.AdultPrice = model.AdultPrice;
-                    contract.ChildPrice = model.ChildPrice;
                     contract.ADP = model.ADP;
                     contract.CH07 = model.CH07;
                     contract.CH14 = model.CH14;

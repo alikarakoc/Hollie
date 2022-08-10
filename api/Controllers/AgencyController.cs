@@ -1,6 +1,8 @@
-﻿using Application.Concrete;
+﻿using api.Helpers;
+using Application.Concrete;
 using Application.Dtos;
 using Application.Infrastructure;
+using AutoMapper;
 using DataAccess.Concrate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +19,9 @@ namespace api.Controllers
     [ApiController]
     public class AgencyController : Controller
     {
+
+        private readonly IMapper _mapper;
+
         private readonly Context _context;
         public AgencyController(Context _context)
         {
@@ -84,8 +89,15 @@ namespace api.Controllers
             var checkCode = _context.Agencies.Where(h => h.Code == _agency.Code).Count();
             if (checkCode < 1)
             {
+                Agency agency = new Agency();
+                agency = _mapper.Map<Agency>(_agency);
+
                 _context.Agencies.Add(_agency);
                 _agency.Status = true;
+
+
+                AgencyMarketHelper.AddMarkets(agency.Id, agency.MarketList, _context);
+
                 _context.SaveChanges();
             }
             return actionResponse;

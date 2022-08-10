@@ -25,6 +25,10 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Email { get; set; }
+
+        [NotMapped]
+        public List<MarketListA> MarketList { get; set; }
+        
         public bool Status { get; set; }
     }
     

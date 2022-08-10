@@ -21,10 +21,8 @@ namespace Application.Dtos
 
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }
-        public float AdultPrice { get; set; }
-        public float ChildPrice { get; set; }
         public int ContDay { get; set; }
-        public bool status { get; set; }
+        public bool Status { get; set; }
 
         public float ADP { get; set; }
         public float CH07 { get; set; }
