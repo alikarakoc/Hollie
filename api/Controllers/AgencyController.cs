@@ -78,6 +78,9 @@ namespace api.Controllers
             //var checkName = _context.Agencies.Where(h => h.Name == _agency.Name).Count();
             //if (checkName < 1)
 
+            //Agency s = _agency;
+            ////s.Code = 5;
+
             var checkCode = _context.Agencies.Where(h => h.Code == _agency.Code).Count();
             if (checkCode < 1)
             {

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repository
 {
-    public class UserRepository
+    public class AuthenticationRepository
     {
-        public List<UserLogin> TestUsers;
-        public UserRepository()
+        public List<Authentication> TestUsers;
+        public AuthenticationRepository()
         {
-            TestUsers = new List<UserLogin>();
-            TestUsers.Add(new UserLogin() { UserName = "User1", Password  = "Pass1" });
-            TestUsers.Add(new UserLogin() { UserName = "User2", Password = "Pass2" });
+            TestUsers = new List<Authentication>();
+            TestUsers.Add(new Authentication() { UserName = "User1", Password  = "Pass1" });
+            TestUsers.Add(new Authentication() { UserName = "User2", Password = "Pass2" });
         }
-        public UserLogin GetUser(string username)
+        public Authentication GetUser(string username)
         {
             try
             {

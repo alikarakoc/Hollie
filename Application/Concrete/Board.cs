@@ -13,6 +13,7 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(20)]
         public string Code { get; set; }
+        
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Name { get; set; }
