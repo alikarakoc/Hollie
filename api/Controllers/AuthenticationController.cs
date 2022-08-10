@@ -1,4 +1,5 @@
-﻿using Application.Concrete;
+﻿using api.Helpers;
+using Application.Concrete;
 using Application.Dtos;
 using Application.Infrastructure;
 using DataAccess.Concrate;
@@ -25,13 +26,17 @@ namespace api.Controllers
         }
 
         [HttpPost ("register")]
-        public async Task<ActionResponse<Authentication>> Register ([FromBody] AuthenticationDto f)
+        public async Task<ActionResponse<Authentication>> Register ([FromBody] AuthenticationDto authenticationDto)
         {
             ActionResponse<Authentication> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
+
+            authenticationDto.Password = AuthenticationHelper.ConvertStringToMD5(authenticationDto.Password);
+
+          
 
 
             return actionResponse;
