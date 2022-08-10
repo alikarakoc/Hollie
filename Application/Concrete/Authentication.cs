@@ -6,18 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Application.Concrete
 {
-    public class Board : BaseEntity
+    public class Authentication 
     {
         [Column(TypeName = "nvarchar")]
-        [StringLength(20)]
-        public string Code { get; set; }
-        
+        [StringLength(50)]
+        public string UserName { get; set; }
+
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
-        public string Name { get; set; }
-        public bool Status { get; set; }
+        public string Password { get; set; }
 
+        [Column(TypeName = "nvarchar")]
+        [StringLength(50)]
+        public string ConfirmPassword { get; set; }
     }
 }

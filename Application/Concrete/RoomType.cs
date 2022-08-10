@@ -14,12 +14,18 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(20)]
         public string Code { get; set; }
+
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
         public string Name { get; set; }
+
+        [Column(TypeName = "float")]
         public short HotelId { get; set; }
+        [Column(TypeName = "float")]
         public short MaxAD { get; set; }
+        [Column(TypeName = "float")]
         public short MaxCH { get; set; }
+        [Column(TypeName = "float")]
         public short Pax { get; set; }
         [Column(TypeName = "float")]
         public bool Status { get; set; }
