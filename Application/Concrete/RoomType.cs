@@ -21,9 +21,7 @@ namespace Application.Concrete
 
         [Column(TypeName = "float")]
         public short HotelId { get; set; }
-        [Column(TypeName = "float")]
         public short MaxAD { get; set; }
-        [Column(TypeName = "float")]
         public short MaxCH { get; set; }
         [Column(TypeName = "float")]
         public short Pax { get; set; }
