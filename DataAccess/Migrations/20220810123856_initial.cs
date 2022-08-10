@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -245,10 +245,10 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    HotelId = table.Column<short>(type: "smallint", nullable: false),
-                    MaxAD = table.Column<short>(type: "smallint", nullable: false),
-                    MaxCH = table.Column<short>(type: "smallint", nullable: false),
-                    Pax = table.Column<short>(type: "smallint", nullable: false),
+                    HotelId = table.Column<double>(type: "float", nullable: false),
+                    MaxAD = table.Column<double>(type: "float", nullable: false),
+                    MaxCH = table.Column<double>(type: "float", nullable: false),
+                    Pax = table.Column<double>(type: "float", nullable: false),
                     Status = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),

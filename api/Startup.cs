@@ -70,6 +70,12 @@ namespace api
             {
                 endpoints.MapControllers();
             });
+
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var dataContext = scope.ServiceProvider.GetRequiredService<Context>();
+                dataContext.Database.Migrate();
+            }
         }
     }
 }

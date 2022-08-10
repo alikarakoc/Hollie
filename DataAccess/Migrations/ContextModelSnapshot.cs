@@ -449,21 +449,21 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<short>("HotelId")
-                        .HasColumnType("smallint");
+                    b.Property<double>("HotelId")
+                        .HasColumnType("float");
 
-                    b.Property<short>("MaxAD")
-                        .HasColumnType("smallint");
+                    b.Property<double>("MaxAD")
+                        .HasColumnType("float");
 
-                    b.Property<short>("MaxCH")
-                        .HasColumnType("smallint");
+                    b.Property<double>("MaxCH")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<short>("Pax")
-                        .HasColumnType("smallint");
+                    b.Property<double>("Pax")
+                        .HasColumnType("float");
 
                     b.Property<double>("Status")
                         .HasColumnType("float");
