@@ -85,23 +85,23 @@ namespace api.Controllers
             //if (checkName < 1) 
             if (checkCode < 1)
             {
-                    _context.RoomTypes.Add(room);
+                _context.RoomTypes.Add(room);
                 room.Status = true;
-                    _context.SaveChanges();
+               _context.SaveChanges();
             }
             return actionResponse;
         }
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<RoomType>> DeleteRoomType([FromQuery] RoomTypeDto model)
+        public async Task<ActionResponse<RoomType>> DeleteRoomType([FromBody] RoomTypeDto model)
         {
             ActionResponse<RoomType> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
+            RoomType roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
             roomtype.Status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -109,7 +109,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<RoomType>> UpdateRoomType([FromQuery]RoomTypeDto modelID, [FromBody] RoomTypeDto model)
+        public async Task<ActionResponse<RoomType>> UpdateRoomType([FromBody] RoomTypeDto model)
         {
             ActionResponse<RoomType> actionResponse = new()
             {
@@ -119,32 +119,31 @@ namespace api.Controllers
 
             try
             {
-                var roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                //var checkName = _context.RoomTypes.Where(h => h.Name == model.Name)?.Count();
-                var checkCode = _context.RoomTypes.Where(h => h.Code == model.Code)?.Count();
-                if (roomtype.Code == model.Code)
+                RoomType roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
+                int checkCode = (int)_context.RoomTypes.Where(h => h.Code == model.Code)?.Count();
+
+                if(checkCode > 0)
                 {
-                    roomtype.Name = model.Name;
-                    roomtype.CreatedDate = model.CreatedDate;
-                    roomtype.CreatedUser = model.CreatedUser;
-                    roomtype.HotelId = model.HotelId;
-                    roomtype.UpdatedDate = model.UpdatedDate;
-                    roomtype.UpdateUser = model.UpdateUser;
-                    roomtype.Status = true;
-                    _context.SaveChanges();
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
                 }
-                else if (checkCode < 1 && roomtype != null)
+
+                if (roomtype.Code == model.Code || checkCode == 0)
                 {
                     roomtype.Code = model.Code;
                     roomtype.Name = model.Name;
-                    roomtype.HotelId = model.HotelId;
                     roomtype.CreatedDate = model.CreatedDate;
                     roomtype.CreatedUser = model.CreatedUser;
+                    roomtype.HotelId = model.HotelId;
+                    roomtype.MaxCH = model.MaxCH;
+                    roomtype.MaxAD = model.MaxAD;
+                    roomtype.Pax = model.Pax;
                     roomtype.UpdatedDate = model.UpdatedDate;
                     roomtype.UpdateUser = model.UpdateUser;
                     roomtype.Status = true;
                     _context.SaveChanges();
                 }
+               
                 return actionResponse;
             }
             catch (Exception ex)

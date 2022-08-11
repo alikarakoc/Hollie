@@ -80,7 +80,7 @@ namespace api.Controllers
         }
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Room>> DeleteRoom([FromQuery] RoomDto model)
+        public async Task<ActionResponse<Room>> DeleteRoom([FromBody] RoomDto model)
         {
             ActionResponse<Room> actionResponse = new()
             {
@@ -119,7 +119,9 @@ namespace api.Controllers
                 {
                     room.Code = model.Code;
                     room.Name = model.Name;
+                    room.HotelId = model.HotelId;
                     room.RoomTypeId = model.RoomTypeId;
+                    room.Clean = model.Clean;
                     room.Status = true;
                     _context.SaveChanges();
                 }
