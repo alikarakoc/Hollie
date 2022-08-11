@@ -84,8 +84,8 @@ namespace api.Controllers
             country.Status = true;
             _context.SaveChanges();
             }
-            return actionResponse;    
-}
+            return actionResponse;
+        }
         [HttpDelete]
         [Route("delete")]
         public async Task<ActionResponse<Country>> DeleteCountry([FromQuery] CountryDto model)
