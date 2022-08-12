@@ -21,13 +21,18 @@ namespace Application.Concrete
 
         [Column(TypeName = "float")]
         public short HotelId { get; set; }
-        [Column(TypeName = "float")]
+        [Column(TypeName = "smallint")]
         public short MaxAD { get; set; }
-        [Column(TypeName = "float")]
+        [Column(TypeName = "smallint")]
         public short MaxCH { get; set; }
 
-        [Column(TypeName = "float")]
+        [Column(TypeName = "smallint")]
         public short Pax { get; set; }
+
+        [Column(TypeName = "float")]
+        public short AdP { get; set; }
+        [Column(TypeName = "float")]
+        public short ChP { get; set; }
 
         public bool Status { get; set; }
 
