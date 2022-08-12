@@ -4,14 +4,16 @@ using DataAccess.Concrate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20220811110700_change3")]
+    partial class change3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,9 +318,6 @@ namespace DataAccess.Migrations
                     b.Property<int>("HotelCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("HotelFeatureId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -372,11 +371,11 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte>("BabyTop")
-                        .HasColumnType("tinyint");
+                    b.Property<short>("BabyTop")
+                        .HasColumnType("smallint");
 
-                    b.Property<byte>("ChildTop")
-                        .HasColumnType("tinyint");
+                    b.Property<short>("ChildTop")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Code")
                         .HasMaxLength(20)
@@ -388,8 +387,8 @@ namespace DataAccess.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("TeenTop")
-                        .HasColumnType("tinyint");
+                    b.Property<short>("TeenTop")
+                        .HasColumnType("smallint");
 
                     b.HasKey("Id");
 

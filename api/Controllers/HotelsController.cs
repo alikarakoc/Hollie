@@ -96,9 +96,8 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            //var checkName = _context.Hotels.Where(h => h.Name == htl.Name).Count();
-            var checkCode = _context.Hotels.Where(c => c.Code == htl.Code).Count();
-            //if(checkName < 1 || checkCode <1 )
+            int checkCode = _context.Hotels.Where(c => c.Code == htl.Code).Count();
+           
             if (checkCode < 1)
             {
                 _context.Hotels.Add(htl);
@@ -126,7 +125,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<Hotel>> UpdateHotel([FromQuery] HotelDto modelID, [FromBody] HotelDto model)
+        public async Task<ActionResponse<Hotel>> UpdateHotel([FromBody] HotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
@@ -136,33 +135,22 @@ namespace api.Controllers
 
             try
             {
-                var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                //var checkName=_context.Hotels.Where(h => h.Name == model.Name)?.Count();
-                var checkCode = _context.Hotels.Where(c => c.Code == model.Code)?.Count();
+                Hotel hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == model.Id);
+                int checkCode = _context.Hotels.Where(h => h.Code == model.Code && h.Id != model.Id).Count();
 
-                if (hotel.Code == model.Code)
+                if (checkCode > 0)
                 {
-                    hotel.Name = model.Name;
-                    hotel.Address = model.Address;
-                    hotel.Phone = model.Phone;
-                    hotel.Email = model.Email;
-                    hotel.HotelCategoryId = model.HotelCategoryId;
-                    hotel.CreatedDate = model.CreatedDate;
-                    hotel.CreatedUser = model.CreatedUser;
-                    hotel.UpdatedDate = model.UpdatedDate;
-                    hotel.UpdateUser = model.UpdateUser;
-                    hotel.Status = true;
-                    _context.SaveChanges();
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
                 }
-             
-                else if (checkCode < 1 && hotel != null)
+                if (hotel.Code == model.Code || checkCode == 0)
                 {
-                    hotel.Code = model.Code;
                     hotel.Name = model.Name;
                     hotel.Address = model.Address;
                     hotel.Phone = model.Phone;
                     hotel.Email = model.Email;
                     hotel.HotelCategoryId = model.HotelCategoryId;
+                    hotel.HotelFeatureId  = model.HotelFeatureId;
                     hotel.CreatedDate = model.CreatedDate;
                     hotel.CreatedUser = model.CreatedUser;
                     hotel.UpdatedDate = model.UpdatedDate;
@@ -172,6 +160,7 @@ namespace api.Controllers
                 }
                 return actionResponse;
             }
+
             catch (Exception ex)
             {
                 actionResponse.ResponseType = ResponseType.Error;
