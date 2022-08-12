@@ -114,7 +114,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Hotel>> DeleteAgency([FromQuery] AgencyDto model)
+        public async Task<ActionResponse<Hotel>> DeleteAgency([FromBody] AgencyDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
@@ -131,7 +131,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<Agency>> UpdateAgency([FromQuery] AgencyDto modelID, [FromBody] AgencyDto model)
+        public async Task<ActionResponse<Agency>> UpdateAgency([FromBody] AgencyDto model)
         {
             ActionResponse<Agency> actionResponse = new()
             {
@@ -141,24 +141,17 @@ namespace api.Controllers
 
             try
             {
-                var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                //var checkAgency = _context.Agencies.Where(h => h.Name == model.Name)?.Count();         
-                //if (checkAgency< 1 && agency != null)
-                var checkCode = _context.Agencies.Where(h => h.Code == model.Code)?.Count();
-                if(agency.Code == model.Code)
-                {
-                    agency.Name = model.Name;
-                    agency.Phone = model.Phone;
-                    agency.Email = model.Email;
-                    agency.Address = model.Address;
-                    agency.UpdateUser = bilgisayarAdi;
-                    agency.UpdatedDate = DateTime.Now;
-                    agency.Status = true;
+                Agency agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
+                agency.MarketList = _context.AMarkets.Where(c => c.ListId == model.Id).ToList();
 
-                    _context.SaveChanges();
+                int checkCode = _context.Agencies.Where(h => h.Code == model.Code).Count();
+
+                if (checkCode > 0)
+                {
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
                 }
-                
-                else if (checkCode < 1 && agency != null)
+                if (agency.Code == model.Code || checkCode == 0)
                 {
                     agency.Code = model.Code;
                     agency.Name = model.Name;
@@ -169,8 +162,12 @@ namespace api.Controllers
                     agency.UpdatedDate = DateTime.Now;
                     agency.Status = true;
 
+                    AgencyMarketHelper.DeleteMarkets(agency.MarketList, _context);
+                    AgencyMarketHelper.AddMarkets(model.Id, model.MarketList, _context);
+
                     _context.SaveChanges();
                 }
+               
                 return actionResponse;
             }
             catch (Exception ex)
