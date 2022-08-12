@@ -15,7 +15,9 @@ namespace Application.Concrete
         [Column(TypeName = "nvarchar")]
         [StringLength(20)]
         public string Code { get; set; }
-        public int HotelId { get; set; }
+        [Column(TypeName = "nvarchar")]
+        [StringLength(50)]
+        public string Name { get; set; }
         public byte BabyTop { get; set; }
         public byte ChildTop { get; set; }
         public byte TeenTop  { get; set; }

@@ -103,7 +103,7 @@ namespace api.Controllers
                 if (hotelFeature.Code == model.Code || checkCode == 0)
                 {
                     hotelFeature.Code = model.Code;
-                    hotelFeature.HotelId = model.HotelId;
+                    hotelFeature.Name = model.Name;
                     hotelFeature.BabyTop = model.BabyTop;
                     hotelFeature.ChildTop = model.ChildTop;
                     hotelFeature.TeenTop = model.TeenTop;

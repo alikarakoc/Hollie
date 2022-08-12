@@ -11,7 +11,7 @@ namespace Application.Dtos
        
         public int Id { get; set; }
         public string Code { get; set; }
-        public int HotelId { get; set; }
+        public string Name { get; set; }
         public byte BabyTop { get; set; }
         public byte ChildTop { get; set; }
         public byte TeenTop { get; set; }
