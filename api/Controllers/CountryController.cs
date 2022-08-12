@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -18,6 +19,8 @@ namespace api.Controllers
 
     public class CountryController : Controller
     {
+        string bilgisayarAdi = Dns.GetHostName();
+
         private readonly Context _context;
         public CountryController(Context _context)
         {
@@ -81,7 +84,9 @@ namespace api.Controllers
             if (checkCode < 1)
             { 
             _context.Countries.Add(country);
-            country.Status = true;
+                country.CreatedUser = bilgisayarAdi;
+                country.CreatedDate = DateTime.Now;
+                country.Status = true;
             _context.SaveChanges();
             }
             return actionResponse;
@@ -96,6 +101,8 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
+            country.UpdateUser = bilgisayarAdi;
+            country.UpdatedDate = DateTime.Now;
             country.Status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -122,10 +129,8 @@ namespace api.Controllers
                 if (country.Code == model.Code)
                 {
                     country.Name = model.Name;
-                    country.CreatedDate = model.CreatedDate;
-                    country.CreatedUser = model.CreatedUser;
-                    country.UpdatedDate = model.UpdatedDate;
-                    country.UpdateUser = model.UpdateUser;
+                    country.UpdateUser = bilgisayarAdi;
+                    country.UpdatedDate = DateTime.Now;
                     country.Status = true;
                     _context.SaveChanges();
                 }
@@ -134,10 +139,8 @@ namespace api.Controllers
                 {
                     country.Code = model.Code;
                     country.Name = model.Name;
-                    country.CreatedDate = model.CreatedDate;
-                    country.CreatedUser = model.CreatedUser;
-                    country.UpdatedDate = model.UpdatedDate;
-                    country.UpdateUser = model.UpdateUser;
+                    country.UpdateUser = bilgisayarAdi;
+                    country.UpdatedDate = DateTime.Now;
                     country.Status = true;
                     _context.SaveChanges();
                 }

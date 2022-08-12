@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -17,6 +18,8 @@ namespace api.Controllers
     [ApiController]
     public class MarketController : Controller
     {
+        string bilgisayarAdi = Dns.GetHostName();
+
         private readonly Context _context;
         public MarketController(Context _context)
         {
@@ -79,11 +82,14 @@ namespace api.Controllers
             };
 
             //var checkMarket = _context.Markets.Where(h => h.Name == market.Name).Count();
-            market.Status = true;
+
             var checkCode = _context.Markets.Where(h => h.Code == market.Code).Count();
             if (checkCode < 1) { 
                  _context.Markets.Add(market);
-                 _context.SaveChanges();
+                market.CreatedUser = bilgisayarAdi;
+                market.CreatedDate = DateTime.Now;
+                market.Status = true;
+                _context.SaveChanges();
             }
             return actionResponse;
         }
@@ -98,6 +104,8 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == model.Id);
+            market.UpdateUser = bilgisayarAdi;
+            market.UpdatedDate = DateTime.Now;
             market.Status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -122,10 +130,8 @@ namespace api.Controllers
                 if (market.Code == model.Code)
                 { 
                     market.Name = model.Name;
-                    market.CreatedDate = model.CreatedDate;
-                    market.CreatedUser = model.CreatedUser;
-                    market.UpdatedDate = model.UpdatedDate;
-                    market.UpdateUser = model.UpdateUser;
+                    market.UpdateUser = bilgisayarAdi;
+                    market.UpdatedDate = DateTime.Now;
                     market.Status = true;
                     _context.SaveChanges();
                 }
@@ -133,10 +139,8 @@ namespace api.Controllers
                 {
                     market.Code = model.Code;
                     market.Name = model.Name;
-                    market.CreatedDate = model.CreatedDate;
-                    market.CreatedUser = model.CreatedUser;
-                    market.UpdatedDate = model.UpdatedDate;
-                    market.UpdateUser = model.UpdateUser;
+                    market.UpdateUser = bilgisayarAdi;
+                    market.UpdatedDate = DateTime.Now;
                     market.Status = true;
                     _context.SaveChanges();
                 }

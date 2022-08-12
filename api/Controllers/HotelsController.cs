@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -17,6 +18,8 @@ namespace api.Controllers
     [ApiController]
     public class HotelsController : Controller
     {
+        string bilgisayarAdi = Dns.GetHostName();
+
         private readonly Context _context;
         public HotelsController(Context _context)
         {
@@ -101,6 +104,8 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Hotels.Add(htl);
+                htl.CreatedUser = bilgisayarAdi;
+                htl.CreatedDate = DateTime.Now;
                 htl.Status = true;
                 _context.SaveChanges();
             }
@@ -118,6 +123,8 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == model.Id);
+            hotel.UpdateUser = bilgisayarAdi;
+            hotel.UpdatedDate = DateTime.Now;
             hotel.Status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -151,10 +158,8 @@ namespace api.Controllers
                     hotel.Email = model.Email;
                     hotel.HotelCategoryId = model.HotelCategoryId;
                     hotel.HotelFeatureId  = model.HotelFeatureId;
-                    hotel.CreatedDate = model.CreatedDate;
-                    hotel.CreatedUser = model.CreatedUser;
-                    hotel.UpdatedDate = model.UpdatedDate;
-                    hotel.UpdateUser = model.UpdateUser;
+                    hotel.UpdateUser = bilgisayarAdi;
+                    hotel.UpdatedDate = DateTime.Now;
                     hotel.Status = true;
                     _context.SaveChanges();
                 }

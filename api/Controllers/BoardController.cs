@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -18,6 +19,8 @@ namespace api.Controllers
 
     public class BoardController : Controller
     {
+        string bilgisayarAdi = Dns.GetHostName();
+
         private readonly Context _context;
         public BoardController(Context _context)
         {
@@ -85,6 +88,8 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Boards.Add(board);
+                board.CreatedUser = bilgisayarAdi;
+                board.CreatedDate = DateTime.Now;
                 board.Status = true;
                 _context.SaveChanges();
             }
@@ -104,6 +109,8 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var board = await _context.Boards.FirstOrDefaultAsync(h => h.Id == model.Id);
+            board.UpdateUser = bilgisayarAdi;
+            board.UpdatedDate = DateTime.Now;
             board.Status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -130,10 +137,8 @@ namespace api.Controllers
                 if (board.Code == model.Code)
                 {
                     board.Name = model.Name;
-                    board.CreatedDate = model.CreatedDate;
-                    board.CreatedUser = model.CreatedUser;
-                    board.UpdatedDate = model.UpdatedDate;
-                    board.UpdateUser = model.UpdateUser;
+                    board.UpdateUser = bilgisayarAdi;
+                    board.UpdatedDate = DateTime.Now;
                     board.Status = true;
                     _context.SaveChanges();
                 }
@@ -142,10 +147,8 @@ namespace api.Controllers
                 {
                     board.Code = model.Code;
                     board.Name = model.Name;
-                    board.CreatedDate = model.CreatedDate;
-                    board.CreatedUser = model.CreatedUser;
-                    board.UpdatedDate = model.UpdatedDate;  
-                    board.UpdateUser = model.UpdateUser;
+                    board.UpdateUser = bilgisayarAdi;
+                    board.UpdatedDate = DateTime.Now;
                     board.Status = true;
                     _context.SaveChanges();
                 }

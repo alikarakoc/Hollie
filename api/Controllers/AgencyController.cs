@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -19,6 +20,8 @@ namespace api.Controllers
     [ApiController]
     public class AgencyController : Controller
     {
+        string bilgisayarAdi = Dns.GetHostName();
+
 
         private readonly IMapper _mapper;
 
@@ -91,9 +94,11 @@ namespace api.Controllers
             {
                 Agency agency = new Agency();
                 agency = _mapper.Map<Agency>(_agency);
-
-                _context.Agencies.Add(_agency);
+                _agency.CreatedUser = bilgisayarAdi;
+                _agency.CreatedDate = DateTime.Now;
                 _agency.Status = true;
+                _context.Agencies.Add(_agency);
+
 
 
                 AgencyMarketHelper.AddMarkets(agency.Id, agency.MarketList, _context);
@@ -113,6 +118,8 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
+            agency.UpdateUser = bilgisayarAdi;
+            agency.UpdatedDate = DateTime.Now;
             agency.Status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -140,10 +147,8 @@ namespace api.Controllers
                     agency.Phone = model.Phone;
                     agency.Email = model.Email;
                     agency.Address = model.Address;
-                    agency.CreatedDate = model.CreatedDate;
-                    agency.CreatedUser = model.CreatedUser;
-                    agency.UpdatedDate = model.UpdatedDate;
-                    agency.UpdateUser = model.UpdateUser;
+                    agency.UpdateUser = bilgisayarAdi;
+                    agency.UpdatedDate = DateTime.Now;
                     agency.Status = true;
 
                     _context.SaveChanges();
@@ -156,10 +161,8 @@ namespace api.Controllers
                     agency.Phone = model.Phone;
                     agency.Email = model.Email;
                     agency.Address = model.Address;
-                    agency.CreatedDate = model.CreatedDate;
-                    agency.CreatedUser = model.CreatedUser;
-                    agency.UpdatedDate = model.UpdatedDate;
-                    agency.UpdateUser = model.UpdateUser;
+                    agency.UpdateUser = bilgisayarAdi;
+                    agency.UpdatedDate = DateTime.Now;
                     agency.Status = true;
 
                     _context.SaveChanges();
