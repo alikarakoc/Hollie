@@ -10,13 +10,17 @@ namespace api.Helpers
         public static void AddMarkets(int id, List<MarketListA> listMarkets, Context context)
         {
             List<Market> list = context.Markets.ToList();
-            foreach (MarketListA marketFromList in listMarkets)
+            if (listMarkets != null)
             {
-                marketFromList.ListId = id;
-                if (list.Any(p => p.Id == marketFromList.MarketId))
+                foreach (MarketListA marketFromList in listMarkets)
                 {
-                    context.AMarkets.Add(marketFromList);
+                    marketFromList.ListId = id;
+                    if (list.Any(p => p.Id == marketFromList.MarketId))
+                    {
+                        context.AMarkets.Add(marketFromList);
+                    }
                 }
+
             }
         }
 

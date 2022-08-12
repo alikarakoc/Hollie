@@ -89,19 +89,23 @@ namespace api.Controllers
             //Agency s = _agency;
             ////s.Code = 5;
 
-            var checkCode = _context.Agencies.Where(h => h.Code == _agency.Code).Count();
+            int checkCode = _context.Agencies.Where(h => h.Code == _agency.Code).Count();
             if (checkCode < 1)
             {
-                Agency agency = new Agency();
-                agency = _mapper.Map<Agency>(_agency);
+                //Agency agency = new Agency();
+                //agency = _mapper.Map<Agency>(_agency);
                 _agency.CreatedUser = bilgisayarAdi;
                 _agency.CreatedDate = DateTime.Now;
+
                 _agency.Status = true;
                 _context.Agencies.Add(_agency);
 
 
+                _context.SaveChanges();
 
-                AgencyMarketHelper.AddMarkets(agency.Id, agency.MarketList, _context);
+
+
+                AgencyMarketHelper.AddMarkets(_agency.Id, _agency.MarketList, _context);
 
                 _context.SaveChanges();
             }

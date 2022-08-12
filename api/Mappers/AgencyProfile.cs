@@ -15,6 +15,8 @@ namespace api.Mappers
                 operation => operation.MapFrom(source => source.Code))
                 .ForMember(destination => destination.Address,
                 operation => operation.MapFrom(source => source.Address))
+                 .ForMember(destination => destination.Phone,
+                operation => operation.MapFrom(source => source.Phone))
                 .ForMember(destination => destination.Email,
                 operation => operation.MapFrom(source => source.Email))
                  .ForMember(destination => destination.MarketList,
