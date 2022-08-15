@@ -58,7 +58,7 @@ namespace api.Controllers
             var currencies = _context.Currencies;
             if (DateTime.Now.ToString("dddd") != "Cumartesi" || DateTime.Now.ToString("dddd") != "Pazar")
             { 
-                SqlConnection con = new SqlConnection("Data source=192.168.40.222;initial catalog=Hollie;user id=admin;password=1");
+                SqlConnection con = new SqlConnection("Data source=192.168.40.222;initial catalog=HollieDb;user id=admin;password=1");
                 SqlCommand cmd = new SqlCommand();
                 con.Open();
                 cmd.Connection = con;

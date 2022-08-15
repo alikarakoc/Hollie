@@ -10,7 +10,7 @@ namespace Application.Dtos
     public class CRoomDto
     {
         [Key]
-        public int Id { get; set; }
+        public bool selected { get; set; }
 
         public int RoomId { get; set; }
 

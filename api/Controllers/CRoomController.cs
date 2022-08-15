@@ -23,7 +23,7 @@ namespace api.Controllers
         [HttpGet]
         [Route("AllCRooms")]
 
-        public ActionResponse<List<CRoomList>> GetAllCRoomTypes()
+        public ActionResponse<List<CRoomList>> GetAllCRooms()
         {
             ActionResponse<List<CRoomList>> actionResponse = new()
             {
