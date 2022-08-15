@@ -23,16 +23,17 @@ namespace Application.Concrete
         [StringLength(20)]
         public string Code { get; set; }
         public int HotelId { get; set; }
-        public int ContDay { get; set; }
         public int CurrencyId { get; set; }
         public DateTime EnteredDate { get; set; }
         public DateTime ExitDate { get; set; }
         [Column(TypeName = "float")]
         public float ADP { get; set; }
         [Column(TypeName = "float")]
-        public float CH07 { get; set; }
+        public float CH1 { get; set; }
         [Column(TypeName = "float")]
-        public float CH14 { get; set; }
+        public float CH2 { get; set; }
+        [Column(TypeName = "float")]
+        public float CH3 { get; set; }
         [NotMapped]
         public List<CAgencyList> AgencyList { get; set; }
         [NotMapped]

@@ -68,7 +68,6 @@ namespace api.Controllers
 
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
-                contract.ContDay = ((int)(contract.ExitDate - contract.EnteredDate).TotalDays);
 
 
 
@@ -172,14 +171,13 @@ namespace api.Controllers
                     contract.Name = model.Name;
                     contract.HotelId = model.HotelId;
                     contract.ADP = model.ADP;
-                    contract.CH07 = model.CH07;
-                    contract.CH14 = model.CH14;
-                    contract.ContDay = model.ContDay;
+                    contract.CH1 = model.CH1;
+                    contract.CH2 = model.CH2;
+                    contract.CH3 = model.CH3;
                     contract.CurrencyId = model.CurrencyId;
                     contract.Status = true;
                     contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);
                     contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(model.ExitDate, TimeZoneInfo.Local);
-                    contract.ContDay = ((int)(contract.ExitDate - contract.EnteredDate).TotalDays);
 
                     List<Agency> list = _context.Agencies.ToList();
 
