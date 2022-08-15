@@ -17,6 +17,9 @@ namespace Application.Concrete
         [StringLength(100)]
         [Column(TypeName = "nvarchar")]
         public string? Name { get; set; }
+
+        [Column(TypeName = "float")]
+        public float? Unit { get; set; }
         [Column(TypeName = "float")]
         public float? Value { get; set; }
         [Column(TypeName = "date")]
