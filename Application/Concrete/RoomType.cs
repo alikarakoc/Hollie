@@ -28,12 +28,6 @@ namespace Application.Concrete
 
         [Column(TypeName = "smallint")]
         public short Pax { get; set; }
-
-        [Column(TypeName = "float")]
-        public short AdP { get; set; }
-        [Column(TypeName = "float")]
-        public short ChP { get; set; }
-
         public bool Status { get; set; }
 
 

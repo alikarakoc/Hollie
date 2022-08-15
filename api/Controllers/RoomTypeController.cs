@@ -144,8 +144,6 @@ namespace api.Controllers
                     roomtype.MaxCH = model.MaxCH;
                     roomtype.MaxAD = model.MaxAD;
                     roomtype.Pax = model.Pax;
-                    roomtype.AdP = model.AdP;
-                    roomtype.ChP = model.ChP;
                     roomtype.UpdateUser = bilgisayarAdi;
                     roomtype.UpdatedDate = DateTime.Now;
                     roomtype.Status = true;
