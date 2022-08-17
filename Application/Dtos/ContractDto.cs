@@ -32,7 +32,7 @@ namespace Application.Dtos
         public List<CAgencyList> AgencyList { get; set; }
         public List<CMarketList> MarketList { get; set; }
         public List<CBoardList> BoardList { get; set; }
-        public List<CRoomList> RoomList { get; set; }
+        public List<CRoomTypeList> RoomTypeList { get; set; }
 
 
     }

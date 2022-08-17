@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EntityFramework
 {
-    public class EfCRoomList : GenericRepository<CRoomList>, ICRoom
+    public class EfCRoomTypeList : GenericRepository<CRoomTypeList>, ICRoomType
     {
-        public EfCRoomList(Context _context) : base(_context)
+        public EfCRoomTypeList(Context _context) : base(_context)
         {
         }
     }

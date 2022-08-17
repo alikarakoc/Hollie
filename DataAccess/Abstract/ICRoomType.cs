@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface ICRoom : IGeneric<CRoomList>
+    public interface ICRoomType : IGeneric<CRoomTypeList>
     {
     }
 }

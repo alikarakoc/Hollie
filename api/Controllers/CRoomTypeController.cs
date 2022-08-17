@@ -11,29 +11,29 @@ namespace api.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class CRoomController : Controller
+    public class CRoomTypeController : Controller
     {
         private readonly Context _context;
-        public CRoomController(Context context)
+        public CRoomTypeController(Context context)
         {
             _context = context;
 
         }
 
         [HttpGet]
-        [Route("AllCRooms")]
+        [Route("AllCRoomTypes")]
 
-        public ActionResponse<List<CRoomList>> GetAllCRooms()
+        public ActionResponse<List<CRoomTypeList>> GetAllCRooms()
         {
-            ActionResponse<List<CRoomList>> actionResponse = new()
+            ActionResponse<List<CRoomTypeList>> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var cRoomList = _context.CRooms;
-            if (cRoomList != null && cRoomList.Count() > 0)
+            var cRoomTypeList = _context.CRoomTypes;
+            if (cRoomTypeList != null && cRoomTypeList.Count() > 0)
             {
-                actionResponse.Data = cRoomList.ToList();
+                actionResponse.Data = cRoomTypeList.ToList();
             }
             return actionResponse;
         }

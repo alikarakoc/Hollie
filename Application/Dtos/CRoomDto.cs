@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos
 {
-    public class CRoomDto
+    public class CRoomTypeDto
     {
         [Key]
         public bool selected { get; set; }
 
-        public int RoomId { get; set; }
+        public int RoomTypeId { get; set; }
 
         public int ListId { get; set; }
     }

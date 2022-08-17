@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Abstract
 {
-    internal interface ICRoomListService : IGenericService<CRoomList>
+    internal interface ICRoomTypeListService : IGenericService<CRoomTypeList>
     {
     }
 }

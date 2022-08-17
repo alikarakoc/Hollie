@@ -39,7 +39,7 @@ namespace Application.Concrete
         [NotMapped]
         public List<CBoardList> BoardList { get; set; }
         [NotMapped]
-        public List<CRoomList> RoomList { get; set; }
+        public List<CRoomTypeList> RoomTypeList { get; set; }
         [NotMapped]
         public List<CMarketList> MarketList { get; set; }
 

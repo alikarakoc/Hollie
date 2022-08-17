@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class CRoomList
+    public class CRoomTypeList
     {
         [Key]
         public int Id { get; set; }
 
-        public int RoomId { get; set; }
+        public int RoomTypeId { get; set; }
 
         public int ListId { get; set; }
     }
