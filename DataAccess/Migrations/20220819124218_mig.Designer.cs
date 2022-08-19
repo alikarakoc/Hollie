@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220819105824_mig1")]
-    partial class mig1
+    [Migration("20220819124218_mig")]
+    partial class mig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -551,6 +551,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("Reservation")
+                        .HasColumnType("bit");
 
                     b.Property<short>("RoomTypeId")
                         .HasColumnType("smallint");

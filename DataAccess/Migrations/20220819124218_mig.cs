@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class mig1 : Migration
+    public partial class mig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -306,6 +306,7 @@ namespace DataAccess.Migrations
                     HotelId = table.Column<short>(type: "smallint", nullable: false),
                     RoomTypeId = table.Column<short>(type: "smallint", nullable: false),
                     Clean = table.Column<bool>(type: "bit", nullable: false),
+                    Reservation = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

@@ -14,6 +14,7 @@ namespace Application.Dtos
         public short HotelId { get; set; }
         public short RoomTypeId { get; set; }
         public bool Clean { get; set; }
+        public bool Reservation { get; set; }
         public bool Status { get; set; }
     }
 }

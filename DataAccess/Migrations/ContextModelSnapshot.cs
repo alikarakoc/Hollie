@@ -550,6 +550,9 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("Reservation")
+                        .HasColumnType("bit");
+
                     b.Property<short>("RoomTypeId")
                         .HasColumnType("smallint");
 

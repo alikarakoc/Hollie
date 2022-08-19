@@ -124,6 +124,7 @@ namespace api.Controllers
                     room.HotelId = model.HotelId;
                     room.RoomTypeId = model.RoomTypeId;
                     room.Clean = model.Clean;
+                    room.Reservation = model.Reservation;
                     room.Status = true;
                     _context.SaveChanges();
                 }
