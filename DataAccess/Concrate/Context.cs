@@ -1,4 +1,6 @@
 ﻿using Application.Concrete;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrate
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext<AppUser, IdentityRole, string>
     {
         
-        public Context(DbContextOptions options) : base(options) { }
+        public Context(DbContextOptions options ) : base(options) { }
 
 
         public DbSet<Agency> Agencies { get; set; }   
