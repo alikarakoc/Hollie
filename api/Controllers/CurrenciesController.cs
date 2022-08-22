@@ -57,8 +57,10 @@ namespace api.Controllers
             };
             var currencies = _context.Currencies;
             if (DateTime.Now.ToString("dddd") != "Cumartesi" || DateTime.Now.ToString("dddd") != "Pazar")
-            { 
-                SqlConnection con = new SqlConnection("server=DESKTOP-S5PJJKN;database=Hollie;integrated security=true");
+            {
+
+                var connectionString = _context.Database.GetDbConnection().ConnectionString;
+                SqlConnection con = new SqlConnection(connectionString);
                 SqlCommand cmd = new SqlCommand();
                 con.Open();
                 cmd.Connection = con;

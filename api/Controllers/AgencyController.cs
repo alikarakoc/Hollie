@@ -52,31 +52,33 @@ namespace api.Controllers
             }
             return actionResponse;
         }
-        [HttpGet]
-        [Route("GetAgencySelectList")]
-        public ActionResponse<List<AgencyMarketSelectDto>> GetAgencySelectList()
-        {
-            ActionResponse<List<AgencyMarketSelectDto>> actionResponse = new()
-            {
-                ResponseType = ResponseType.Ok,
-                IsSuccessful = true,
-            };
 
-            var agencys = _context.Agencies.Where(x => x.Status == true).ToList();
-            var agencyMarkets = _context.AMarkets.ToList();
-            actionResponse.Data = new List<AgencyMarketSelectDto>();
-            foreach (var agency in agencys)
-            {
-                actionResponse.Data.Add(new AgencyMarketSelectDto()
-                {
-                    AgencyCode = agency.Code,
-                    AgencyId = agency.Id,
-                    Markets = agencyMarkets.Where(p => p.ListId == agency.Id).Select(s => s.Id).ToList()
-                });
-            }
+        //[HttpGet]
+        //[Route("GetAgencySelectList")]
+        //public ActionResponse<List<AgencyMarketSelectDto>> GetAgencySelectList()
+        //{
+        //    ActionResponse<List<AgencyMarketSelectDto>> actionResponse = new()
+        //    {
+        //        ResponseType = ResponseType.Ok,
+        //        IsSuccessful = true,
+        //    };
+
+        //    var agencys = _context.Agencies.Where(x => x.Status == true).ToList();
+        //    var agencyMarkets = _context.AMarkets.ToList();
+        //    actionResponse.Data = new List<AgencyMarketSelectDto>();
+        //    foreach (var agency in agencys)
+        //    {
+        //        actionResponse.Data.Add(new AgencyMarketSelectDto()
+        //        {
+        //            AgencyCode = agency.Code,
+        //            AgencyId = agency.Id,
+        //            Markets = agencyMarkets.Where(p => p.ListId == agency.Id).Select(s => s.Id).ToList()
+        //        });
+        //    }
            
-            return actionResponse;
-        }
+        //    return actionResponse;
+        //}
+
         [HttpGet]
         public async Task<ActionResponse<Agency>> GetAgencies([FromQuery] AgencyDto model)
         {
