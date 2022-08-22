@@ -2,9 +2,11 @@
 using Application.Concrete;
 using Application.Dtos;
 using Application.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,22 +15,27 @@ using System.Threading.Tasks;
 
 namespace api.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
+   
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
+        public readonly IConfiguration _configuration;
 
-        public UserController(ILogger<UserController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signManager)
+        public UserController(ILogger<UserController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signManager;
+            _configuration=configuration;
             _logger = logger;
         }
 
+        [Authorize]
         [HttpPost("RegisterUser")]
         public async Task<ActionResponse<AddUpdateRegisterUserBindingModel>> RegisterUser([FromBody] AddUpdateRegisterUserBindingModel model)
         {
@@ -71,6 +78,7 @@ namespace api.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("GetAllUser")]
         public async Task<ActionResponse<List<UserDto>>> GetAllUser()
         {
@@ -96,6 +104,7 @@ namespace api.Controllers
 
         }
 
+        [Authorize]
         [HttpPost("Login")]
 
         public async Task<ActionResponse<loginBindingModel>> Login([FromBody] loginBindingModel model)
@@ -123,6 +132,7 @@ namespace api.Controllers
                         actionResponse.IsSuccessful = true;
                         return actionResponse;
                     }
+
                 }
 
             }
@@ -135,5 +145,24 @@ namespace api.Controllers
             return actionResponse;
 
         }
+
+        //private string GenerateJwtToken(AppUser user)
+        //{
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Secret").Value);
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //      Subject = new ClaimsIdentity(new Claim[]{
+        //          new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        //          new Claim(ClaimTypes.Name, user.FullName)
+        //      }),
+        //      Expires =DateTime.UtcNow.AddDays(1),
+        //      SigninCredentials = new SigninCredentials(new SymetricSecurityKey(key) , SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    return tokenHandler.writeToken(token);
+
+        //}
     }
 }
