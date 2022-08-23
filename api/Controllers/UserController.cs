@@ -39,7 +39,7 @@ namespace api.Controllers
             _configuration = configuration;
         }
 
-        //[Authorize]
+        
         [HttpPost("register")]
         public async Task<ActionResponse<AddUpdateRegisterUserBindingModel>> Register([FromBody] AddUpdateRegisterUserBindingModel model)
         {
@@ -84,7 +84,7 @@ namespace api.Controllers
 
         }
 
-        //[AllowAnonymous]
+       
         [HttpGet("GetAllUser")]
         public async Task<ActionResponse<List<UserDto>>> GetAllUser()
         {
@@ -110,8 +110,7 @@ namespace api.Controllers
 
         }
 
-        //[Authorize]
-        //[AllowAnonymous] bütün kullanıcılara açık
+        [AllowAnonymous]
         [HttpPost("login")]
 
         public async Task<ActionResponse<TokenDto>> Login([FromBody] loginBindingModel model)
