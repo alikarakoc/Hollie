@@ -30,6 +30,7 @@ namespace api
         }
 
         public IConfiguration Configuration { get; }
+        //readonly string MyAllowOrigins _myAllowOrigins;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -63,7 +64,22 @@ namespace api
 
             services.AddDbContext<Context>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("HollieConnection")));
+
             services.AddCors();
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(
+            //        name: MyAllowOrigins,
+            //        builder =>
+            //        {
+            //            builder
+            //            .WithOrigins("http://localhost:4200")
+            //            .AllowAnyHeader()
+            //            .AllowAnyMethod();
+            //        });
+            //});
+
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,7 +93,7 @@ namespace api
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
-                    ValidateIssuer =false,
+                    ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
@@ -98,9 +114,12 @@ namespace api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //app.UseCors(MyAllowOrigins);
+            app.UseCors();
 
             app.UseAuthentication();
 

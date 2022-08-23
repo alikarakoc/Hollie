@@ -8,9 +8,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace api.Controllers
@@ -31,18 +35,19 @@ namespace api.Controllers
         {
             _userManager = userManager;
             _signInManager = signManager;
-            _configuration=configuration;
             _logger = logger;
+            _configuration = configuration;
         }
 
-        [Authorize]
-        [HttpPost("RegisterUser")]
-        public async Task<ActionResponse<AddUpdateRegisterUserBindingModel>> RegisterUser([FromBody] AddUpdateRegisterUserBindingModel model)
+        //[Authorize]
+        [HttpPost("register")]
+        public async Task<ActionResponse<AddUpdateRegisterUserBindingModel>> Register([FromBody] AddUpdateRegisterUserBindingModel model)
         {
             ActionResponse<AddUpdateRegisterUserBindingModel> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok
             };
+
             try
             {
 
@@ -58,15 +63,16 @@ namespace api.Controllers
                 };
 
 
-                var userCheck = await _userManager.CreateAsync(user, model.Password);
-                if (userCheck.Succeeded)
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
                 {
                     actionResponse.IsSuccessful = true;
                     return actionResponse;
                 }
-                userCheck.Errors.ToList().ForEach(x => actionResponse.Message+=x+",");
+                result.Errors.ToList().ForEach(x => actionResponse.Message+=x+",");
                 actionResponse.Message = actionResponse.Message.TrimEnd(',');
             }
+
             catch (Exception ex)
             {
                 actionResponse.ResponseType = ResponseType.Error;
@@ -78,7 +84,7 @@ namespace api.Controllers
 
         }
 
-        [Authorize]
+        //[AllowAnonymous]
         [HttpGet("GetAllUser")]
         public async Task<ActionResponse<List<UserDto>>> GetAllUser()
         {
@@ -104,12 +110,13 @@ namespace api.Controllers
 
         }
 
-        [Authorize]
-        [HttpPost("Login")]
+        //[Authorize]
+        //[AllowAnonymous] bütün kullanıcılara açık
+        [HttpPost("login")]
 
-        public async Task<ActionResponse<loginBindingModel>> Login([FromBody] loginBindingModel model)
+        public async Task<ActionResponse<TokenDto>> Login([FromBody] loginBindingModel model)
         {
-            ActionResponse<loginBindingModel> actionResponse = new()
+            ActionResponse<TokenDto> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok
             };
@@ -119,19 +126,26 @@ namespace api.Controllers
                 var user = new AppUser()
                 {
                     UserName=model.FullName.Replace(" ", ""),
-                    //NormalizedEmail=model.Email.Normalize().ToUpperInvariant(),
                     PasswordHash = model.Password
+                    //NormalizedEmail=model.Email.Normalize().ToUpperInvariant(),
                 };
+
+                //var userX = await _userManager.FindByNameAsync(model.FullName.Replace(" ", ""));
 
                 if (model.FullName != "" || model.Password != "")
                 {
                     var result = await _signInManager.PasswordSignInAsync(user.UserName, user.PasswordHash, false, false);
+                    //var resultX = await _signInManager.CheckPasswordSignInAsync(userX, model.Password, false);
 
                     if (result.Succeeded)
                     {
+                        
                         actionResponse.IsSuccessful = true;
+                        actionResponse.Data = GenerateJwtToken(user);
                         return actionResponse;
+                       
                     }
+                    //return Unauthorized();
 
                 }
 
@@ -146,23 +160,30 @@ namespace api.Controllers
 
         }
 
-        //private string GenerateJwtToken(AppUser user)
-        //{
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Secret").Value);
-        //    var tokenDescriptor = new SecurityTokenDescriptor
-        //    {
-        //      Subject = new ClaimsIdentity(new Claim[]{
-        //          new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        //          new Claim(ClaimTypes.Name, user.FullName)
-        //      }),
-        //      Expires =DateTime.UtcNow.AddDays(1),
-        //      SigninCredentials = new SigninCredentials(new SymetricSecurityKey(key) , SecurityAlgorithms.HmacSha256Signature)
-        //    };
-        //
-        //    var token = tokenHandler.CreateToken(tokenDescriptor);
-        //    return tokenHandler.writeToken(token);
+        private TokenDto GenerateJwtToken(AppUser user)
+        {
+            TokenDto tokenUser = new TokenDto();
+            tokenUser.Username = user.UserName;
+            tokenUser.ExpiryDate = DateTime.UtcNow.AddDays(1);
 
-        //}
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Secret").Value);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]{
+                  new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                  new Claim(ClaimTypes.Name, user.UserName)
+              }),
+                Expires = tokenUser.ExpiryDate,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            
+            
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            tokenUser.Token = tokenHandler.WriteToken(token);
+
+            return tokenUser;
+
+        }
     }
 }

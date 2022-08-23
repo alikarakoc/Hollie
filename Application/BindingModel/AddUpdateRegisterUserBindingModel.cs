@@ -16,4 +16,6 @@ namespace Application.BindingModel
 
     public string Password { get; set; }
 }
+
+    //UserDto
 }
