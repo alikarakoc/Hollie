@@ -18,7 +18,6 @@ namespace api.Controllers
     [ApiController]
     public class RoomTypeController : Controller
     {
-        string bilgisayarAdi = Dns.GetHostName();
         private readonly Context _context;
         public RoomTypeController(Context _context)
         {
@@ -89,7 +88,6 @@ namespace api.Controllers
             {
                 _context.RoomTypes.Add(room);
                 room.Status = true;
-                room.CreatedUser = bilgisayarAdi;
                 room.CreatedDate = DateTime.Now;
                 _context.SaveChanges();
             }
@@ -107,7 +105,7 @@ namespace api.Controllers
             };
             RoomType roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
             roomtype.Status = false;
-            roomtype.UpdateUser = bilgisayarAdi;
+            roomtype.UpdateUser = model.UpdateUser;
             roomtype.UpdatedDate = DateTime.Now;
             _context.SaveChanges();
             return actionResponse;
@@ -144,7 +142,7 @@ namespace api.Controllers
                     roomtype.MaxCH = model.MaxCH;
                     roomtype.MaxAD = model.MaxAD;
                     roomtype.Pax = model.Pax;
-                    roomtype.UpdateUser = bilgisayarAdi;
+                    roomtype.UpdateUser = model.UpdateUser;
                     roomtype.UpdatedDate = DateTime.Now;
                     roomtype.Status = true;
                     _context.SaveChanges();

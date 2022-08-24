@@ -18,33 +18,13 @@ namespace api.Controllers
     [ApiController]
     public class HotelsController : Controller
     {
-        string bilgisayarAdi = Dns.GetHostName();
-
+       
         private readonly Context _context;
         public HotelsController(Context _context)
         {
             this._context = _context;
         }
 
-
-        //private readonly ILogger<HotelsController> _logger;
-        //Context c = new Context();
-
-        //public HotelsController(ILogger<HotelsController> logger)
-        //{
-        //    _logger = logger;
-        //}
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
-        //Context c = new Context();
 
         [HttpGet]
         [Route("AllHotels")]
@@ -57,9 +37,6 @@ namespace api.Controllers
             };
 
             var hotels = _context.Hotels;
-            //Otelleri Çek await ile
-            //eğer hata var ise actionResponse.IsSuccessful=false set edilir.
-            //actionResponse.Data = "çekilen otel listesi";
             if (hotels != null && hotels.Count() > 0)
             {
                 actionResponse.Data = _context.Hotels.Where(x => x.Status == true).ToList();
@@ -104,7 +81,6 @@ namespace api.Controllers
             if (checkCode < 1)
             {
                 _context.Hotels.Add(htl);
-                htl.CreatedUser = bilgisayarAdi;
                 htl.CreatedDate = DateTime.Now;
                 htl.Status = true;
                 _context.SaveChanges();
@@ -115,7 +91,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Hotel>> DeleteHotel([FromQuery] HotelDto model)
+        public async Task<ActionResponse<Hotel>> DeleteHotel([FromBody] HotelDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
@@ -123,7 +99,6 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == model.Id);
-            hotel.UpdateUser = bilgisayarAdi;
             hotel.UpdatedDate = DateTime.Now;
             hotel.Status = false;
             _context.SaveChanges();
@@ -158,7 +133,7 @@ namespace api.Controllers
                     hotel.Email = model.Email;
                     hotel.HotelCategoryId = model.HotelCategoryId;
                     hotel.HotelFeatureId  = model.HotelFeatureId;
-                    hotel.UpdateUser = bilgisayarAdi;
+                    hotel.UpdateUser = model.UpdateUser;
                     hotel.UpdatedDate = DateTime.Now;
                     hotel.Status = true;
                     _context.SaveChanges();

@@ -19,8 +19,7 @@ namespace api.Controllers
 
     public class BoardController : Controller
     {
-        string bilgisayarAdi = Dns.GetHostName();
-
+        
         private readonly Context _context;
         public BoardController(Context _context)
         {
@@ -82,13 +81,10 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            //var checkName = _context.Boards.Where(h => h.Name == brd.Name).Count();
-            //if(checkName < 1)
-            var checkCode = _context.Boards.Where(h => h.Code == board.Code).Count();
+            int checkCode = _context.Boards.Where(h => h.Code == board.Code).Count();
             if (checkCode < 1)
             {
                 _context.Boards.Add(board);
-                board.CreatedUser = bilgisayarAdi;
                 board.CreatedDate = DateTime.Now;
                 board.Status = true;
                 _context.SaveChanges();
@@ -101,15 +97,14 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Board>> DeleteBoard([FromQuery] BoardDto model)
+        public async Task<ActionResponse<Board>> DeleteBoard([FromBody] BoardDto model)
         {
             ActionResponse<Board> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var board = await _context.Boards.FirstOrDefaultAsync(h => h.Id == model.Id);
-            board.UpdateUser = bilgisayarAdi;
+            Board board = await _context.Boards.FirstOrDefaultAsync(h => h.Id == model.Id);
             board.UpdatedDate = DateTime.Now;
             board.Status = false;
             _context.SaveChanges();
@@ -120,7 +115,7 @@ namespace api.Controllers
         [HttpPut]
         [Route("update")]
 
-        public async Task<ActionResponse<Board>> UpdateBoard([FromQuery] BoardDto modelD, [FromBody] BoardDto model)
+        public async Task<ActionResponse<Board>> UpdateBoard([FromBody] BoardDto model)
         {
             ActionResponse<Board> actionResponse = new()
             {
@@ -130,28 +125,23 @@ namespace api.Controllers
 
             try
             {
-                var board = await _context.Boards.FirstOrDefaultAsync(h =>h.Id == modelD.Id);
-                //var checkName = _context.Boards.Where(h => h.Name == model.Name)?.Count();
-                //if( checkName < 1 && board != null)
-                var checkCode = _context.Boards.Where(h => h.Code == model.Code)?.Count();
-                if (board.Code == model.Code)
+                var board = await _context.Boards.FirstOrDefaultAsync(h =>h.Id == model.Id);
+                int checkCode = _context.Boards.Where(h => h.Code == model.Code && h.Id != model.Id).Count();
+                if (checkCode > 0)
                 {
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
+                }
+                if (board.Code == model.Code || checkCode == 0)
+                {
+                    board.Code = model.Code;
                     board.Name = model.Name;
-                    board.UpdateUser = bilgisayarAdi;
+                    board.UpdateUser = model.UpdateUser;
                     board.UpdatedDate = DateTime.Now;
                     board.Status = true;
                     _context.SaveChanges();
                 }
 
-                else if (checkCode < 1 && board != null)
-                {
-                    board.Code = model.Code;
-                    board.Name = model.Name;
-                    board.UpdateUser = bilgisayarAdi;
-                    board.UpdatedDate = DateTime.Now;
-                    board.Status = true;
-                    _context.SaveChanges();
-                }
                 return actionResponse;
             }
             catch(Exception ex)

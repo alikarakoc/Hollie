@@ -24,6 +24,7 @@ namespace api.Controllers
         {
             this._context = _context;
         }
+
         [HttpGet]
         [Route("AllRooms")]
         public ActionResponse<List<Room>> GetAllRooms()

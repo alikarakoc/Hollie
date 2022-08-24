@@ -20,9 +20,7 @@ namespace api.Controllers
     [ApiController]
     public class AgencyController : Controller
     {
-        string bilgisayarAdi = Dns.GetHostName();
-
-
+        
         private readonly IMapper _mapper;
 
         private readonly Context _context;
@@ -85,27 +83,14 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            //var checkName = _context.Agencies.Where(h => h.Name == _agency.Name).Count();
-            //if (checkName < 1)
-
-            //Agency s = _agency;
-            ////s.Code = 5;
-
             int checkCode = _context.Agencies.Where(h => h.Code == _agency.Code).Count();
             if (checkCode < 1)
             {
-                //Agency agency = new Agency();
-                //agency = _mapper.Map<Agency>(_agency);
-                _agency.CreatedUser = bilgisayarAdi;
                 _agency.CreatedDate = DateTime.Now;
-
                 _agency.Status = true;
                 _context.Agencies.Add(_agency);
 
-
                 _context.SaveChanges();
-
-
 
                 AgencyMarketHelper.AddMarkets(_agency.Id, _agency.MarketList, _context);
 
@@ -124,7 +109,6 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var agency = await _context.Agencies.FirstOrDefaultAsync(h => h.Id == model.Id);
-            agency.UpdateUser = bilgisayarAdi;
             agency.UpdatedDate = DateTime.Now;
             agency.Status = false;
             _context.SaveChanges();
@@ -160,7 +144,7 @@ namespace api.Controllers
                     agency.Phone = model.Phone;
                     agency.Email = model.Email;
                     agency.Address = model.Address;
-                    agency.UpdateUser = bilgisayarAdi;
+                    agency.UpdateUser = model.UpdateUser;
                     agency.UpdatedDate = DateTime.Now;
                     agency.Status = true;
 

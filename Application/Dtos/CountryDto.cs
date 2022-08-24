@@ -18,7 +18,7 @@ namespace Application.Dtos
 
         public string CreatedUser { get; set; }
 
-        public DateTime UpdatedDate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
         public string UpdateUser { get; set; }
         public bool Status { get; set; }

@@ -19,7 +19,6 @@ namespace api.Controllers
 
     public class CountryController : Controller
     {
-        string bilgisayarAdi = Dns.GetHostName();
 
         private readonly Context _context;
         public CountryController(Context _context)
@@ -58,7 +57,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
+            Country country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
             if (country != null)
             {
                 actionResponse.Data = country;
@@ -78,30 +77,26 @@ namespace api.Controllers
                 IsSuccessful=true,
             };
 
-            //var checkName = _context.Countries.Where(h => h.Name == country.Name).Count();
-            //if (checkName < 1)
-            var checkCode = _context.Countries.Where(h => h.Code == country.Code).Count();
+            int checkCode = _context.Countries.Where(h => h.Code == country.Code).Count();
             if (checkCode < 1)
             { 
-            _context.Countries.Add(country);
-                country.CreatedUser = bilgisayarAdi;
+                _context.Countries.Add(country);
                 country.CreatedDate = DateTime.Now;
                 country.Status = true;
-            _context.SaveChanges();
+                 _context.SaveChanges();
             }
             return actionResponse;
         }
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Country>> DeleteCountry([FromQuery] CountryDto model)
+        public async Task<ActionResponse<Country>> DeleteCountry([FromBody] Country model)
         {
             ActionResponse<Country> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
-            var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
-            country.UpdateUser = bilgisayarAdi;
+            Country country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
             country.UpdatedDate = DateTime.Now;
             country.Status = false;
             _context.SaveChanges();
@@ -112,7 +107,7 @@ namespace api.Controllers
         [HttpPut]
         [Route("update")]
 
-        public async Task<ActionResponse<Country>> UpdateCountry([FromQuery] CountryDto modelD, [FromBody] CountryDto model)
+        public async Task<ActionResponse<Country>> UpdateCountry([FromBody] Country model)
         {
             ActionResponse<Country> actionResponse = new()
             {
@@ -122,28 +117,26 @@ namespace api.Controllers
 
             try
             {
-                var country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == modelD.Id);
-                //var checkName = _context.Countries.Where(h=>h.Name == model.Name)?.Count();
-                //if (checkName <1 && country != null)
-                var checkCode = _context.Countries.Where(h => h.Code == model.Code)?.Count();
-                if (country.Code == model.Code)
+                Country country = await _context.Countries.FirstOrDefaultAsync(h => h.Id == model.Id);
+                int checkCode = _context.Countries.Where(h => h.Code == model.Code && h.Id != model.Id).Count();
+
+                if(checkCode > 0)
                 {
-                    country.Name = model.Name;
-                    country.UpdateUser = bilgisayarAdi;
-                    country.UpdatedDate = DateTime.Now;
-                    country.Status = true;
-                    _context.SaveChanges();
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
                 }
 
-                else if (checkCode < 1 && country != null)
+                if (country.Code == model.Code || checkCode == 0)
                 {
                     country.Code = model.Code;
                     country.Name = model.Name;
-                    country.UpdateUser = bilgisayarAdi;
+                    country.UpdateUser = model.UpdateUser;
                     country.UpdatedDate = DateTime.Now;
                     country.Status = true;
+                    actionResponse.IsSuccessful = true;
                     _context.SaveChanges();
                 }
+
                 return actionResponse;
             }
             catch (Exception ex)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class Room
+    public class Room 
     {
         public int Id { get; set; }
         [Column(TypeName = "nvarchar")]

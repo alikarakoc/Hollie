@@ -142,7 +142,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Currency>> DeleteCurrency([FromQuery] CurrencyDto model)
+        public async Task<ActionResponse<Currency>> DeleteCurrency([FromBody] CurrencyDto model)
         {
             ActionResponse<Currency> actionResponse = new()
             {
@@ -158,7 +158,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<Currency>> UpdateCurrency([FromQuery] CurrencyDto modelID, [FromBody] CurrencyDto model)
+        public async Task<ActionResponse<Currency>> UpdateCurrency([FromBody] CurrencyDto model)
         {
             ActionResponse<Currency> actionResponse = new()
             {
@@ -169,7 +169,7 @@ namespace api.Controllers
 
             try
             {
-                var currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == modelID.Id);
+                Currency currency = await _context.Currencies.FirstOrDefaultAsync(h => h.Id == model.Id);
                 //var checkName = _context.Currencies.Where(h => h.Name == model.Name)?.Count();
                 //var checkCode = _context.Currencies.Where(c => c.Code == model.Code)?.Count();
 

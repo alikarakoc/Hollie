@@ -94,7 +94,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<HotelCategory>> DeleteHotelCategory([FromQuery] HotelCategoryDto model)
+        public async Task<ActionResponse<HotelCategory>> DeleteHotelCategory([FromBody] HotelCategoryDto model)
         {
             ActionResponse<HotelCategory> actionResponse = new()
             {
@@ -102,7 +102,7 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
 
-            var hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == model.Id);
+            HotelCategory hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == model.Id);
             hotelCategory.Status = false;
             _context.SaveChanges();
             return actionResponse;
@@ -110,7 +110,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<HotelCategory>> UpdateHotelCategory([FromQuery] HotelCategoryDto modelID, [FromBody] HotelCategoryDto model)
+        public async Task<ActionResponse<HotelCategory>> UpdateHotelCategory([FromBody] HotelCategoryDto model)
         {
             ActionResponse<HotelCategory> actionResponse = new()
             {
@@ -121,25 +121,11 @@ namespace api.Controllers
 
             try
             {
-                //var hotelCategory = await _context.HotelCategorys.FirstOrDefaultAsync(h => h.Id == model.Id);
 
-                //if (hotelCategory != null)
-                //{
-                //    hotelCategory.Name = model.Name;
-                //    _context.SaveChanges();
-                //}
-                //return actionResponse;
-
-                var hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                var checkName = _context.HotelCategories.Where(h => h.Name == model.Name)?.Count();
-                var checkCode = _context.HotelCategories.Where(c => c.Code == model.Code)?.Count();
+                HotelCategory hotelCategory = await _context.HotelCategories.FirstOrDefaultAsync(h => h.Id == model.Id);
+                int checkName = _context.HotelCategories.Where(h => h.Name == model.Name).Count();
+                int checkCode = _context.HotelCategories.Where(c => c.Code == model.Code).Count();
                 
-                //if (hotelCategory.Name == model.Name && hotelCategory.Code != model.Code)
-                //{
-                //    hotelCategory.Code = model.Code;
-                //    _context.SaveChanges();
-                //}
-
                 if (checkName < 1 ||checkCode < 1)
                 {
                     hotelCategory.Name = model.Name;

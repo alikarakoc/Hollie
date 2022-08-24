@@ -74,11 +74,6 @@ namespace api.Controllers
         [HttpGet]
         public async Task<ActionResponse<Market>> GetMarkets([FromQuery] MarketDto model)
         {
-            if (model is null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
             ActionResponse<Market> actionResponse = new()
             {
                 ResponseType = ResponseType.Ok,
@@ -104,13 +99,11 @@ namespace api.Controllers
                 ResponseType = ResponseType.Ok,
                 IsSuccessful = true,
             };
+;
 
-            //var checkMarket = _context.Markets.Where(h => h.Name == market.Name).Count();
-
-            var checkCode = _context.Markets.Where(h => h.Code == market.Code).Count();
+            int checkCode = _context.Markets.Where(h => h.Code == market.Code).Count();
             if (checkCode < 1) { 
                  _context.Markets.Add(market);
-                market.CreatedUser = bilgisayarAdi;
                 market.CreatedDate = DateTime.Now;
                 market.Status = true;
                 _context.SaveChanges();
@@ -120,7 +113,7 @@ namespace api.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public async Task<ActionResponse<Hotel>> DeleteMarket([FromQuery] MarketDto model)
+        public async Task<ActionResponse<Hotel>> DeleteMarket([FromBody] MarketDto model)
         {
             ActionResponse<Hotel> actionResponse = new()
             {
@@ -128,7 +121,6 @@ namespace api.Controllers
                 IsSuccessful = true,
             };
             var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == model.Id);
-            market.UpdateUser = bilgisayarAdi;
             market.UpdatedDate = DateTime.Now;
             market.Status = false;
             _context.SaveChanges();
@@ -137,7 +129,7 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("update")]
-        public async Task<ActionResponse<Market>> UpdateMarket([FromQuery]MarketDto modelID, [FromBody] MarketDto model)
+        public async Task<ActionResponse<Market>> UpdateMarket([FromBody] MarketDto model)
         {
             ActionResponse<Market> actionResponse = new()
             {
@@ -147,28 +139,24 @@ namespace api.Controllers
 
             try
             {
-                var market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == modelID.Id);
-                //var checkMarket =  _context.Markets.Where(h => h.Name == model.Name)?.Count();
-                var checkCode = _context.Markets.Where(h => h.Code == model.Code)?.Count();
-                //if (checkMarket<1 && market != null)
-                if (market.Code == model.Code)
-                { 
-                    market.Name = model.Name;
-                    market.UpdateUser = bilgisayarAdi;
-                    market.UpdatedDate = DateTime.Now;
-                    market.Status = true;
-                    _context.SaveChanges();
+                Market market = await _context.Markets.FirstOrDefaultAsync(h => h.Id == model.Id);
+                int checkCode = _context.Markets.Where(h => h.Code == model.Code).Count();
+
+                if (checkCode > 0)
+                {
+                    actionResponse.Message = "Same code exists";
+                    actionResponse.IsSuccessful = false;
                 }
-                else if (checkCode < 1 && market != null)
+                if (market.Code == model.Code || checkCode == 0)
                 {
                     market.Code = model.Code;
                     market.Name = model.Name;
-                    market.UpdateUser = bilgisayarAdi;
+                    market.UpdateUser = model.UpdateUser;
                     market.UpdatedDate = DateTime.Now;
                     market.Status = true;
                     _context.SaveChanges();
                 }
-               
+                
                 return actionResponse;
             }
             catch (Exception ex)
@@ -178,13 +166,7 @@ namespace api.Controllers
                 actionResponse.Errors.Add(ex.Message);
                 return actionResponse;
             }
-
-
-
         }
-
-
-
     }
 
   
