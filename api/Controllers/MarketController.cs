@@ -45,6 +45,30 @@ namespace api.Controllers
             return actionResponse;
         }
 
+        [HttpGet]
+        [Route("GetMarketSelectList")]
+        public ActionResponse<List<MarketAgencySelectorDto>> GetMarketSelectList()
+        {
+            ActionResponse<List<MarketAgencySelectorDto>> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok,
+                IsSuccessful = true,
+            };
+
+            var markets = _context.Markets.Where(x => x.Status == true).ToList();
+            var marketAgencies = _context.AMarkets.ToList();
+            actionResponse.Data = new List<MarketAgencySelectorDto>();
+            foreach (var market in markets)
+            {
+                actionResponse.Data.Add(new MarketAgencySelectorDto()
+                {
+                    MarketId = market.Id,
+                    Agencies = marketAgencies.Where(p => p.MarketId == market.Id).Select(s => s.ListId).ToList()
+                });
+            }
+
+            return actionResponse;
+        }
 
 
         [HttpGet]
