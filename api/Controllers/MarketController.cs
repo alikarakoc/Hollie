@@ -151,7 +151,7 @@ namespace api.Controllers
                 {
                     market.Code = model.Code;
                     market.Name = model.Name;
-                    market.UpdateUser = model.UpdateUser;
+                    market.UpdatedUser = model.UpdatedUser;
                     market.UpdatedDate = DateTime.Now;
                     market.Status = true;
                     _context.SaveChanges();

@@ -21,6 +21,6 @@ namespace Application.Concrete
        
         [Column(TypeName = "nvarchar")]
         [StringLength(50)]
-        public string UpdateUser { get; set; }
+        public string UpdatedUser { get; set; }
     }
 }

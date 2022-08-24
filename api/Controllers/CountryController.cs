@@ -130,7 +130,7 @@ namespace api.Controllers
                 {
                     country.Code = model.Code;
                     country.Name = model.Name;
-                    country.UpdateUser = model.UpdateUser;
+                    country.UpdatedUser = model.UpdatedUser;
                     country.UpdatedDate = DateTime.Now;
                     country.Status = true;
                     actionResponse.IsSuccessful = true;

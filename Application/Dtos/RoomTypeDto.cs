@@ -25,7 +25,7 @@ namespace Application.Dtos
 
         public DateTime UpdatedDate { get; set; }
 
-        public string UpdateUser { get; set; }
+        public string UpdatedUser { get; set; }
 
         public bool Status { get; set; }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class Contract
+    public class Contract: BaseEntity
     {
         public Contract()
         {

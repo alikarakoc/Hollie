@@ -136,7 +136,7 @@ namespace api.Controllers
                 {
                     board.Code = model.Code;
                     board.Name = model.Name;
-                    board.UpdateUser = model.UpdateUser;
+                    board.UpdatedUser = model.UpdatedUser;
                     board.UpdatedDate = DateTime.Now;
                     board.Status = true;
                     _context.SaveChanges();

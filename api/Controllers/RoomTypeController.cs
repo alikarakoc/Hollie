@@ -105,7 +105,7 @@ namespace api.Controllers
             };
             RoomType roomtype = await _context.RoomTypes.FirstOrDefaultAsync(h => h.Id == model.Id);
             roomtype.Status = false;
-            roomtype.UpdateUser = model.UpdateUser;
+            roomtype.UpdatedUser = model.UpdatedUser;
             roomtype.UpdatedDate = DateTime.Now;
             _context.SaveChanges();
             return actionResponse;
@@ -142,7 +142,7 @@ namespace api.Controllers
                     roomtype.MaxCH = model.MaxCH;
                     roomtype.MaxAD = model.MaxAD;
                     roomtype.Pax = model.Pax;
-                    roomtype.UpdateUser = model.UpdateUser;
+                    roomtype.UpdatedUser = model.UpdatedUser;
                     roomtype.UpdatedDate = DateTime.Now;
                     roomtype.Status = true;
                     _context.SaveChanges();

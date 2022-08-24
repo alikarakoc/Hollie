@@ -144,7 +144,7 @@ namespace api.Controllers
                     agency.Phone = model.Phone;
                     agency.Email = model.Email;
                     agency.Address = model.Address;
-                    agency.UpdateUser = model.UpdateUser;
+                    agency.UpdatedUser = model.UpdatedUser;
                     agency.UpdatedDate = DateTime.Now;
                     agency.Status = true;
 

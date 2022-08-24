@@ -133,7 +133,7 @@ namespace api.Controllers
                     hotel.Email = model.Email;
                     hotel.HotelCategoryId = model.HotelCategoryId;
                     hotel.HotelFeatureId  = model.HotelFeatureId;
-                    hotel.UpdateUser = model.UpdateUser;
+                    hotel.UpdatedUser = model.UpdatedUser;
                     hotel.UpdatedDate = DateTime.Now;
                     hotel.Status = true;
                     _context.SaveChanges();

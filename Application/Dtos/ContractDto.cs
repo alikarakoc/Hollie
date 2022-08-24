@@ -34,6 +34,11 @@ namespace Application.Dtos
         public List<CBoardList> BoardList { get; set; }
         public List<CRoomTypeList> RoomTypeList { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+        public string CreatedUser { get; set; }
+        public DateTime UpdatedDate { get; set; }
+        public string UpdatedUser { get; set; }
+
 
     }
 }
