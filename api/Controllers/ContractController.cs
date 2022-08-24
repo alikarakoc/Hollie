@@ -68,9 +68,11 @@ namespace api.Controllers
 
                 contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(contract.EnteredDate, TimeZoneInfo.Local);
                 contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(contract.ExitDate, TimeZoneInfo.Local);
-
+                contract.CreatedUser = contractdto.CreatedUser;
+                contract.CreatedDate = DateTime.Now;
                 _context.Contracts.Add(contract);
                 contract.Status = true;
+                
 
                 _context.SaveChanges();
 
@@ -172,6 +174,8 @@ namespace api.Controllers
                     contract.CH2 = model.CH2;
                     contract.CH3 = model.CH3;
                     contract.CurrencyId = model.CurrencyId;
+                    contract.UpdatedDate = DateTime.Now;
+                    contract.UpdatedUser = model.UpdatedUser;
                     contract.Status = true;
                     contract.EnteredDate = TimeZoneInfo.ConvertTimeFromUtc(model.EnteredDate, TimeZoneInfo.Local);
                     contract.ExitDate = TimeZoneInfo.ConvertTimeFromUtc(model.ExitDate, TimeZoneInfo.Local);
