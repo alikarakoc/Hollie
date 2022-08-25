@@ -35,7 +35,7 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<AppUser, IdentityRole>(opt => { }).AddEntityFrameworkStores<Context>();
+            services.AddIdentity<AppUser, IdentityRole>(opt => opt.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<Context>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -84,6 +84,7 @@ namespace api
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
@@ -94,6 +95,8 @@ namespace api
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Secret").Value)),
                     ValidateIssuer = false,
+                    ValidIssuer = Configuration["JWTSettings:API"],
+                    ValidAudience = Configuration["JWTSettings:https://localhost:4200"],
                     ValidateAudience = false
                 };
             });

@@ -39,7 +39,7 @@ namespace api.Controllers
             _configuration = configuration;
         }
 
-        
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResponse<AddUpdateRegisterUserBindingModel>> Register([FromBody] AddUpdateRegisterUserBindingModel model)
         {
