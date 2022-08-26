@@ -28,15 +28,19 @@ namespace api.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        //private readonly JWTConfig _jWTConfig;
 
         public readonly IConfiguration _configuration;
 
-        public UserController(ILogger<UserController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signManager, IConfiguration configuration)
+        public UserController(ILogger<UserController> logger, UserManager<AppUser> userManager, SignInManager<AppUser> signManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signManager;
             _logger = logger;
             _configuration = configuration;
+            _roleManager=roleManager;
+            //_jWTConfig=jwtConfig.Value;
         }
 
         [AllowAnonymous]
@@ -84,7 +88,7 @@ namespace api.Controllers
 
         }
 
-       
+        
         [HttpGet("GetAllUser")]
         public async Task<ActionResponse<List<UserDto>>> GetAllUser()
         {
@@ -127,7 +131,7 @@ namespace api.Controllers
                     UserName=model.FullName.Replace(" ", ""),
                     PasswordHash = model.Password
                     //NormalizedEmail=model.Email.Normalize().ToUpperInvariant(),
-                };
+                }; 
 
                 //var userX = await _userManager.FindByNameAsync(model.FullName.Replace(" ", ""));
 
@@ -184,5 +188,6 @@ namespace api.Controllers
             return tokenUser;
 
         }
+
     }
 }

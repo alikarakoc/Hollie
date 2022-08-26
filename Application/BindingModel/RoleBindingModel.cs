@@ -8,9 +8,9 @@ namespace Application.BindingModel
 {
     public class RoleBindingModel
     {
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
-        public bool HasAssign { get; set; }
-        
+        public string Role { get; set; }
+        //public string RoleName { get; set; }
+        //public bool HasAssign { get; set; }
+
     }
 }

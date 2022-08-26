@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Concrete
 {
-    public class Role: IdentityRole<int>
+    public class Role : IdentityRole<int>
     {
         public DateTime DateTime { get; set; }
     }
