@@ -15,7 +15,6 @@ namespace DataAccess.Concrate
         
         public Context(DbContextOptions options ) : base(options) { }
 
-
         public DbSet<Agency> Agencies { get; set; }   
         public DbSet<Contract> Contracts { get; set; }   
         public DbSet<Board> Boards { get; set; }
