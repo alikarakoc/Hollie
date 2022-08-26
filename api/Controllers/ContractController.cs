@@ -210,5 +210,69 @@ namespace api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("searchContract")]
+        public async Task<ActionResponse<List<Contract>>> searchContract([FromBody] SearchContractDto searchDto)
+        {
+           
+            ActionResponse<List<Contract>> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok
+            };
+
+            searchDto.BeginDate = searchDto.BeginDate.AddDays(1);
+            searchDto.EndDate = searchDto.EndDate.AddDays(1);
+            if (searchDto.BeginDate > searchDto.EndDate)
+            {
+                actionResponse.IsSuccessful = false;
+                actionResponse.Message = "EndDate can not be smaller than BeginDate";
+                return actionResponse;
+            }
+
+            
+            List<Contract>  contracts =  _context.Contracts.Where(x=> 
+            (searchDto.BeginDate <= x.EnteredDate &&  searchDto.EndDate >= x.ExitDate)||
+            (x.EnteredDate <= searchDto.BeginDate && x.ExitDate <= searchDto.EndDate && !(x.ExitDate <= searchDto.BeginDate)) || 
+            (x.EnteredDate >= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate && x.EnteredDate <= searchDto.EndDate) ||
+            (x.EnteredDate <= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate)).ToList();
+            actionResponse.Data = new List<Contract>(contracts);
+
+            if (searchDto.Hotels != null)
+            {
+                contracts.Clear();
+                foreach (var hotelID in searchDto.Hotels)
+                {
+                    List<Contract> contractsTemp = actionResponse.Data.Where(x => x.HotelId == hotelID).ToList();
+                    contracts.AddRange(contractsTemp);
+                }
+                actionResponse.Data = contracts;    
+               
+            }
+            actionResponse.IsSuccessful = true;
+
+            return actionResponse;
+
+        }
+
+
+        [HttpPost]
+        [Route("searchAccommodation")]
+        public async Task<ActionResponse<List<Contract>>> searchAccommodation([FromBody] SearchAccommodationDate searchDto)
+        {
+
+            ActionResponse<List<Contract>> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok
+            };
+
+            
+            actionResponse.IsSuccessful = true;
+
+            return actionResponse;
+
+        }
+
+
     }
+
 }
