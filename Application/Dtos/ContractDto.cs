@@ -27,7 +27,6 @@ namespace Application.Dtos
         public float CH1 { get; set; }
         public float CH2 { get; set; }
         public float CH3 { get; set; }
-        public float CH14 { get; set; }
 
         public List<CAgencyList> AgencyList { get; set; }
         public List<CMarketList> MarketList { get; set; }
