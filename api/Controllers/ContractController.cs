@@ -267,8 +267,8 @@ namespace api.Controllers
                 
             };
 
-            searchDto.BeginDate = searchDto.BeginDate.AddDays(1);
-            searchDto.EndDate = searchDto.EndDate.AddDays(1);
+            //searchDto.BeginDate = searchDto.BeginDate.AddDays(1);
+            //searchDto.EndDate = searchDto.EndDate.AddDays(1);
             if (searchDto.BeginDate > searchDto.EndDate)
             {
                 actionResponse.IsSuccessful = false;
@@ -277,8 +277,8 @@ namespace api.Controllers
             }
 
 
-            List<Contract> contracts = _context.Contracts.Where(x =>
-          (searchDto.BeginDate >= x.EnteredDate && searchDto.EndDate <= x.ExitDate) ||
+          List<Contract> contracts = _context.Contracts.Where(x =>
+          (searchDto.BeginDate <= x.EnteredDate && searchDto.EndDate >= x.ExitDate) ||
           (x.EnteredDate <= searchDto.BeginDate && x.ExitDate <= searchDto.EndDate && !(x.ExitDate <= searchDto.BeginDate)) ||
           (x.EnteredDate >= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate && x.EnteredDate <= searchDto.EndDate) ||
           (x.EnteredDate <= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate) ).ToList();
@@ -288,11 +288,14 @@ namespace api.Controllers
             {
                 contracts = contracts.Where(x => searchDto.Hotels.Contains(x.HotelId)).ToList();
             }
+
+           
             Parallel.ForEach(contracts, x =>
             {
                 x.AgencyList = _context.CAgencies.Where(p => p.ListId==x.Id).ToList();
                 x.RoomTypeList = _context.CRoomTypes.Where(p => p.ListId == x.Id).ToList();
             });
+
             List<int> agencyIds = new List<int>();
                 contracts.ForEach(x => {
                     agencyIds.AddRange(x.AgencyList.Select(s => s.AgencyId));

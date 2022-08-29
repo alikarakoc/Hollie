@@ -41,6 +41,7 @@ namespace api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
+
             services.Configure<IdentityOptions>(options =>
             {
 
@@ -58,6 +59,7 @@ namespace api
                 options.User.AllowedUserNameCharacters =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ";
                 options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedAccount = false;
             });
 
             services.AddAutoMapper(typeof(ContractProfile));
