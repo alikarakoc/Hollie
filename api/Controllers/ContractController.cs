@@ -254,6 +254,74 @@ namespace api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("searchAccommodation")]
+        public async Task<ActionResponse<List<PriceDto>>> searchAccommodation([FromBody] SearchContractDto searchDto)
+        {
+            List<PriceDto> testList = new List<PriceDto>();
+
+            float minPrice;
+
+            ActionResponse<List<PriceDto>> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok,
+                Data = testList
+
+            };
+            PriceDto priceDto = new PriceDto();
+            //searchDto.BeginDate = searchDto.BeginDate.AddDays(1);
+            searchDto.EndDate = searchDto.EndDate.AddDays(1);
+            while (searchDto.BeginDate < searchDto.EndDate)
+            {
+                if (searchDto.BeginDate > searchDto.EndDate)
+                {
+                    actionResponse.IsSuccessful = false;
+                    actionResponse.Message = "EndDate can not be smaller than BeginDate";
+                    return actionResponse;
+                }
+
+                searchDto.BeginDate = searchDto.BeginDate.AddDays(1);
+                List<Contract> contracts = _context.Contracts.Where(x =>
+                (x.EnteredDate <= searchDto.BeginDate && x.ExitDate >= searchDto.BeginDate)).ToList();
+
+                if (searchDto.Hotels != null)
+                {
+                    contracts.Clear();
+                    foreach (var hotelID in searchDto.Hotels)
+                    {
+                        List<Contract> contractsTemp = contracts.Where(x => x.HotelId == hotelID).ToList();
+
+                    }
+
+                }
+
+
+                minPrice = 9999999999999999;
+                foreach (var contract in contracts)
+                {
+
+                    if (contract.ADP < minPrice)
+                    {
+                        minPrice = contract.ADP;
+                    }
+
+                }
+
+                priceDto.totalPrice = minPrice + priceDto.totalPrice;
+
+                //actionResponse.Data = priceDto;
+                actionResponse.IsSuccessful = true;
+            }
+
+            priceDto.startDate = searchDto.BeginDate;
+            priceDto.endDate = searchDto.EndDate;
+
+            //testList.Add(priceDto);
+            actionResponse.Data.Add(priceDto);
+
+            return actionResponse;
+        }
+
 
         [HttpPost]
         [Route("detailAccommodation")]
