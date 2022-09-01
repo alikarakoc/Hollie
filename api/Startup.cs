@@ -67,21 +67,11 @@ namespace api
             services.AddDbContext<Context>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("HollieConnection")));
 
+            //services.AddDbContext<Context>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("HollieConnection")), ServiceLifetime.Transient);
+
             services.AddCors();
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(
-            //        name: MyAllowOrigins,
-            //        builder =>
-            //        {
-            //            builder
-            //            .WithOrigins("http://localhost:4200")
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod();
-            //        });
-            //});
-
-
+            
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

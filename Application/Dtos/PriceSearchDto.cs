@@ -16,8 +16,10 @@ namespace Application.Dtos
         public int HotelId { get; set; }
         public int RoomTypeId { get; set; }
         public int Adult { get; set; }
-        public int Child { get; set; }
-        public int Baby { get; set; }
+        public int NumberOfChild { get; set; }
+        //public int Baby { get; set; }
+        //public int Child { get; set; }
+        //public int Teen { get; set; }
         public int[] ChildAges { get; set; }
         public string AgencyName { get; set; }
         public string HotelName { get; set; }
@@ -31,7 +33,7 @@ namespace Application.Dtos
     {
         public int StayDay { get; set; }
         public double BasePrice { get; set; }
-        public double Discounts { get; set; }
+        //public double Discounts { get; set; }
         public double  NetPrice { get; set; }
         public int ContractId { get; set; }
     }

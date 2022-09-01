@@ -256,8 +256,8 @@ namespace api.Controllers
 
 
         [HttpPost]
-        [Route("searchAccommodation")]
-        public async Task<ActionResponse<List<PriceSearchDto>>> searchAccommodation([FromBody] SearchAccommodationDate searchDto)
+        [Route("detailAccommodation")]
+        public async Task<ActionResponse<List<PriceSearchDto>>> detailAccommodation([FromBody] SearchAccommodationDate searchDto)
         {
 
             ActionResponse<List<PriceSearchDto>> actionResponse = new()
@@ -267,8 +267,6 @@ namespace api.Controllers
                 
             };
 
-            //searchDto.BeginDate = searchDto.BeginDate.AddDays(1);
-            //searchDto.EndDate = searchDto.EndDate.AddDays(1);
             if (searchDto.BeginDate > searchDto.EndDate)
             {
                 actionResponse.IsSuccessful = false;
@@ -277,11 +275,11 @@ namespace api.Controllers
             }
 
 
-          List<Contract> contracts = _context.Contracts.Where(x =>
-          (searchDto.BeginDate <= x.EnteredDate && searchDto.EndDate >= x.ExitDate) ||
-          (x.EnteredDate <= searchDto.BeginDate && x.ExitDate <= searchDto.EndDate && !(x.ExitDate <= searchDto.BeginDate)) ||
-          (x.EnteredDate >= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate && x.EnteredDate <= searchDto.EndDate) ||
-          (x.EnteredDate <= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate) ).ToList();
+            List<Contract> contracts = _context.Contracts.Where(x => x.Status == true &&
+            (searchDto.BeginDate <= x.EnteredDate && searchDto.EndDate >= x.ExitDate) ||
+            (x.EnteredDate <= searchDto.BeginDate && x.ExitDate <= searchDto.EndDate && !(x.ExitDate <= searchDto.BeginDate)) ||
+            (x.EnteredDate >= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate && x.EnteredDate <= searchDto.EndDate) ||
+            (x.EnteredDate <= searchDto.BeginDate && x.ExitDate >= searchDto.EndDate)).ToList();
             
 
             if (searchDto.Hotels != null)
@@ -289,54 +287,121 @@ namespace api.Controllers
                 contracts = contracts.Where(x => searchDto.Hotels.Contains(x.HotelId)).ToList();
             }
 
-           
-            Parallel.ForEach(contracts, x =>
+            List<PriceSearchDto> dtoList = new List<PriceSearchDto>();
+
+
+            contracts.ForEach( x =>
             {
-                x.AgencyList = _context.CAgencies.Where(p => p.ListId==x.Id).ToList();
+                x.AgencyList = _context.CAgencies.Where(p => p.ListId == x.Id).ToList();
                 x.RoomTypeList = _context.CRoomTypes.Where(p => p.ListId == x.Id).ToList();
             });
 
             List<int> agencyIds = new List<int>();
-                contracts.ForEach(x => {
-                    agencyIds.AddRange(x.AgencyList.Select(s => s.AgencyId));
+            contracts.ForEach(x => {
+                agencyIds.AddRange(x.AgencyList.Select(s => s.AgencyId));
             });
+
             agencyIds=agencyIds.Distinct().ToList();
+
             var agencies = _context.Agencies.ToList();
             var roomTypes=_context.RoomTypes.ToList();
             var hotels = _context.Hotels.ToList();
+
             TimeSpan ts = (TimeSpan)(searchDto.EndDate - searchDto.BeginDate);
             int days = (int)ts.TotalDays;
+
             foreach(int i in agencyIds)
             {
                 Agency agency=agencies.FirstOrDefault(x => x.Id==i);
+
                 var tempCont = contracts.Where(p => p.AgencyList.Any(x => x.AgencyId == i)).ToList();
+
                 List<int> roomIds = new List<int>();
                 tempCont.ForEach(x => {
                     roomIds.AddRange(x.RoomTypeList.Select(s => s.RoomTypeId));
                 });
+
                 foreach(int r in roomIds)
                 {
                     RoomType roomType = roomTypes.FirstOrDefault(x => x.Id==r);
                     var finalConts=tempCont.Where(x => x.RoomTypeList.Any(t=> t.RoomTypeId==r)).ToList();
-                    //yeni modeli doldur
+
                     PriceSearchDto dto = new PriceSearchDto();
+
                     dto.Adult = searchDto.Adult;
-                    dto.Child = searchDto.NumberOfChild;
                     dto.AgencyId = i;
                     dto.AgencyName = agency.Name;
+                    dto.NumberOfChild = searchDto.NumberOfChild;
+                    dto.ChildAges = new int[] { searchDto.Child1Age, searchDto.Child2Age, searchDto.Child3Age};
                     dto.HotelId = finalConts[0].HotelId;
                     dto.HotelName = hotels.Where(p => p.Id == dto.HotelId).Select(p => p.Name).FirstOrDefault();
-                    for(int t = 0; t < days; t++)
+                    dto.RoomTypeId = roomType.Id;
+                    dto.RoomName = roomTypes.Where(p => p.Id == dto.RoomTypeId).Select(p => p.Name).FirstOrDefault();
+
+                    bool extractThis = false;
+
+                    for (int t = 0; t < days; t++)
                     {
-                        DateTime staydate=searchDto.BeginDate.AddDays(t);
+                        DateTime staydate = searchDto.BeginDate.AddDays(t);
+
                         var datCont=finalConts.Where(h=> h.EnteredDate<=staydate && h.ExitDate>=staydate).OrderBy(o=> o.ADP).FirstOrDefault();
-                        PriceSearchDetail detail = new PriceSearchDetail();
-                        detail.StayDay = t + 1;
-                        detail.ContractId = datCont.Id;
-                        //adult ve cocuklara göre tek gün fiyatı hesaplanacak
+                        if (datCont != null)
+                        {
+                            Hotel hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == datCont.HotelId);
+                            HotelFeature hotelFeature = await _context.HotelFeatures.FirstOrDefaultAsync(h => h.Id == hotel.HotelFeatureId);
+
+                            PriceSearchDetail detail = new PriceSearchDetail();
+                            detail.StayDay = t + 1;
+                            detail.ContractId = datCont.Id;
+                            detail.BasePrice = datCont.ADP * dto.Adult;
+                            for (int a = 0; a < 3; a++)
+                            {
+                                if (dto.ChildAges[a] == 0)
+                                {
+
+                                }
+                                else if (dto.ChildAges[a] <= hotelFeature.BabyTop)
+                                {
+                                    detail.BasePrice += datCont.CH1;
+                                }
+                                else if (dto.ChildAges[a] <= hotelFeature.ChildTop)
+                                {
+                                    detail.BasePrice += datCont.CH2;
+                                }
+                                else if (dto.ChildAges[a] <= hotelFeature.TeenTop)
+                                {
+                                    detail.BasePrice += datCont.CH3;
+                                }
+                                else
+                                {
+                                    detail.BasePrice += datCont.ADP;
+                                }
+                            }
+
+                            detail.NetPrice = detail.BasePrice;
+
+                            dto.PriceDetails.Add(detail);
+
+                        
+
+                        }
+                        else
+                        {
+                            extractThis = true;
+                            break;
+                        }
+                        foreach (var price in dto.PriceDetails)
+                        {
+                            dto.TotalPrice = dto.TotalPrice + price.NetPrice;
+                        }
+                    
+                    
                     }
+                    if (extractThis) continue;
+                    dtoList.Add(dto);
                 }
             }
+            actionResponse.Data = dtoList;
             actionResponse.IsSuccessful = true;
 
             return actionResponse;
