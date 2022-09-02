@@ -16,7 +16,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Net.Mail;
+using System.Net;
 namespace api.Controllers
 {
     [Authorize]
@@ -51,7 +52,8 @@ namespace api.Controllers
             {
                 ResponseType = ResponseType.Ok
             };
-
+            var subject = "Confirm your email";
+            
             try
             {
 
@@ -66,10 +68,13 @@ namespace api.Controllers
                     DateModified=DateTime.UtcNow
                 };
 
+                var message = "Sayın " + user.FullName + " Hollie Ailesine hoş geldiniz! :)";
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var mailing = new Mailing();
+                    mailing.SendMailA("hollietheproject@gmail.com",user.Email, subject, message);
                     actionResponse.IsSuccessful = true;
                     return actionResponse;
                 }
@@ -190,4 +195,45 @@ namespace api.Controllers
         }
 
     }
+
+        public class Mailing
+        {
+            public void SendMailA(string from, string to, string subject, string message)
+            {
+                SmtpClient smtp = new SmtpClient();
+                {
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.Credentials = new NetworkCredential("hollietheproject@gmail.com", "uoziqrulardlnool");
+                    smtp.EnableSsl = true;
+                }
+                var mailMessage = new MailMessage(from, to, subject, message)
+                {
+
+                    IsBodyHtml = true,
+                };
+
+                smtp.Send(mailMessage);
+        }
+
+        [HttpPost("sendmail")]
+        public ActionResponse<MailDto> SendMail(string from, string to, string subject, string message)
+
+        {
+            ActionResponse<MailDto> actionResponse = new()
+            {
+                ResponseType = ResponseType.Ok
+            };
+
+            var mailing = new Mailing();
+            mailing.SendMailA(from, to, subject, message);
+            actionResponse.IsSuccessful = true;
+            return actionResponse;
+        }
+    }
 }
+    
+        
+    
+
+
