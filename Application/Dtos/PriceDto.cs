@@ -11,6 +11,6 @@ namespace Application.Dtos
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
         public float totalPrice { get; set; }
-        public object HotelId { get; set; }
+        public int HotelId { get; set; }
     }
 }

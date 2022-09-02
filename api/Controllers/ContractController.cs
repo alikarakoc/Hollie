@@ -273,6 +273,7 @@ namespace api.Controllers
 
             };
             PriceDto priceDto = new PriceDto();
+            //searchDto.Hotels.Add(searchDto.HotelId);
             //searchDto.BeginDate = searchDto.BeginDate.AddDays(1);
             searchDto.EndDate = searchDto.EndDate.AddDays(1);
             while (searchDto.BeginDate < searchDto.EndDate)
@@ -288,6 +289,7 @@ namespace api.Controllers
                 List<Contract> contracts = _context.Contracts.Where(x =>
                 (x.EnteredDate <= searchDto.BeginDate && x.ExitDate >= searchDto.BeginDate)).ToList();
 
+
                 if (searchDto.Hotels != null)
                 {
                     contracts = contracts.Where(x => searchDto.Hotels.Contains(x.HotelId)).ToList();
@@ -297,6 +299,7 @@ namespace api.Controllers
                     }
                 }
 
+                contracts = contracts.Where(p => p.HotelId == searchDto.HotelId).ToList();
                 Hotel hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == searchDto.HotelId);
                 HotelFeature hotelFeature = await _context.HotelFeatures.FirstOrDefaultAsync(h => h.Id == hotel.HotelFeatureId);
 
@@ -306,7 +309,7 @@ namespace api.Controllers
                     return actionResponse;
                 }
 
-                if (searchDto.Hotels.Count == 0)
+                if (searchDto.HotelId == 0)
                 {
                     actionResponse.Message = "failed";
                     return actionResponse;
@@ -324,21 +327,21 @@ namespace api.Controllers
                     {
                         minPrice = contract.ADP;
 
-                        if (searchDto.child1Age < hotelFeature.BabyTop && searchDto.child1Age >= 0)
+                        if (searchDto.child1Age < hotelFeature.BabyTop && searchDto.child1Age > 0)
                         {
                             childPrice1 = contract.CH1;
                         }
                         if (searchDto.child1Age > hotelFeature.BabyTop && searchDto.child1Age <= hotelFeature.ChildTop)
                         {
-                            childPrice2 = contract.CH2;
+                            childPrice1 = contract.CH2;
                         }
                         if (searchDto.child1Age > hotelFeature.ChildTop && searchDto.child1Age <= hotelFeature.TeenTop)
                         {
-                            childPrice3 = contract.CH3;
+                            childPrice1 = contract.CH3;
                         }
-                        if (searchDto.child2Age < hotelFeature.BabyTop && searchDto.child2Age >= 0)
+                        if (searchDto.child2Age < hotelFeature.BabyTop && searchDto.child2Age > 0)
                         {
-                            childPrice1 = contract.CH1;
+                            childPrice2 = contract.CH1;
                         }
                         if (searchDto.child2Age > hotelFeature.BabyTop && searchDto.child2Age <= hotelFeature.ChildTop)
                         {
@@ -346,31 +349,32 @@ namespace api.Controllers
                         }
                         if (searchDto.child2Age > hotelFeature.ChildTop && searchDto.child2Age <= hotelFeature.TeenTop)
                         {
-                            childPrice3 = contract.CH3;
+                            childPrice2 = contract.CH3;
                         }
-                        if (searchDto.child3Age < hotelFeature.BabyTop && searchDto.child3Age >= 0)
+                        if (searchDto.child3Age < hotelFeature.BabyTop && searchDto.child3Age > 0)
                         {
-                            childPrice1 = contract.CH1;
+                            childPrice3 = contract.CH1;
                         }
                         if (searchDto.child3Age > hotelFeature.BabyTop && searchDto.child3Age <= hotelFeature.ChildTop)
                         {
-                            childPrice2 = contract.CH2;
+                            childPrice3 = contract.CH2;
                         }
                         if (searchDto.child3Age > hotelFeature.ChildTop && searchDto.child3Age <= hotelFeature.TeenTop)
                         {
                             childPrice3 = contract.CH3;
                         }
+                       
                     }
 
                 }
 
                 
-                priceDto.totalPrice = minPrice + childPrice1 + childPrice2 + childPrice3 + priceDto.totalPrice;
+                priceDto.totalPrice = (minPrice + childPrice1 + childPrice2 + childPrice3 + priceDto.totalPrice) * searchDto.adult;
                 //actionResponse.Data = priceDto;
                 actionResponse.IsSuccessful = true;
             }
 
-            priceDto.totalPrice = priceDto.totalPrice * searchDto.adult;
+            //priceDto.totalPrice = priceDto.totalPrice * searchDto.adult;
             priceDto.startDate = searchDto.BeginDate;
             priceDto.endDate = searchDto.EndDate;
 
