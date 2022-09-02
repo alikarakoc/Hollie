@@ -479,6 +479,7 @@ namespace api.Controllers
                             PriceSearchDetail detail = new PriceSearchDetail();
                             detail.StayDay = t + 1;
                             detail.ContractId = datCont.Id;
+                            detail.ContractCode = datCont.Code;
                             detail.BasePrice = datCont.ADP * dto.Adult;
                             for (int a = 0; a < 3; a++)
                             {

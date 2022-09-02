@@ -36,5 +36,6 @@ namespace Application.Dtos
         //public double Discounts { get; set; }
         public double  NetPrice { get; set; }
         public int ContractId { get; set; }
+        public string ContractCode { get; set; }
     }
 }
