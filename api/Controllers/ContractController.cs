@@ -261,6 +261,10 @@ namespace api.Controllers
             List<PriceDto> testList = new List<PriceDto>();
 
             float minPrice;
+            float childPrice1;
+            float childPrice2;
+            float childPrice3;
+             
 
             ActionResponse<List<PriceDto>> actionResponse = new()
             {
@@ -286,16 +290,32 @@ namespace api.Controllers
 
                 if (searchDto.Hotels != null)
                 {
-                    contracts.Clear();
-                    foreach (var hotelID in searchDto.Hotels)
+                    contracts = contracts.Where(x => searchDto.Hotels.Contains(x.HotelId)).ToList();
+                    if (contracts.Count == 0)
                     {
-                        List<Contract> contractsTemp = contracts.Where(x => x.HotelId == hotelID).ToList();
-
+                        return actionResponse;
                     }
+                }
+
+                Hotel hotel = await _context.Hotels.FirstOrDefaultAsync(h => h.Id == searchDto.HotelId);
+                HotelFeature hotelFeature = await _context.HotelFeatures.FirstOrDefaultAsync(h => h.Id == hotel.HotelFeatureId);
+
+                if (contracts.Count == 0)
+                {
+                    actionResponse.Message = "failed";
+                    return actionResponse;
+                }
+
+                if (searchDto.Hotels.Count == 0)
+                {
+                    actionResponse.Message = "failed";
+                    return actionResponse;
 
                 }
 
-
+                childPrice1 = 0;
+                childPrice2 = 0;
+                childPrice3 = 0;
                 minPrice = 9999999999999999;
                 foreach (var contract in contracts)
                 {
@@ -303,16 +323,54 @@ namespace api.Controllers
                     if (contract.ADP < minPrice)
                     {
                         minPrice = contract.ADP;
+
+                        if (searchDto.child1Age < hotelFeature.BabyTop && searchDto.child1Age >= 0)
+                        {
+                            childPrice1 = contract.CH1;
+                        }
+                        if (searchDto.child1Age > hotelFeature.BabyTop && searchDto.child1Age <= hotelFeature.ChildTop)
+                        {
+                            childPrice2 = contract.CH2;
+                        }
+                        if (searchDto.child1Age > hotelFeature.ChildTop && searchDto.child1Age <= hotelFeature.TeenTop)
+                        {
+                            childPrice3 = contract.CH3;
+                        }
+                        if (searchDto.child2Age < hotelFeature.BabyTop && searchDto.child2Age >= 0)
+                        {
+                            childPrice1 = contract.CH1;
+                        }
+                        if (searchDto.child2Age > hotelFeature.BabyTop && searchDto.child2Age <= hotelFeature.ChildTop)
+                        {
+                            childPrice2 = contract.CH2;
+                        }
+                        if (searchDto.child2Age > hotelFeature.ChildTop && searchDto.child2Age <= hotelFeature.TeenTop)
+                        {
+                            childPrice3 = contract.CH3;
+                        }
+                        if (searchDto.child3Age < hotelFeature.BabyTop && searchDto.child3Age >= 0)
+                        {
+                            childPrice1 = contract.CH1;
+                        }
+                        if (searchDto.child3Age > hotelFeature.BabyTop && searchDto.child3Age <= hotelFeature.ChildTop)
+                        {
+                            childPrice2 = contract.CH2;
+                        }
+                        if (searchDto.child3Age > hotelFeature.ChildTop && searchDto.child3Age <= hotelFeature.TeenTop)
+                        {
+                            childPrice3 = contract.CH3;
+                        }
                     }
 
                 }
 
-                priceDto.totalPrice = minPrice + priceDto.totalPrice;
-
+                
+                priceDto.totalPrice = minPrice + childPrice1 + childPrice2 + childPrice3 + priceDto.totalPrice;
                 //actionResponse.Data = priceDto;
                 actionResponse.IsSuccessful = true;
             }
 
+            priceDto.totalPrice = priceDto.totalPrice * searchDto.adult;
             priceDto.startDate = searchDto.BeginDate;
             priceDto.endDate = searchDto.EndDate;
 

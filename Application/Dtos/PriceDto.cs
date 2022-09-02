@@ -10,8 +10,7 @@ namespace Application.Dtos
     {
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
-        public string UpdatedUser { get; set; }
         public float totalPrice { get; set; }
-        public int HotelId { get; set; }
+        public object HotelId { get; set; }
     }
 }

@@ -11,5 +11,10 @@ namespace Application.Dtos
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
         public List<int> Hotels { get; set; }
+        public int HotelId { get; set; }
+        public int adult { get; set; }
+        public int child1Age { get; set; }
+        public int child2Age { get; set; }
+        public int child3Age { get; set; }
     }
 }
